@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Button} from 'react-bootstrap';
 
-class ChatInput extends Component {
+class ChatInput extends React.Component {
   static propTypes = {
     onSubmitMessage: PropTypes.func.isRequired,
   }
   state = {
     message: '',
-  }
+  }  
 
   render() {
     return (
@@ -26,9 +27,14 @@ class ChatInput extends Component {
           onChange={e => this.setState({ message: e.target.value })}
         />
         <input type="submit" value={'Send'} />
+        <Button onClick={nextQuestion}>Next Question</Button>{' '}
       </form>
     )
   }
+}
+
+function nextQuestion(){
+  console.log('button clicked')
 }
 
 export default ChatInput
