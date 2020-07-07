@@ -123,13 +123,17 @@ current content of the editor to the server. */
     </div>
   )
 
+  bonusQuestion = () => {
+    console.log('hi')
+  }
+
   showQuizMasterSection = (username) => {
     if(username === "quizmaster")
     {
       return (
         <div className="main-content">
           <Button variant="secondary">Next Question</Button>{' '}
-          <Button variant="secondary">Bonus Question</Button>{' '}
+          <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
         </div>
       )
     }    
@@ -139,7 +143,6 @@ current content of the editor to the server. */
     const {
       username
     } = this.state;
-    console.log(username)
     return (
       <React.Fragment>
         <Navbar color="light" light>
