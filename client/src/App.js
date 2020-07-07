@@ -118,9 +118,9 @@ current content of the editor to the server. */
         <ul>
           {this.state.userActivity.map((activity, index) => <li key={`activity-${index}`}>{activity}</li>)}
         </ul>
-      </div>
+      </div>      
       <Button variant="secondary">Jump</Button>{' '}      
-    </div>    
+    </div>
   )
 
   showQuizMasterSection = (username) => {
@@ -129,6 +129,7 @@ current content of the editor to the server. */
       return (
         <div className="main-content">
           <Button variant="secondary">Next Question</Button>{' '}
+          <Button variant="secondary">Bonus Question</Button>{' '}
         </div>
       )
     }    
@@ -142,13 +143,13 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Real-time document editor</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
         </Navbar>
         <div className="container-fluid">
           {username ? this.showEditorSection() : this.showLoginSection()}
+          <br></br>
           {this.showQuizMasterSection(username)}
         </div>
-        
       </React.Fragment>
     );
   }
