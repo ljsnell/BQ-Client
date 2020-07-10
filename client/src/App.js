@@ -50,15 +50,15 @@ current content of the editor to the server. */
        stateToChange.currentUsers = Object.values(dataFromServer.data.users);
      } else if (dataFromServer.type === "contentchange") {
        stateToChange.text = dataFromServer.data.editorContent;
-     }
-     stateToChange.userActivity = dataFromServer.data.userActivity;
-     this.setState({
-       ...stateToChange
-     });
-   };
- }
-
- componentWillUnmount() {
+      }
+      stateToChange.userActivity = dataFromServer.data.userActivity;
+      this.setState({
+        ...stateToChange
+      });
+    };
+  }
+  
+  componentWillUnmount() {
     clearInterval(this.myInterval)
   }
 
@@ -81,7 +81,7 @@ current content of the editor to the server. */
           className="body-editor"
           text={this.state.text}
           onChange={this.onEditorStateChange}
-        />
+          />
       </div>      
       <Button variant="secondary">Jump</Button>{' '}
     </div>
@@ -90,19 +90,16 @@ current content of the editor to the server. */
   i = 0
   bonusQuestion() {
     // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
-    // this.setState({q_text_to_display: ''})
     var {
       q_text_to_display
     } = this.state
-    this.question_array = this.full_question_test.split(" ")      
+    this.question_array = this.full_question_test.split(" ")
     
     if (this.i < this.question_array.length) {
         q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
-        
-        console.log('in setInterval')
         this.setState({ q_text_to_display: q_text_to_display })
         console.log(q_text_to_display)
-        this.i++; // need to update the UI everytime the state is set.
+        this.i++
       }
   }
 
@@ -110,7 +107,7 @@ current content of the editor to the server. */
       return (
         <div className="main-content">
           <Button variant="secondary">Next Question</Button>{' '}
-          <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
+          <Button onClick={()=>setInterval(() => this.bonusQuestion(),1000)} variant="secondary">Bonus Question</Button>{' '}
         </div>
       )
     }
