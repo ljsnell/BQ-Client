@@ -23,13 +23,17 @@ class App extends Component {
       username: null,
       text: '',
       minutes: 3,
-      seconds: 0
+      seconds: 0,
+      q_text_to_display: ""
     };
   }
-
+ 
+  full_question_test = "For God so Loved the World"
   /* When content changes, we send the
 current content of the editor to the server. */
  onEditorStateChange = (text) => {
+   console.log('text')
+   console.log(text)
    client.send(JSON.stringify({
      type: "contentchange",
      username: this.state.username,
@@ -56,6 +60,10 @@ current content of the editor to the server. */
    };
  }
 
+ componentWillUnmount() {
+    clearInterval(this.myInterval)
+  }
+
   showEditorSection = () => (
     <div className="main-content">
       <div className="document-holder">
@@ -80,25 +88,22 @@ current content of the editor to the server. */
       <Button variant="secondary">Jump</Button>{' '}
     </div>
   )
-
+  question_length = 0
   bonusQuestion = () => {
+    var {
+      q_text_to_display
+    } = this.state;
+    console.log(this.full_question_test)
     // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
+    var i = 0
     this.myInterval = setInterval(() => {
-      const { seconds, minutes } = this.state
-      if (seconds > 0) {
-        this.setState(({ seconds }) => ({
-          seconds: seconds - 1
-        }))
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(this.myInterval)
-        } else {
-          this.setState(({ minutes }) => ({
-            minutes: minutes - 1,
-            seconds: 59
-          }))
-        }
+      this.question_array = this.full_question_test.split(" ")
+      this.question_length = this.question_array.length
+      while (i < this.question_length) {
+        console.log(q_text_to_display)
+        q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
+        console.log(q_text_to_display)
+        i++;
       }
     }, 1000)
   }
@@ -114,7 +119,7 @@ current content of the editor to the server. */
 
   render() {
     const {
-      minutes, seconds
+      q_text_to_display
     } = this.state;
     
     return (
@@ -128,7 +133,7 @@ current content of the editor to the server. */
           {this.showQuizMasterSection()}
         </div>
       <div>
-        <h1>Time Remaining: { minutes }:{ seconds < 10 ? `0${ seconds }` : seconds }</h1>
+        <h1>Question: { q_text_to_display }</h1>
       </div>
       </React.Fragment>
     );
