@@ -22,8 +22,6 @@ class App extends Component {
       userActivity: [],
       username: null,
       text: '',
-      minutes: 3,
-      seconds: 0,
       q_text_to_display: ""
     };
   }
@@ -88,24 +86,24 @@ current content of the editor to the server. */
       <Button variant="secondary">Jump</Button>{' '}
     </div>
   )
-  question_length = 0
+  
   bonusQuestion = () => {
-    var {
-      q_text_to_display
-    } = this.state;
-    console.log(this.full_question_test)
-    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
+    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7    
     var i = 0
     this.myInterval = setInterval(() => {
-      this.question_array = this.full_question_test.split(" ")
-      this.question_length = this.question_array.length
-      while (i < this.question_length) {
+      var {
+        q_text_to_display
+      } = this.state
+
+      this.question_array = this.full_question_test.split(" ")      
+      while (i < this.question_array.length) {
         console.log(q_text_to_display)
         q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
+        this.setState({ q_text_to_display: q_text_to_display})
         console.log(q_text_to_display)
-        i++;
+        i++;        
       }
-    }, 1000)
+    }, 11000)
   }
 
   showQuizMasterSection = () => {    
