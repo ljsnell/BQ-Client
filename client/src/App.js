@@ -56,27 +56,6 @@ current content of the editor to the server. */
    };
  }
 
- componentDidMount() {
-  this.myInterval = setInterval(() => {
-    const { seconds, minutes } = this.state
-    if (seconds > 0) {
-      this.setState(({ seconds }) => ({
-        seconds: seconds - 1
-      }))
-    }
-    if (seconds === 0) {
-      if (minutes === 0) {
-        clearInterval(this.myInterval)
-      } else {
-        this.setState(({ minutes }) => ({
-          minutes: minutes - 1,
-          seconds: 59
-        }))
-      }
-    }
-  }, 1000)
-}
-
   showEditorSection = () => (
     <div className="main-content">
       <div className="document-holder">
@@ -104,7 +83,24 @@ current content of the editor to the server. */
 
   bonusQuestion = () => {
     // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
-    this.setState({text:'asdf'})
+    this.myInterval = setInterval(() => {
+      const { seconds, minutes } = this.state
+      if (seconds > 0) {
+        this.setState(({ seconds }) => ({
+          seconds: seconds - 1
+        }))
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(this.myInterval)
+        } else {
+          this.setState(({ minutes }) => ({
+            minutes: minutes - 1,
+            seconds: 59
+          }))
+        }
+      }
+    }, 1000)
   }
 
   showQuizMasterSection = () => {    
