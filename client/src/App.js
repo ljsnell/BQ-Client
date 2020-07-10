@@ -90,20 +90,28 @@ current content of the editor to the server. */
   bonusQuestion = () => {
     // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7    
     var i = 0
-    this.myInterval = setInterval(() => {
-      var {
-        q_text_to_display
-      } = this.state
-
-      this.question_array = this.full_question_test.split(" ")      
-      while (i < this.question_array.length) {
-        console.log(q_text_to_display)
+    // this.setState({q_text_to_display: ''})
+    var {
+      q_text_to_display
+    } = this.state
+    this.question_array = this.full_question_test.split(" ")      
+    
+    while (i < this.question_array.length) {
         q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
-        this.setState({ q_text_to_display: q_text_to_display})
+        
+        console.log('in setInterval')
+        this.setState({ q_text_to_display: q_text_to_display })
         console.log(q_text_to_display)
-        i++;        
+        i++; // need to update the UI everytime the state is set.
       }
-    }, 11000)
+  }
+
+  sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
   }
 
   showQuizMasterSection = () => {    
@@ -125,14 +133,14 @@ current content of the editor to the server. */
         <Navbar color="light" light>
           <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
         </Navbar>
+        <div>
+          <h1>Question: { q_text_to_display }</h1>
+        </div>
         <div className="container-fluid">
           {this.showEditorSection()}
           <br></br>
           {this.showQuizMasterSection()}
         </div>
-      <div>
-        <h1>Question: { q_text_to_display }</h1>
-      </div>
       </React.Fragment>
     );
   }
