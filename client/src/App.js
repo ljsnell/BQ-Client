@@ -87,31 +87,23 @@ current content of the editor to the server. */
     </div>
   )
   
-  bonusQuestion = () => {
-    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7    
-    var i = 0
+  i = 0
+  bonusQuestion() {
+    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
     // this.setState({q_text_to_display: ''})
     var {
       q_text_to_display
     } = this.state
     this.question_array = this.full_question_test.split(" ")      
     
-    while (i < this.question_array.length) {
-        q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
+    if (this.i < this.question_array.length) {
+        q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
         
         console.log('in setInterval')
         this.setState({ q_text_to_display: q_text_to_display })
         console.log(q_text_to_display)
-        i++; // need to update the UI everytime the state is set.
+        this.i++; // need to update the UI everytime the state is set.
       }
-  }
-
-  sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
   }
 
   showQuizMasterSection = () => {    
