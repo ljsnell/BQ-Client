@@ -13,7 +13,6 @@ import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
-const contentDefaultMessage = "Start writing your document here";
 
 class App extends Component {
   constructor(props) {
@@ -22,25 +21,10 @@ class App extends Component {
       currentUsers: [],
       userActivity: [],
       username: null,
-      text: ''
+      text: '',
+      minutes: 3,
+      seconds: 0
     };
-  }
-
-  logInUser = () => {
-    const username = this.username.value;
-    if (username.trim()) {
-      const data = {
-        username
-      };
-      this.setState({
-        ...data
-      }, () => {
-        client.send(JSON.stringify({
-          ...data,
-          type: "userevent"
-        }));
-      });
-    }
   }
 
   /* When content changes, we send the
@@ -63,7 +47,7 @@ current content of the editor to the server. */
      if (dataFromServer.type === "userevent") {
        stateToChange.currentUsers = Object.values(dataFromServer.data.users);
      } else if (dataFromServer.type === "contentchange") {
-       stateToChange.text = dataFromServer.data.editorContent || contentDefaultMessage;
+       stateToChange.text = dataFromServer.data.editorContent;
      }
      stateToChange.userActivity = dataFromServer.data.userActivity;
      this.setState({
@@ -72,21 +56,26 @@ current content of the editor to the server. */
    };
  }
 
-  showLoginSection = () => (
-    <div className="account">
-      <div className="account__wrapper">
-        <div className="account__card">
-          <div className="account__profile">
-            <Identicon className="account__avatar" size={64} string="randomness" />
-            <p className="account__name">Hello, user!</p>
-            <p className="account__sub">Join to edit the document</p>
-          </div>
-          <input name="username" ref={(input) => { this.username = input; }} className="form-control" />
-          <button type="button" onClick={() => this.logInUser()} className="btn btn-primary account__btn">Join</button>
-        </div>
-      </div>
-    </div>
-  )
+ componentDidMount() {
+  this.myInterval = setInterval(() => {
+    const { seconds, minutes } = this.state
+    if (seconds > 0) {
+      this.setState(({ seconds }) => ({
+        seconds: seconds - 1
+      }))
+    }
+    if (seconds === 0) {
+      if (minutes === 0) {
+        clearInterval(this.myInterval)
+      } else {
+        this.setState(({ minutes }) => ({
+          minutes: minutes - 1,
+          seconds: 59
+        }))
+      }
+    }
+  }, 1000)
+}
 
   showEditorSection = () => (
     <div className="main-content">
@@ -103,56 +92,48 @@ current content of the editor to the server. */
             </React.Fragment>
           ))}
         </div>
-        <Editor
-          options={{
-            placeholder: {
-              text: this.state.text ? contentDefaultMessage : ""
-            }
-          }}
+        <Editor          
           className="body-editor"
           text={this.state.text}
           onChange={this.onEditorStateChange}
         />
-      </div>
-      <div className="history-holder">
-        <ul>
-          {this.state.userActivity.map((activity, index) => <li key={`activity-${index}`}>{activity}</li>)}
-        </ul>
       </div>      
-      <Button variant="secondary">Jump</Button>{' '}      
+      <Button variant="secondary">Jump</Button>{' '}
     </div>
   )
 
   bonusQuestion = () => {
-    console.log('hi')
+    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
+    this.setState({text:'asdf'})
   }
 
-  showQuizMasterSection = (username) => {
-    if(username === "quizmaster")
-    {
+  showQuizMasterSection = () => {    
       return (
         <div className="main-content">
           <Button variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
         </div>
       )
-    }    
-  }
+    }
 
   render() {
     const {
-      username
+      minutes, seconds
     } = this.state;
+    
     return (
       <React.Fragment>
         <Navbar color="light" light>
           <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
         </Navbar>
         <div className="container-fluid">
-          {username ? this.showEditorSection() : this.showLoginSection()}
+          {this.showEditorSection()}
           <br></br>
-          {this.showQuizMasterSection(username)}
+          {this.showQuizMasterSection()}
         </div>
+      <div>
+        <h1>Time Remaining: { minutes }:{ seconds < 10 ? `0${ seconds }` : seconds }</h1>
+      </div>
       </React.Fragment>
     );
   }
