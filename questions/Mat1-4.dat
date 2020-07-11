@@ -1,0 +1,354 @@
+1|1|1|1|1|a|0||A record of the genealogy of whom?|Jesus Christ (the son of David, the son of Abraham).||1
+2|1|1|2|1|a|0||Abraham was the father of whom?|Isaac.||0
+3|1|1|2|1|a|0||Isaac was the father of whom?|Jacob.||0
+4|1|1|2|8|d|0||Jacob was the father of whom?|Judah and his brothers.||0
+5|1|1|2|8|a|0||Jacob was the father of whom?|Judah and his brothers.|1:16|0
+6|1|1|3|1|e|0||Judah was the father of Perez and Zerah by whom?|Tamar.||0
+7|1|1|3|1|e|0||Perez was the father of whom?|Hezron.||0
+8|1|1|3|1|e|0||Hezron was the father of whom?|Ram.||0
+9|1|1|4|1|e|0||Ram was the father of whom?|Amminadab.||0
+10|1|1|4|1|e|0||Amminadab was the father of whom?|Nahshon.||0
+11|1|1|4|1|e|0||Nahshon was the father of whom?|Salmon.||0
+12|1|1|5|1|e|0||Salmon was the father of whom?|Boaz.||0
+13|1|1|5|1|e|0||Salmon was the father of Boaz by whom?|Rahab.||0
+14|1|1|5|1|e|0||Boaz was the father of whom?|Obed.||0
+15|1|1|5|1|e|0||Boaz was the father of Obed by whom?|Ruth.||0
+16|1|1|5|1|e|0||Obed was the father of whom?|Jesse.||0
+17|1|1|6|1|a|0||Jesse was the father of whom?|David the King.||0
+18|1|1|6|1|a|0||David was the father of whom?|Solomon.||0
+19|1|1|6|1|e|0||David was the father of Solomon by whom?|The wife of Uriah.||0
+20|1|1|7|1|e|0||Solomon was the father of whom?|Rehoboam.||0
+21|1|1|7|1|e|0||Rehoboam was the father of whom?|Abijah.||0
+22|1|1|7|1|e|0||Abijah was the father of whom?|Asaph.||0
+23|1|1|8|1|e|0||Asaph was the father of whom?|Jehoshaphat.||0
+24|1|1|8|1|e|0||Jehoshaphat was the father of whom?|Joram.||0
+25|1|1|8|1|e|0||Joram was the father of whom?|Uzziah.||0
+26|1|1|9|1|e|0||Uzziah was the father of whom?|Jotham.||0
+27|1|1|9|1|e|0||Jotham was the father of whom?|Ahaz.||0
+28|1|1|9|1|e|0||Ahaz was the father of whom?|Hezekiah.||0
+29|1|1|10|1|e|0||Hezekiah was the father of whom?|Manasseh.||0
+30|1|1|10|1|e|0||Manasseh was the father of whom?|Amos.||0
+31|1|1|10|1|e|0||Amos was the father of whom?|Josiah.||0
+32|1|1|11|2|e|0||Josiah was the father of whom?|Jeconiah and his brothers.||0
+33|1|1|11|1|e|0||Josiah was the father of Jeconiah and his brothers when?|At the time of the deportation to Babylon.||0
+34|1|1|12|1|e|0||Jeconiah was the father of whom?|Shealtiel.||0
+35|1|1|12|1|e|0||Shealtiel was the father of whom?|Zerubbabel.||0
+36|1|1|13|1|e|0||Zerubbabel was the father of whom?|Abiud.||0
+37|1|1|13|1|e|0||Abiud was the father of whom?|Eliakim.||0
+38|1|1|13|1|e|0||Eliakim was the father of whom?|Azor.||0
+39|1|1|14|1|e|0||Azor was the father of whom?|Zadok.||0
+40|1|1|14|1|e|0||Zadok was the father of whom?|Achim.||0
+41|1|1|14|1|e|0||Achim was the father of whom?|Eliud.||0
+42|1|1|15|1|e|0||Eliud was the father of whom?|Eleazar.||0
+43|1|1|15|1|e|0||Eleazar was the father of whom?|Matthan.||0
+44|1|1|15|1|e|0||Matthan was the father of whom?|Jacob.||0
+45|1|1|16|8|d|0||Jacob was the father of whom?|Joseph.||0
+46|1|1|16|1|a|0||Who was the husband of Mary?|Joseph.||0
+47|1|1|16|1|a|0||Of whom was Jesus born?|Mary.||0
+48|1|1|16|1|c|0||Who is called Christ.|Jesus.||0
+49|1|1|17|3|a|0||All the generations when were fourteen generations?|From Abraham to David, and from David to the deportation to Babylon, and from the deportation to Babylon to the Christ.||0
+50|1|1|18|7|a|0||Now the|birth of Jesus Christ took place in this way. When his mother Mary had been betrothed to Joseph, before they came together she was found to be with child from the Holy Spirit.||0
+51|1|1|18|1|a|0||His mother Mary had been betrothed to whom?|Joseph.||0
+52|1|1|18|1|a|0||Who had been betrothed to Joseph?|Mary.||0
+53|1|1|18|1|e|0||She was found to be with child from whom?|The Holy Spirit.||0
+54|1|1|18|2|a|0||She was found to be with child from the Holy Spirit when?|When his mother Mary had been betrothed to Joseph, before they came together.||0
+55|1|1|19|1|b|0||Who was a just man?|Her husband Joseph.||0
+56|1|1|19|1|b|0||Who was unwilling to put her to shame?|Her husband Joseph.||1
+57|1|1|19|1|a|0||Who resolved to divorce her quietly?|Her husband Joseph.||0
+58|1|1|19|2|a|0||Her husband Joseph, being what, resolved to divorce her quietly?|A just man and unwilling to put her to shame.||0
+59|1|1|20|9|a|0|Who said it, to whom, when, and how?|"Joseph, son of David, do not fear to take Mary as your wife, for that which is conceived in her is from the Holy Spirit."|As he [Joseph] considered these things, behold, an angel of the Lord appeared to him in a dream, saying.||0
+60|1|1|20|8|d|0||An angel of the Lord appeared to him in a dream when?|After he (Joseph) had considered this (to divorce her quietly). (cf 2:13, 2:19)||0
+61|1|1|20|1|b|0||Who appeared to Joseph in a dream?|An angel of the Lord.|2:13|0
+62|1|1|20|1|b|0||Do not fear to take whom as your wife?|Mary.|10:28|0
+63|1|1|20|1|a|0||That which is conceived in her is from whom?|The Holy Spirit.||0
+64|1|1|20|1|e|0||What is from the Holy Spirit?|That which is conceived in her.||0
+65|1|1|20|7|a|1||But as|he considered these things, behold, an angel of the Lord appeared to him in a dream, saying, "Joseph, son of David, do not fear to take Mary as your wife, for that which is conceived in her is from the Holy Spirit. She will bear a son, and you shall call his name Jesus, for he will save his people from their sins."||1
+66|1|1|21|1|a|0||Who will bear a son?|(She) Mary.||0
+67|1|1|21|1|a|0||You shall call his name what?|Jesus.||1
+68|1|1|21|1|a|0||You shall call his name Jesus, because he will what?|Save his people from their sins.||0
+69|1|1|21|1|c|0||Who will save his people from their sins?|(He) Jesus.||0
+70|1|1|22|7|a|1||All|this took place to fulfill what the Lord had spoken by the prophet: "Behold, the virgin shall conceive and bear a son, and they shall call his name Immanuel" (which means, God with us).||1
+71|1|1|22|1|c|0||All this took place why?|To fulfill what the Lord had spoken by the prophet.|26:56|0
+72|1|1|22|8|a|1||The Lord had spoken what by the prophet?|"Behold, the virgin shall conceive and bear a son, and they shall call his name Immanuel."|2:15|0
+73|1|1|23|9|a|0|Who said it, and how?|"Behold, the virgin shall conceive and bear a son, and they shall call his name Immanuel."|The Lord had spoken it, by the prophet.||0
+74|1|1|23|1|a|0||The virgin shall bear what?|A son.||0
+75|1|1|23|2|a|0||The virgin shall what?|Conceive and bear a son.||0
+76|1|1|23|1|a|0||They shall call his name what?|Immanuel.||1
+77|1|1|23|1|b|0||What means, God with us?|Immanuel.|27:33|0
+78|1|1|23|1|a|0||Immanuel means what?|God with us.||0
+79|1|1|24|1|a|0||When Joseph woke from sleep, he did what?|He did as the angel of the Lord had commanded him: he took his wife.||0
+80|1|1|24|1|b|0||Who did as the angel of the Lord had commanded him?|(He) Joseph.||0
+81|1|1|24|1|c|0||Who took his wife?|(He) Joseph.||0
+82|1|1|25|1|c|0||Who called his name Jesus?|(He) Joseph.||0
+83|1|1|25|1|a|0||He took his wife, but knew her not until when?|Until she had given birth to a son.||0
+84|1|1|25|1|a|0||He gave him what name?|The name Jesus.||1
+85|1|2|1|1|b|0||Jesus was born where?|In Bethlehem of Judea.||0
+86|1|2|1|1|e|0||Who was born in Bethlehem of Judea?|Jesus.||0
+87|1|2|1|1|a|0||Wise men from the east came where?|To Jerusalem.||0
+88|1|2|1|2|a|0||Wise men from the east came to Jerusalem when?|After Jesus was born (in Bethlehem of Judea) in the days of Herod the king.||0
+89|1|2|1|9|a|1|Who said it, when, where, and what was the response?|"Where is he who has been born King of the Jews?"|After Jesus was born (in Bethlehem of Judea) in the days of Herod the king, wise men from the east came to Jerusalem, saying it. When Herod the king heard this, he was troubled, and all Jerusalem with him.||0
+90|1|2|2|1|a|0||We saw his star when?|When it rose.||0
+91|1|2|2|1|c|0||We have come to worship whom?|(Him) he who has been born King of the Jews [Jesus].||0
+92|1|2|3|2|a|0||Who was troubled when Herod the king heard this?|(He) Herod the king, and all Jerusalem with him.||0
+93|1|2|4|2|a|0||Assembling whom, he inquired of them where the Christ was to be born?|The chief priests and scribes of the people.||0
+94|1|2|4|1|a|0||Who inquired of them where the Christ was to be born?|(He) Herod the king.||0
+95|1|2|4|9|a|0|Who said it, and in reply to what?|"In Bethlehem of Judea."|The chief priests and scribes of the people said it. Herod the king inquired of them where the Christ was to be born.||1
+96|1|2|5|1|c|0||What is written by the prophet?|"And you, O Bethlehem, in the land of Judah, are by no means least among the rulers of Judah; for from you shall come a ruler who will shepherd my people Israel."||0
+97|1|2|6|7|a|0||"And you,|O Bethlehem, in the land of Judah, are by no means least among the rulers of Judah; for from you shall come a ruler who will shepherd my people Israel."||0
+98|1|2|6|1|a|0||Who are by no means least among the rulers of Judah?|You, O Bethlehem (in the land of Judah).||0
+99|1|2|6|1|a|0||From you shall come a ruler who will what?|Shepherd my people Israel.||0
+100|1|2|6|1|b|0||From whom shall come a ruler who will shepherd my people Israel?|You, O Bethlehem.||0
+101|1|2|7|1|a|0||Herod summmoned whom secretly?|The wise men.||0
+102|1|2|7|1|e|0||Who ascertained from them what time the star had appeared?|Herod.||0
+103|1|2|8|1|b|0||Who sent the wise men to Bethlehem?|(He) Herod.||0
+104|1|2|8|9|a|0|Who said it, to whom?|"Go and search diligently for the child, and when you have found him, bring me word, that I too may come and worship him."|(He) Herod said it, to (them) the wise men.||1
+105|1|2|8|1|a|0||Search diligently for whom?|The child (Jesus).||0
+106|1|2|8|1|a|0||When you have found him, bring me word, why?|That I too may come and worship him.||0
+107|1|2|8|1|a|0||Bring me word when?|When you have found him.||0
+108|1|2|9|1|a|0||What went before them?|The star that they had seen when it rose.||1
+109|1|2|9|1|a|0||It came to rest over what place?|The place where the child was.||0
+110|1|2|10|1|a|0||They rejoiced exceedingly with great joy when?|When they saw the star.||0
+111|1|2|10|7|a|1||When they saw|the star, they rejoiced exceedingly with great joy. And going into the house, they saw the child with Mary his mother, and they fell down and worshiped him. Then, opening their treasures, they offered him gifts, gold and frankincense and myrrh.||0
+112|1|2|11|2|a|0||Going into the house, they saw whom?|The child with Mary his mother.||0
+113|1|2|11|5|a|0||Going into the house, they what?|They saw the child with Mary his mother, and they fell down and worshiped him. Then, opening their treasures, they offered him gifts, gold and frankincense and myrrh.||0
+114|1|2|11|1|b|0||Who fell down and worshiped him?|(They) The wise men.||0
+115|1|2|11|8|a|0||Who worshiped him?|(They) The wise men.|14:33, 28:9, 28:17|0
+116|1|2|11|1|a|0||Opening their treasures, they offered him what?|Gifts.||0
+117|1|2|11|3|a|0||Opening their treasures, they offered him what gifts?|Gold and frankincense and myrrh.||0
+119|1|2|12|1|b|0||Who departed to their own country by another way?|(They) The wise men.||0
+120|1|2|12|1|b|0||The wise men departed to their own country by another way why?|Being warned in a dream not to return to Herod.||0
+121|1|2|13|8|d|0||An angel of the Lord appeared to Joseph in a dream when?|When they (the Magi) had gone. (cf 1:20, 2:19)||0
+122|1|2|13|9|b|1|Who said it, to whom, when, how, and what was the response?|"Rise, take the child and his mother, and flee to Egypt, and remain there until I tell you, for Herod is about to search for the child, to destroy him."|When they [the wise men] had departed, behold, an angel of the Lord appeared to Joseph in a dream and said it. And he rose and took the child and his mother by night and departed to Egypt.||0
+123|1|2|13|1|e|0||Take the child and his mother, and flee to where?|Egypt.||0
+124|1|2|13|2|a|0||Take whom and escape flee to Egypt?|The child and his mother.||1
+125|1|2|13|1|c|0||Remain where until I tell you?|(There) Egypt.||0
+126|1|2|13|1|e|0||Why remain there until I tell you?|Herod is about to search for the child, to destroy him.||0
+127|1|2|13|1|a|0||Herod is about to search for the child, why?|To destroy him.||0
+128|1|2|14|2|c|0||He rose and took whom by night and departed to Egypt?|The child and his mother.||0
+129|1|2|14|8|d|0||He got up, took the child and his mother and what?|Left for Egypt (during the night). (cf 2:21)||0
+130|1|2|15|1|e|0||He remained where until the death of Herod?|(There) Egypt.||0
+131|1|2|15|8|a|0||This was to fulfill what?|What the Lord had spoken by the prophet, "Out of Egypt I called my son."|8:17; 12:17; 13:35|0
+132|1|2|15|8|d|0||The Lord had said what through the prophet?|"Out of Egypt I called my son."||0
+133|1|2|15|1|a|0||Out of Egypt I called whom?|My son.||0
+134|1|2|16|3|a|0||Herod, when he saw that he had been tricked by the wise men, what?|Became furious, and he sent and killed all the male children in Bethlehem and in all that region who were two years old or under.||0
+135|1|2|16|1|a|0||Herod became furious when?|When he saw that he had been tricked by the wise men.||0
+136|1|2|16|1|a|0||Who saw that he had been tricked by the wise men?|(He) Herod.||0
+137|1|2|16|1|b|0||Herod sent and killed whom?|All the male children in Bethlehem and in all that region who were two years old or under.||0
+138|1|2|16|1|c|0||He had ascertained what from the wise men?|The time.||0
+139|1|2|17|1|c|1||What was spoken by the prophet Jeremiah?|"A voice was heard in Ramah, weeping and loud lamentation, Rachel weeping for her children; she refused to be comforted, because they are no more."||0
+140|1|2|17|8|a|1||What was fulfilled?|What was spoken by the prophet Jeremiah: "A voice was heard in Ramah, weeping and loud lamentation, Rachel weeping for her children; she refused to be comforted, because they are no more."||0
+141|1|2|18|1|e|0||A voice was heard where?|In Ramah.||0
+142|1|2|18|1|e|0||Rachel weeping for whom?|Her children.||0
+143|1|2|18|1|e|0||She refused to be comforted why?|Because they are no more.||0
+144|1|2|19|8|d|0||An angel of the Lord appeared in a dream to Joseph when?|After Herod died. (cf 1:20, 2:13)||0
+145|1|2|19|9|b|2|Who said it, to whom, when, where, how, and what was the response?|"Rise, take the child and his mother and go to the land of Israel, for those who sought the child's life are dead."|When Herod died, behold, an angel of the Lord appeared in a dream to Joseph in Egypt, saying it. And he rose and took the child and his mother and went to the land of Israel.||0
+146|1|2|20|2|b|0||Take whom and go to the land of Israel?|The child and his mother.||0
+147|1|2|20|1|e|0||Go to the land of Israel, why?|For those who sought the child's life are dead.||0
+148|1|2|20|1|c|0||Who are dead?|Those who sought the child's life.||0
+149|1|2|21|1|c|0||Who went to the land of Israel.|(He) Joseph.||0
+150|1|2|21|8|d|0||He got up, took the child and his mother and what?|Went to the land of Israel. (cf 2:14)||0
+151|1|2|22|1|a|0||Who was reigning over Judea in place of his father Herod?|Archelaus.||0
+152|1|2|22|1|a|0||Archelaus was reigning where?|In Judea (in place of his father Herod).||0
+153|1|2|22|1|e|0||He was afraid to go where?|(There) Judea.||0
+154|1|2|22|1|c|0||He was afraid to go there when?|When he heard that Archelaus was reigning over Judea in place of his father Herod.||0
+155|1|2|22|1|c|0||Who withdrew to the district of Galilee?|(He) Joseph.||0
+156|1|2|22|1|c|0||He withdrew to the district of Galilee why?|Being warned in a dream.||0
+158|1|2|23|7|c|0||And he went|and lived in a town called Nazareth. So was fulfilled what was said through the prophets: "He will be called a Nazarene."||0
+159|1|2|23|1|b|0||Who went and lived in a city called Nazareth?|(He) Joseph.||0
+160|1|2|23|8|a|0||What might be fulfilled?|What was spoken by the prophets, that he would be called Nazarene.|4:14; 26:56|0
+161|1|2|23|1|c|0||What was spoken by the prophets?|That he would be called a Nazarene.||0
+162|1|2|23|1|e|0||He would be called a what?|A Nazarene.||0
+163|1|3|1|1|a|0||Who came preaching in the wilderness of Judea?|John the Baptist.||0
+164|1|3|1|1|a|0||John the Baptist came preaching where?|In the wilderness of Judea.||0
+165|1|3|1|7|a|1||In those|days John the Baptist came preaching in the wilderness of Judea, "Repent, for the kingdom of heaven is at hand."||1
+166|1|3|2|1|a|0||Repent, for what is at hand?|The kingdom of heaven.|4:17|1
+167|1|3|2|8|d|0||Who said, "Repent, for the kingdom of heaven is near"?|John the Baptist. (cf 4:17)||0
+168|1|3|3|7|a|0||"For this|is he who was spoken of by the prophet Isaiah when he said, "The voice of one crying in the wilderness: `Prepare the way of the Lord; make his paths straight.' "||0
+169|1|3|3|1|a|0||Who was spoken of by the prophet Isaiah?|John the Baptist.||0
+170|1|3|3|1|e|0||The voice of one crying where?|In the wilderness.||0
+171|1|3|3|1|a|0||Prepare the way of whom?|The Lord.||1
+172|1|3|3|1|e|0||Make his paths how?|Straight.||0
+173|1|3|4|2|a|0||John wore what?|A garment of camel's hair and a leather belt around his waist.||0
+174|1|3|4|1|a|0||Who wore a leather belt around his waist?|John [the Baptist].||0
+175|1|3|4|2|a|0||His food was what?|Locusts and wild honey.||0
+176|1|3|5|1|b|0||Jerusalem and all Judea and all the region about the Jordan were going out to whom?|(Him) John [the Baptist].||0
+177|1|3|5|3|a|0||Who were going out to him?|Jerusalem and all Judea and all the region about the Jordan.||0
+178|1|3|6|1|c|0||They were baptized by him in the river Jordan, confessing what?|Their sins.||0
+179|1|3|6|1|e|0||They were baptized by him where?|In the river Jordan.||0
+180|1|3|7|9|a|0|Who said it, to whom, and when?|"You brood of vipers! Who warned you to flee from wrath to come?"|When he [John the Baptist] saw many of the Pharisees and Sadducees coming to his baptism, he said it to them.||0
+181|1|3|7|2|a|0||He saw many of whom coming to his baptism?|The Pharisees and Sadducees.||1
+182|1|3|7|1|c|0||You brood of what?|Vipers!||0
+183|1|3|8|7|d|0||"Produce|fruit in keeping with repentance."||0
+184|1|3|8|1|a|0||Bear fruit in keeping with what?|Repentance.||1
+186|1|3|9|1|a|0||Do not presume to say to yourselves what?|"We have Abraham as our father."||0
+187|1|3|9|1|a|0||God is able from these stones to raise up whom?|Children for Abraham.||0
+188|1|3|9|1|a|0||God is able from what to raise up children for Abraham?|These stones.||1
+189|1|3|10|1|a|0||Even now the axe is laid to what?|The root of the trees.||0
+190|1|3|10|1|a|0||What is cut down and thrown into the fire?|Every tree that does not bear good fruit.|7:19|0
+191|1|3|10|2|a|0||Every tree that does not bear good fruit is what?|Cut down and thrown into the fire.|7:19|0
+192|1|3|11|7|a|0||"I baptize|you with water for repentance, but he who is coming after me is mightier than I, whose sandals I am not worthy to carry. He will baptize you with the Holy Spirit and fire."||0
+193|1|3|11|1|a|0||I baptize you with water for what?|Repentance.||0
+194|1|3|11|1|a|0||He who is coming is what?|Mightier than I.||0
+195|1|3|11|1|c|0||I am not worthy to carry what?|Sandals (of he who is coming).||0
+196|1|3|11|1|c|0||Who will baptize you with the Holy Spirit and fire?|(He) He who is coming [Jesus].||0
+197|1|3|11|2|a|0||He will baptize you how?|With the Holy Spirit and fire.||1
+198|1|3|12|1|a|0||His winnowing fork is where?|In his hand.||1
+199|1|3|12|1|a|0||He will clear his what?|Threshing floor.||0
+201|1|3|12|1|a|0||He will gather his wheat into what?|The barn.||0
+202|1|3|12|1|a|0||The chaff he will burn with what?|Unquenchable fire.||0
+203|1|3|13|1|e|0||Who came from Galilee to the Jordan to John, to be baptized by him?|Jesus.||0
+204|1|3|14|9|a|0|Who said it, to whom, and what was the reply?|"I need to be baptized by you, and do you come to me?"|John said it, to Jesus. But Jesus answered him, "Let it be so now, for thus it is fitting for us to fulfill all righteousness."||0
+205|1|3|14|1|a|0||John would have prevented whom?|(Him) Jesus.||0
+206|1|3|15|9|a|0|Who said it, to whom, in reply to what, and what was the response?|"Let it be so now, for thus it is fitting for us to fulfill all righteousness."|Jesus answered (him) John, in reply to, "I need to be baptized by you, and do you come to me?" Then he [John] consented.||0
+207|1|3|15|1|c|0||Who consented?|(He) John [to baptize Jesus].||0
+208|1|3|15|1|c|0||It is fitting for us to fulfill what?|All righteousness.||0
+209|1|3|16|7|a|1||And when Jesus|was baptized, immediately he went up from the water, and behold, the heavens were opened to him, and he saw the Spirit of God descending like a dove and coming to rest on him; and behold, a voice from heaven said, "This is my beloved Son, with whom I am well pleased."||0
+210|1|3|16|1|c|0||When Jesus was baptized, immediately he what?|Went up from the water.||0
+211|1|3|16|1|c|0||What were opened to him?|The heavens.||0
+213|1|3|16|1|b|0||Jesus saw whom descending like a dove?|The Spirit of God.||0
+214|1|3|16|2|a|0||He saw the Spirit of God what?|Descending like a dove and coming to rest on him.||0
+215|1|3|17|1|b|0||A voice from heaven said what?|"This is my beloved Son, with whom I am well pleased."||0
+216|1|3|17|1|a|0||With whom am I well pleased?|My beloved Son [Jesus].||0
+217|1|4|1|1|a|0||Jesus was led up by the Spirit into where?|The wilderness.||0
+218|1|4|1|1|a|0||Jesus was led up by the Spirit into the wilderness why?|To be tempted by the devil.||1
+219|1|4|1|1|e|0||Who was led up by the Spirit into the wilderness?|Jesus.||0
+220|1|4|2|2|a|0||After fasting how long, he was hungry?|Forty days and forty nights.||0
+222|1|4|3|1|e|0||Command these stones to become what?|Loaves of bread.||0
+223|1|4|3|7|a|1||And the tempter|came and said to him, "If you are the Son of God, command these stones to become loaves of bread." But he answered, "It is written, `Man shall not live by bread alone, but by every word that comes from the mouth of God.' "||0
+224|1|4|2|9|b|2|Who said it, to whom, when, and what was the reply?|"If you are the Son of God, command these stones to become loaves of bread."|The tempter [the devil] said to (him) Jesus, after fasting forty days and forty nights. But he answered, "It is written, `Man shall not live by bread alone, but by every word that comes from the mouth of God.' "|4:5|0
+225|1|4|4|1|a|0||Man shall not live by what?|Bread alone.||0
+226|1|4|4|1|a|0||Man shall not live by bread alone, but by what?|Every word that comes from the mouth of God.||0
+227|1|4|4|8|a|0||What is written?|"Man shall not live by bread alone, but by every word that comes from the mouth of God."||0
+228|1|4|5|8|a|0||The devil took him where?|To the holy city.|4:8|1
+229|1|4|5|1|b|0||The devil took Jesus and set him where?|On the pinnacle of the temple.||0
+230|1|4|6|8|a|0||What is written?|"He will command his angels concerning you," and "On their hands they will bear you up, lest you strike your foot against a stone."||1
+231|1|4|6|1|a|0||He will command whom concerning you?|His angels.||0
+232|1|4|6|1|e|0||On their hands they will what?|Bear you up.||0
+234|1|4|5|9|a|2|Who said it, to whom, where, and in reply to what?|"Again it is written, `You shall not put the Lord your God to the test.' "|Jesus said it, to the devil, on the pinnacle of the temple, in reply to, "If you are the Son of God, throw yourself down."||0
+235|1|4|7|7|c|0||Jesus answered him,|"It is also written: `Do not put the Lord your God to the test.' "||0
+236|1|4|7|8|a|0||What is written?|"You shall not put the Lord your God to the test."||1
+237|1|4|8|8|a|0||The devil took him where?|To a very high mountain.|4:5|0
+238|1|4|8|2|a|0||The devil showed him what?|All the kingdoms of the world and their glory.||0
+239|1|4|8|9|a|2|Who said it, to whom, where, and what was the reply?|"All these I will give you, if you will fall down and worship me."|The devil said it, to Jesus, on a very high mountain. (He) Jesus said to him, "Be gone, Satan! For it is written: `You shall worship the Lord your God and him only shall you serve.' "||0
+240|1|4|9|2|a|0||All these I will give you, if you will what?|Fall down and worship me.||0
+241|1|4|10|7|c|0||Jesus said to|him, "Away from me, Satan! For it is written: `Worship the Lord your God, and serve him only.' "||0
+242|1|4|10|1|e|0||You shall worship whom?|The Lord your God.||0
+243|1|4|10|1|e|0||Whom only shall you serve?|(Him) The Lord your God.||0
+244|1|4|11|1|e|0||Who were ministering to him?|Angels.||0
+245|1|4|12|1|b|0||Jesus heard that who had been arrested?|John.||0
+246|1|4|12|1|a|0||Jesus withdrew into Galilee when he heard what?|That John had been arrested.||0
+247|1|4|13|4|a|0||Leaving Nazareth he went and lived where?|In Capernaum by the sea, in the territory of Zebulun and Naphtali.||1
+248|1|4|13|1|a|0||What was by the lake?|Capernaum.||0
+250|1|4|15|8|d|0||What was said through the prophet Isaiah?|"Land of Zebulun and land of Naphtali, the way to the sea, along the Jordan, Galilee of the Gentiles-- ." (cf 8:17, 12:17)||0
+251|1|4|15|1|a|0||The land of Zebulun and the land of what?|Naphtali.||0
+252|1|4|16|1|a|0||Who have seen a great light?|The people dwelling in darkness.||1
+253|1|4|16|1|a|0||A light has dawned on whom?|(Them) Those dwelling in the region and shadow of death.||0
+255|1|4|17|1|c|0||From that time Jesus began to preach, saying what?|"Repent, for the kingdom of heaven is at hand."||0
+256|1|4|17|1|a|0||Repent, for what is at hand?|The kingdom of heaven.|3:2|1
+257|1|4|18|1|c|0||While walking beside what sea, he saw two brothers?|The Sea of Galilee.||0
+258|1|4|18|2|c|0||Who were casting a net into the sea?|Simon called Peter and Andrew his brother.||0
+259|1|4|18|1|c|0||They were casting a net where?|Into the sea [of Galilee].||0
+260|1|4|18|1|b|0||Jesus saw two brothers casting a net into the sea why?|For they were fishermen.||0
+261|1|4|18|2|a|0||Who were fishermen?|(They) Simon (who is called Peter) and Andrew his brother.||0
+262|1|4|18|8|b|0||Jesus saw what two brothers?|Simon (who is called Peter) and Andrew his brother.|4:21|0
+263|1|4|19|9|a|0|Who said it, to whom, where, and what was the response?|"Follow me, and I will make you fishers of men."|(He) Jesus said it, to (them) Simon (who is called Peter) and Andrew his brother, beside the Sea of Galilee. Immediately they left their nets and followed him.||0
+264|1|4|19|1|a|0||I will make you what?|Fishers of men.||0
+265|1|4|20|1|b|0||Immediately Simon and Andrew left what?|Their nets.||0
+266|1|4|20|2|a|0||Who left their nets?|(They) Simon (who is called Peter) and Andrew his brother.||0
+267|1|4|20|8|a|0||Who followed him?|(They) Simon (who is called Peter) and Andrew his brother.||0
+268|1|4|21|1|e|0||Going on from there, he saw what two other brothers?|James the son of Zebedee and John his brother.||0
+269|1|4|21|8|b|0||Jesus saw what two brothers?|(Two other brothers) James son of Zebedee and John his brother.|4:18|0
+270|1|4|21|2|c|0||Who were in the boat with Zebedee their father?|James the son of Zebedee and John his brother.||0
+271|1|4|21|2|c|0||Who were mending their nets?|James the son of Zebedee and John his brother.||0
+272|1|4|22|2|a|0||Immediately who left the boat?|James the son of Zebedee and John his brother.||0
+273|1|4|22|2|a|0||Immediately they left what?|The boat and their father.||0
+274|1|4|22|8|a|0||Who followed Jesus?|James the son of Zebedee and John his brother.||0
+275|1|4|21|7|a|1||And going on|from there he saw two other brothers, James the son of Zebedee and John his brother, in the boat with Zebedee their father, mending their nets, and he called them. Immediately they left the boat and their father and followed him.||0
+276|1|4|23|1|e|0||He went throughout where?|All Galilee.||0
+277|1|4|23|4|a|0||He went throughout all Galilee doing what?|Teaching in their synagogues and proclaiming the gospel of the kingdom and healing every disease and every affliction among the people.||1
+278|1|4|23|2|a|0||He went throughout all Galilee, healing what?|Every disease and every affliction among the people.||0
+279|1|4|23|1|b|0||Jesus went throughout all Galilee, teaching where?|In their synagogues.||0
+280|1|4|23|1|b|0||Jesus went throughout all Galilee, proclaiming what?|The gospel of the kingdom.||0
+281|1|4|24|1|a|0||His fame spread throughout where?|All Syria.||0
+282|1|4|24|6|a|0||They brought him all the what, and he healed them?|The sick, those afflicted with various diseases and pains, those oppressed by demons, those having seizures, and paralytics.||0
+283|1|4|24|8|b|0||He healed whom?|All the sick, those afflicted with various diseases and pains, those oppressed by demons, those having seizures, and paralytics.|12:15; 15:30; 19:2; 21:14|0
+284|1|4|25|8|a|0||Who followed him?|Large crowds from Galilee, the Decapolis, Jerusalem, Judea and the region across the Jordan.||0
+285|1|4|25|5|a|0||Great crowds followed him from where?|From Galilee and the Decapolis, and from Jerusalem and Judea, and from beyond the Jordan.||0
+2001|1|4|2|8|b|0||He was hungry when?|After fasting forty days and forty nights.|12:3|0
+3117|1|2|1|7|a|1||Now after|Jesus was born in Bethlehem of Judea in the days of Herod the king, behold, wise men from the east came to Jerusalem, saying, "Where is he who has been born king of the Jews? For we saw his star when it rose and have come to worship him."||0
+3146|1|4|17|8|a|0||From that time on Jesus began to what?|Preach, saying, "Repent, for the kingdom of heaven is at hand."|16:21|0
+3175|1|1|3|2|e|0||Judah was the father of whom?|Perez and Zerah.||0
+3176|1|1|16|8|a|0||Jacob was the father of whom?|Joseph the husband of Mary.|1:2|0
+3177|1|1|17|1|a|0||All the generations from Abraham to David were how many?|Fourteen (generations).||1
+3178|1|1|18|1|e|0||Before they came together she was found to be what?|With child from the Holy Spirit.||0
+3179|1|1|19|1|a|0||Joseph resolved to what?|Divorce her quietly.||0
+3180|1|1|20|1|e|0||As he considered these things, who appeared to him in a dream?|An angel of the Lord.|2:13|0
+3181|1|1|20|1|a|0||As he considered these things, an angel of the Lord appeared to whom in a dream?|(Him) Joseph.|2:13|0
+3182|1|1|21|1|a|0||He will save his people from what?|Their sins.||0
+3183|1|1|23|1|a|0||Who shall conceive and bear a son?|The virgin.||0
+3184|1|1|25|1|a|0||He knew her not until she had what?|Given birth to a son.||0
+3185|1|1|25|1|c|0||He called his name what?|Jesus.||0
+3186|1|2|1|1|a|0||Wise men from where came to Jerusalem?|The east.||0
+3187|1|2|6|1|a|0||You, O Bethlehem, are by no means least among whom?|The rulers of Judah.||1
+3188|1|2|7|1|e|0||Herod ascertained from them what?|What time the star had appeared.||0
+3189|1|2|7|1|b|0||Who summmoned the wise men secretly?|Herod.||0
+3190|1|2|7|1|b|0||Herod ascertained from the wise men what?|What time the star had appeared.||0
+3191|1|2|7|1|b|0||Who ascertained from the wise men what time the star had appeared?|Herod.||0
+3192|1|2|8|1|a|0||Go and search diligently for whom?|The child (Jesus).||0
+3193|1|2|8|1|a|0||When you have found whom, bring me word?|(Him) The child.||0
+3194|1|2|9|1|e|0||After listening to the king, they what?|Went on their way.||0
+3195|1|2|9|1|a|0||What came to rest over the place where the child was?|(It) The star that they had seen when it rose.||0
+3196|1|2|9|1|a|0||The star that they had seen when it rose went before whom?|(Them) The wise men.||0
+3197|1|2|9|1|a|0||The star that they had seen when it rose came to rest where?|Over the place where the child was.||0
+3198|1|2|10|1|b|0||When they saw the star, they what?|They rejoiced exceedingly with great joy.||0
+3199|1|2|12|1|b|0||The wise men departed to their country how?|By another way.||0
+3200|1|2|12|1|b|0||Being warned in a dream not to return to Herod, the wise men what?|Departed to their own country by another way.||0
+3201|1|1|20|7|d|0||"She|will bear a son, and you shall call his name Jesus, for he will save his people from their sins."||0
+3202|1|2|10|7|b|1||When they saw|the star, they rejoiced exceedingly with great joy. And going into the house, they saw the child with Mary his mother, and they fell down and worshiped him. Then, opening their treasures, they offered him gifts, gold and frankincense and myrrh.||0
+3203|1|2|13|7|a|1||Now when|they had departed, behold, an angel of the Lord appeared to Joseph in a dream and said, "Rise, take the child and his mother, and flee to Egypt, and remain there until I tell you, for Herod is about to search for the child, to destroy him." And he rose and took the child and his mother by night and departed to Egypt.||0
+3204|1|2|16|7|a|0||Then Herod,|when he saw that he had been tricked by the wise men, became furious, and he sent and killed all the male children in Bethlehem and in all that region who were two years old or under, according to the time that he had ascertained from the wise men.||1
+3205|1|2|22|7|a|1||But when he heard|that Archelaus was reigning over Judea in place of his father Herod, he was afraid to go there, and being warned in a dream he withdrew to the district of Galilee. And he went and lived in a city called Nazareth, so that what was spoken by the prophets might be fulfilled, that he would be called a Nazarene.||0
+3206|1|3|5|7|a|1||Then Jerusalem|and all Judea and all the region about the Jordan were going out to him, and they were baptized by him in the river Jordan, confessing their sins.||0
+3207|1|3|7|7|a|1||But when he saw|many of the Pharisees and Sadducees coming to his baptism, he said to them, "You brood of vipers! Who warned you to flee from the wrath to come? Bear fruit in keeping with repentance."||0
+3208|1|3|10|7|a|0||"Even|now the axe is laid to the root of the trees. Every tree therefore that does not bear good fruit is cut down and thrown into the fire."||0
+3209|1|3|11|7|b|1||"I baptize|you with water for repentance, but he who is coming after me is mightier than I, whose sandals I am not worthy to carry. He will baptize you with the Holy Spirit and fire. His winnowing fork is in his hand, and he will clear his threshing floor and gather his wheat into the barn, but the chaff he will burn with unquenchable fire."||0
+3210|1|4|4|7|c|0||Jesus answered,|"It is written: `Man does not live on bread alone, but on every word that comes from the mouth of God.' "||0
+3211|1|4|8|7|b|2||Again, the devil|took him to a very high mountain and showed him all the kingdoms of the world and their glory. And he said to him, "All these I will give you, if you will fall down and worship me." Then Jesus said to him, "Be gone, Satan! For it is written, `You shall worship the Lord your God and him only shall you serve.' "||0
+3212|1|4|18|7|b|2||While|walking by the Sea of Galilee, he saw two brothers, Simon (who is called Peter) and Andrew his brother, casting a net into the sea, for they were fishermen. And he said to them, "Follow me, and I will make you fishers of men." Immediately they left their nets and followed him.||0
+3213|1|4|23|7|c|0||Jesus went|throughout Galilee, teaching in their synagogues, preaching the good news of the kingdom, and healing every disease and sickness among the people.||0
+3214|1|4|24|7|a|0||So his|fame spread throughout all Syria, and they brought him all the sick, those afflicted with various diseases and pains, those oppressed by demons, those having seizures, and paralytics, and he healed them.||0
+3252|1|2|15|1|b|0||Joseph remained where until the death of Herod?|(There) Egypt.||0
+3253|1|2|16|1|b|0||Who sent and killed all the male children in Bethlehem and in all that region who were two years old or under?|(He) Herod.||0
+3254|1|2|20|1|a|0||Those who sought the child's life are what?|Dead.||0
+3255|1|2|22|1|b|0||Joseph was afraid to go where?|(There) Judea.||0
+3256|1|2|22|1|b|0||Being warned in a dream, who withdrew to the district of Galilee?|(He) Joseph.||1
+3257|1|2|23|1|b|0||Joseph went and lived in a city called what?|Nazareth.||1
+3258|1|3|2|1|a|0||Repent, for the kingdom of heaven is where?|At hand.|4:17|0
+3259|1|3|3|1|a|0||Make whose paths straight?|(His) The Lord's.||0
+3260|1|3|4|1|a|0||Who wore a garment of camel's hair?|John [the Baptist].||0
+3261|1|3|5|3|a|1||Who were baptized by him in the river Jordan?|(They) Jerusalem and all Judea and all the region about the Jordan.||1
+3262|1|3|6|1|b|0||They were baptized by John where?|In the river Jordan.||0
+3263|1|3|10|1|a|0||Even now what is laid to the root of the trees?|The axe.||0
+3264|1|3|13|1|b|0||Jesus came from Galilee to the Jordan to whom, to be baptized by him?|John.||0
+3265|1|4|2|1|b|0||After fasting forty days and forty nights, he was what?|Hungry.||0
+3266|1|4|2|1|e|0||After fasting forty days and forty nights, who was hungry?|(He) Jesus.||0
+3267|1|4|3|1|e|0||The tempter came and said to him what?|"If you are the Son of God, command these stones to become loaves of bread."||0
+3268|1|4|2|9|a|2|Who said it, to whom, when, and in reply to what?|"It is written: `Man shall not live by bread alone, but by every word that comes from the mouth of God.' "|Jesus said it, to the tempter [the devil], after fasting forty days and forty nights, in reply to, "If you are the Son of God, tell these stones to become bread."|21:13|1
+3269|1|4|5|9|b|2|Who said it, to whom, where, and what was the reply?|"If you are the Son of God, throw yourself down, for it is written, `He will command his angels concerning you,' "|The devil said it, to Jesus, on the pinnacle of the temple. Jesus said to him, "Again it is written, `You shall not put the Lord your God to the test.' "|4:3|0
+3270|1|4|6|1|a|0||On their hands they will bear you up, lest you what?|Strike your foot against a stone.||0
+3271|1|4|8|9|a|2|Who said it, to whom, where, and in reply to what?|"Be gone, Satan! For it is written: `You shall worship the Lord your God and him only shall you serve.' "|Jesus said it, to the devil, on a very high mountain, in reply to, "All these I will give you, if you will fall down and worship me."||0
+3272|1|4|11|1|b|0||Who came and were ministering to Jesus?|Angels.||0
+3273|1|4|11|8|b|0||Who left him?|The devil.|22:22; 26:56|0
+3274|1|4|13|1|e|0||Leaving Nazareth who went and lived in Capernaum?|(He) Jesus.||0
+3275|1|4|14|8|b|0||What might be fulfilled?|What was spoken by the prophet Isaiah.|2:23; 26:56|0
+3276|1|4|16|1|a|0||The people dwelling in darkness have seen what?|A great light.||0
+3277|1|4|15|1|a|0||The way of the sea, beyond what?|The Jordan.||0
+3278|1|4|16|2|e|0||For those dwelling where, on them a light has dawned?|In the region and shadow of death.||0
+3279|1|4|18|2|e|0||While walking beside the Sea of Galilee, he saw what two brothers?|Simon (who is called Peter) and Andrew his brother.||0
+3280|1|4|18|1|c|0||While walking beside the Sea of Galilee, he saw two brothers doing what?|Casting a net into the sea.||0
+3281|1|4|21|1|b|0||Jesus saw two other brothers in the boat with whom?|Zebedee their father.||1
+3282|1|4|21|1|b|0||Jesus saw two other brothers mending what?|Their nets.||0
+3283|1|4|20|8|b|0||Immediately they left what?|Their nets.|4:22|0
+3284|1|4|22|8|b|0||Immediately they left what?|The boat and their father.|4:20|0
+3285|1|4|22|2|c|0||Immediately James and John left what?|The boat and their father.||0
+3343|1|2|11|7|b|0||And going into|the house, they saw the child with Mary his mother, and they fell down and worshiped him. Then, opening their treasures, they offered him gifts, gold and frankincense and myrrh.||0
