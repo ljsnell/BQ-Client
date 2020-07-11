@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import Identicon from 'react-identicons';
 import {
   Navbar,
   NavbarBrand,
-  UncontrolledTooltip,
   Button
 } from 'reactstrap';
-import Editor from 'react-medium-editor';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
