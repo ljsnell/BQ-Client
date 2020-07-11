@@ -57,39 +57,9 @@ current content of the editor to the server. */
       });
     };
   }
-  
-  componentWillUnmount() {
-    clearInterval(this.myInterval)
-  }
-
-  showEditorSection = () => (
-    <div className="main-content">
-      <div className="document-holder">
-        <div className="currentusers">
-          {this.state.currentUsers.map(user => (
-            <React.Fragment>
-              <span id={user.username} className="userInfo" key={user.username}>
-                <Identicon className="account__avatar" style={{ backgroundColor: user.randomcolor }} size={40} string={user.username} />
-              </span>
-              <UncontrolledTooltip placement="top" target={user.username}>
-                {user.username}
-              </UncontrolledTooltip>
-            </React.Fragment>
-          ))}
-        </div>
-        <Editor          
-          className="body-editor"
-          text={this.state.text}
-          onChange={this.onEditorStateChange}
-          />
-      </div>
-      <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
-    </div>
-  )
-  
+    
   i = 0
-  startQuiz() {    
-    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
+  startQuiz() {
     var {
       q_text_to_display
     } = this.state
@@ -121,6 +91,14 @@ current content of the editor to the server. */
       )
     }
 
+  showQuizzerSection = () => {
+    return (
+      <div className="quizzer-section">
+        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
+      </div>
+    )
+  }
+
   render() {
     const {
       q_text_to_display
@@ -135,9 +113,10 @@ current content of the editor to the server. */
           <h1>Question: { q_text_to_display }</h1>
         </div>
         <div className="container-fluid">
-          {this.showEditorSection()}
           <br></br>
           {this.showQuizMasterSection()}
+          <br></br>
+          {this.showQuizzerSection()}
         </div>
       </React.Fragment>
     );
