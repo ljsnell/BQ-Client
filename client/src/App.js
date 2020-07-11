@@ -82,19 +82,18 @@ current content of the editor to the server. */
           text={this.state.text}
           onChange={this.onEditorStateChange}
           />
-      </div>      
+      </div>
       <Button variant="secondary">Jump</Button>{' '}
     </div>
   )
   
   i = 0
-  bonusQuestion() {
+  bonusQuestion() {    
     // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
     var {
       q_text_to_display
     } = this.state
     this.question_array = this.full_question_test.split(" ")
-    
     if (this.i < this.question_array.length) {
         q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
         this.setState({ q_text_to_display: q_text_to_display })
@@ -103,10 +102,19 @@ current content of the editor to the server. */
       }
   }
 
+  jump() {
+    console.log('in jump')
+  }
+
+  nextQuestion() {
+    this.i = 0
+    this.setState({q_text_to_display: " "})
+  }
+
   showQuizMasterSection = () => {    
       return (
         <div className="main-content">
-          <Button variant="secondary">Next Question</Button>{' '}
+          <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.bonusQuestion(),1000)} variant="secondary">Bonus Question</Button>{' '}
         </div>
       )
