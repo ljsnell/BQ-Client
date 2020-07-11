@@ -13,7 +13,6 @@ import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
-const contentDefaultMessage = "Start writing your document here";
 
 class App extends Component {
   constructor(props) {
@@ -22,30 +21,17 @@ class App extends Component {
       currentUsers: [],
       userActivity: [],
       username: null,
-      text: ''
+      text: '',
+      q_text_to_display: ""
     };
   }
-
-  logInUser = () => {
-    const username = this.username.value;
-    if (username.trim()) {
-      const data = {
-        username
-      };
-      this.setState({
-        ...data
-      }, () => {
-        client.send(JSON.stringify({
-          ...data,
-          type: "userevent"
-        }));
-      });
-    }
-  }
-
+ 
+  full_question_test = "For God so Loved the World"
   /* When content changes, we send the
 current content of the editor to the server. */
  onEditorStateChange = (text) => {
+   console.log('text')
+   console.log(text)
    client.send(JSON.stringify({
      type: "contentchange",
      username: this.state.username,
@@ -63,30 +49,18 @@ current content of the editor to the server. */
      if (dataFromServer.type === "userevent") {
        stateToChange.currentUsers = Object.values(dataFromServer.data.users);
      } else if (dataFromServer.type === "contentchange") {
-       stateToChange.text = dataFromServer.data.editorContent || contentDefaultMessage;
-     }
-     stateToChange.userActivity = dataFromServer.data.userActivity;
-     this.setState({
-       ...stateToChange
-     });
-   };
- }
-
-  showLoginSection = () => (
-    <div className="account">
-      <div className="account__wrapper">
-        <div className="account__card">
-          <div className="account__profile">
-            <Identicon className="account__avatar" size={64} string="randomness" />
-            <p className="account__name">Hello, user!</p>
-            <p className="account__sub">Join to edit the document</p>
-          </div>
-          <input name="username" ref={(input) => { this.username = input; }} className="form-control" />
-          <button type="button" onClick={() => this.logInUser()} className="btn btn-primary account__btn">Join</button>
-        </div>
-      </div>
-    </div>
-  )
+       stateToChange.text = dataFromServer.data.editorContent;
+      }
+      stateToChange.userActivity = dataFromServer.data.userActivity;
+      this.setState({
+        ...stateToChange
+      });
+    };
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.myInterval)
+  }
 
   showEditorSection = () => (
     <div className="main-content">
@@ -103,52 +77,68 @@ current content of the editor to the server. */
             </React.Fragment>
           ))}
         </div>
-        <Editor
-          options={{
-            placeholder: {
-              text: this.state.text ? contentDefaultMessage : ""
-            }
-          }}
+        <Editor          
           className="body-editor"
           text={this.state.text}
           onChange={this.onEditorStateChange}
-        />
+          />
       </div>
-      <div className="history-holder">
-        <ul>
-          {this.state.userActivity.map((activity, index) => <li key={`activity-${index}`}>{activity}</li>)}
-        </ul>
-      </div>
-      <Button variant="secondary">Jump</Button>{' '}      
-    </div>    
+      <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
+    </div>
   )
+  
+  i = 0
+  startQuiz() {    
+    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
+    var {
+      q_text_to_display
+    } = this.state
+    this.question_array = this.full_question_test.split(" ")
+    if (this.i < this.question_array.length) {
+        q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
+        this.setState({ q_text_to_display: q_text_to_display })
+        console.log(q_text_to_display)
+        this.i++
+      }
+  }
 
-  showQuizMasterSection = (username) => {
-    if(username === "quizmaster")
-    {
+  jump() {
+    this.i = this.question_array.length
+    console.log('in jump')
+  }
+
+  nextQuestion() {
+    this.i = 0
+    this.setState({q_text_to_display: " "})
+  }
+
+  showQuizMasterSection = () => {    
       return (
         <div className="main-content">
-          <Button variant="secondary">Next Question</Button>{' '}
+          <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
+          <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
         </div>
       )
-    }    
-  }
+    }
 
   render() {
     const {
-      username
+      q_text_to_display
     } = this.state;
-    console.log(username)
+    
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Real-time document editor</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
         </Navbar>
-        <div className="container-fluid">
-          {username ? this.showEditorSection() : this.showLoginSection()}
-          {this.showQuizMasterSection(username)}
+        <div>
+          <h1>Question: { q_text_to_display }</h1>
         </div>
-        
+        <div className="container-fluid">
+          {this.showEditorSection()}
+          <br></br>
+          {this.showQuizMasterSection()}
+        </div>
       </React.Fragment>
     );
   }
