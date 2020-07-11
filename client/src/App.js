@@ -20,22 +20,20 @@ class App extends Component {
     this.state = {
       currentUsers: [],
       userActivity: [],
-      username: null,
-      text: '',
+      username: 'QuizMaster',
       q_text_to_display: ""
     };
   }
  
   full_question_test = "For God so Loved the World"
+
   /* When content changes, we send the
 current content of the editor to the server. */
- onEditorStateChange = (text) => {
-   console.log('text')
-   console.log(text)
+ sync = (q_text_to_display) => {
    client.send(JSON.stringify({
      type: "contentchange",
      username: this.state.username,
-     content: text
+     content: q_text_to_display
    }));
  };
 
@@ -44,14 +42,13 @@ current content of the editor to the server. */
      console.log('WebSocket Client Connected');
    };
    client.onmessage = (message) => {
-     const dataFromServer = JSON.parse(message.data);
-     const stateToChange = {};
-     if (dataFromServer.type === "userevent") {
-       stateToChange.currentUsers = Object.values(dataFromServer.data.users);
-     } else if (dataFromServer.type === "contentchange") {
-       stateToChange.text = dataFromServer.data.editorContent;
-      }
-      stateToChange.userActivity = dataFromServer.data.userActivity;
+      const dataFromServer = JSON.parse(message.data);
+      const stateToChange = {};
+     console.log('dataFromServer')
+     console.log(dataFromServer)
+      stateToChange.q_text_to_display = dataFromServer.question;
+      
+      // stateToChange.userActivity = dataFromServer.data.userActivity;
       this.setState({
         ...stateToChange
       });
@@ -68,13 +65,13 @@ current content of the editor to the server. */
         q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
         this.setState({ q_text_to_display: q_text_to_display })
         console.log(q_text_to_display)
+        this.sync(q_text_to_display)
         this.i++
       }
   }
 
   jump() {
     this.i = this.question_array.length
-    console.log('in jump')
   }
 
   nextQuestion() {

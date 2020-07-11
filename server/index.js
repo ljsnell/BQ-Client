@@ -44,18 +44,13 @@ wsServer.on('request', function(request) {
   const connection = request.accept(null, request.origin);
   clients[userID] = connection;
   console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(clients));
+  
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       const dataFromClient = JSON.parse(message.utf8Data);
-      const json = { type: dataFromClient.type };
-      if (dataFromClient.type === typesDef.USER_EVENT) {
-        users[userID] = dataFromClient;
-        userActivity.push(`${dataFromClient.username} joined to edit the document`);
-        json.data = { users, userActivity };
-      } else if (dataFromClient.type === typesDef.CONTENT_CHANGE) {
-        editorContent = dataFromClient.content;
-        json.data = { editorContent, userActivity };
-      }
+      question = dataFromClient.content;
+      const json = { question };
+      console.log(json)
       sendMessage(JSON.stringify(json));
     }
   });
