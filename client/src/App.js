@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import Identicon from 'react-identicons';
 import {
   Navbar,
   NavbarBrand,
-  UncontrolledTooltip,
   Button
 } from 'reactstrap';
-import Editor from 'react-medium-editor';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
@@ -20,22 +17,20 @@ class App extends Component {
     this.state = {
       currentUsers: [],
       userActivity: [],
-      username: null,
-      text: '',
+      username: 'QuizMaster',
       q_text_to_display: ""
     };
   }
  
   full_question_test = "For God so Loved the World"
+
   /* When content changes, we send the
 current content of the editor to the server. */
- onEditorStateChange = (text) => {
-   console.log('text')
-   console.log(text)
+ sync = (q_text_to_display) => {
    client.send(JSON.stringify({
      type: "contentchange",
      username: this.state.username,
-     content: text
+     content: q_text_to_display
    }));
  };
 
@@ -44,52 +39,21 @@ current content of the editor to the server. */
      console.log('WebSocket Client Connected');
    };
    client.onmessage = (message) => {
-     const dataFromServer = JSON.parse(message.data);
-     const stateToChange = {};
-     if (dataFromServer.type === "userevent") {
-       stateToChange.currentUsers = Object.values(dataFromServer.data.users);
-     } else if (dataFromServer.type === "contentchange") {
-       stateToChange.text = dataFromServer.data.editorContent;
-      }
-      stateToChange.userActivity = dataFromServer.data.userActivity;
+      const dataFromServer = JSON.parse(message.data);
+      const stateToChange = {};
+     console.log('dataFromServer')
+     console.log(dataFromServer)
+      stateToChange.q_text_to_display = dataFromServer.question;
+      
+      // stateToChange.userActivity = dataFromServer.data.userActivity;
       this.setState({
         ...stateToChange
       });
     };
   }
-  
-  componentWillUnmount() {
-    clearInterval(this.myInterval)
-  }
-
-  showEditorSection = () => (
-    <div className="main-content">
-      <div className="document-holder">
-        <div className="currentusers">
-          {this.state.currentUsers.map(user => (
-            <React.Fragment>
-              <span id={user.username} className="userInfo" key={user.username}>
-                <Identicon className="account__avatar" style={{ backgroundColor: user.randomcolor }} size={40} string={user.username} />
-              </span>
-              <UncontrolledTooltip placement="top" target={user.username}>
-                {user.username}
-              </UncontrolledTooltip>
-            </React.Fragment>
-          ))}
-        </div>
-        <Editor          
-          className="body-editor"
-          text={this.state.text}
-          onChange={this.onEditorStateChange}
-          />
-      </div>
-      <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
-    </div>
-  )
-  
+    
   i = 0
-  startQuiz() {    
-    // https://medium.com/better-programming/building-a-simple-countdown-timer-with-react-4ca32763dda7
+  startQuiz() {
     var {
       q_text_to_display
     } = this.state
@@ -98,13 +62,13 @@ current content of the editor to the server. */
         q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
         this.setState({ q_text_to_display: q_text_to_display })
         console.log(q_text_to_display)
+        this.sync(q_text_to_display)
         this.i++
       }
   }
 
   jump() {
     this.i = this.question_array.length
-    console.log('in jump')
   }
 
   nextQuestion() {
@@ -121,6 +85,14 @@ current content of the editor to the server. */
       )
     }
 
+  showQuizzerSection = () => {
+    return (
+      <div className="quizzer-section">
+        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
+      </div>
+    )
+  }
+
   render() {
     const {
       q_text_to_display
@@ -135,9 +107,10 @@ current content of the editor to the server. */
           <h1>Question: { q_text_to_display }</h1>
         </div>
         <div className="container-fluid">
-          {this.showEditorSection()}
           <br></br>
           {this.showQuizMasterSection()}
+          <br></br>
+          {this.showQuizzerSection()}
         </div>
       </React.Fragment>
     );
