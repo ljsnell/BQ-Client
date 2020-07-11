@@ -57,8 +57,7 @@ wsServer.on('request', function(request) {
   // user disconnected
   connection.on('close', function(connection) {
     console.log((new Date()) + " Peer " + userID + " disconnected.");
-    const json = { type: typesDef.USER_EVENT };
-    userActivity.push(`${users[userID].username} left the document`);
+    const json = { type: typesDef.USER_EVENT };    
     json.data = { users, userActivity };
     delete clients[userID];
     delete users[userID];
