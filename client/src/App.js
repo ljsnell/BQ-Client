@@ -119,6 +119,10 @@ current content of the editor to the server. */
           <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
         </Navbar>
         <div>
+          <label for="username">User name:</label>
+          <input type="text" id="username" name="user_name"></input>
+        </div>
+        <div>
           <h1>Question: { q_text_to_display }</h1>
         </div>
         <div className="container-fluid">
