@@ -18,7 +18,8 @@ class App extends Component {
       currentUsers: [],
       userActivity: [],
       username: 'QuizMaster',
-      q_text_to_display: ""
+      q_text_to_display: "",
+      i: 0
     };
   }
  
@@ -62,24 +63,23 @@ current content of the editor to the server. */
       });
     };
   }
-    
-  i = 0
+
   startQuiz() {
     var {
-      q_text_to_display
+      q_text_to_display,
+      i
     } = this.state
+
     this.question_array = this.full_question_test.split(" ")
-    if (this.i < this.question_array.length) {
-        q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
-        this.setState({ q_text_to_display: q_text_to_display, i: this.i })
-        console.log(q_text_to_display)        
+    if (i < this.question_array.length) {
+        q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
+        i++
+        this.setState({ q_text_to_display: q_text_to_display, i: i })
         this.sync(q_text_to_display)
-        this.i++
       }
   }
 
   jump() {
-    // Need to sync the i value too.
     this.question_array = this.full_question_test.split(" ")
     this.i = this.question_array.length
     this.syncJump(this.i)
@@ -88,6 +88,7 @@ current content of the editor to the server. */
   nextQuestion() {
     this.i = 0
     this.setState({q_text_to_display: " "})
+    this.setState({i:this.i})
   }
 
   showQuizMasterSection = () => {    
