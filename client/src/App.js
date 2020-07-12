@@ -18,7 +18,8 @@ class App extends Component {
       currentUsers: [],
       userActivity: [],
       username: 'QuizMaster',
-      q_text_to_display: ""
+      q_text_to_display: "",
+      i: 0
     };
   }
  
@@ -34,6 +35,14 @@ current content of the editor to the server. */
    }));
  };
 
+ syncJump = (i) => {
+  client.send(JSON.stringify({
+    type: "jump",
+    username: this.state.username,
+    i: i
+  }));
+};
+
  componentWillMount() {
    client.onopen = () => {
      console.log('WebSocket Client Connected');
@@ -41,39 +50,45 @@ current content of the editor to the server. */
    client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       const stateToChange = {};
-     console.log('dataFromServer')
-     console.log(dataFromServer)
-      stateToChange.q_text_to_display = dataFromServer.question;
+
+      if (dataFromServer.type === 'contentchange') {
+        stateToChange.q_text_to_display = dataFromServer.question;
+      }
+      if (dataFromServer.type === 'jump') {
+        stateToChange.i = dataFromServer.i;        
+      }
       
-      // stateToChange.userActivity = dataFromServer.data.userActivity;
       this.setState({
         ...stateToChange
       });
     };
   }
-    
-  i = 0
+
   startQuiz() {
     var {
-      q_text_to_display
+      q_text_to_display,
+      i
     } = this.state
+
     this.question_array = this.full_question_test.split(" ")
-    if (this.i < this.question_array.length) {
-        q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
-        this.setState({ q_text_to_display: q_text_to_display })
-        console.log(q_text_to_display)
+    if (i < this.question_array.length) {
+        q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
+        i++
+        this.setState({ q_text_to_display: q_text_to_display, i: i })
         this.sync(q_text_to_display)
-        this.i++
       }
   }
 
   jump() {
+    this.question_array = this.full_question_test.split(" ")
     this.i = this.question_array.length
+    this.syncJump(this.i)
   }
 
   nextQuestion() {
     this.i = 0
     this.setState({q_text_to_display: " "})
+    this.setState({i:this.i})
   }
 
   showQuizMasterSection = () => {    
