@@ -49,7 +49,10 @@ wsServer.on('request', function(request) {
     if (message.type === 'utf8') {
       const dataFromClient = JSON.parse(message.utf8Data);
       question = dataFromClient.content;
-      const json = { question };
+      i = dataFromClient.i
+      console.log('i')
+      console.log(i)
+      const json = { question, i };
       console.log(json)
       sendMessage(JSON.stringify(json));
     }

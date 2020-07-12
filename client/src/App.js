@@ -30,7 +30,8 @@ current content of the editor to the server. */
    client.send(JSON.stringify({
      type: "contentchange",
      username: this.state.username,
-     content: q_text_to_display
+     content: q_text_to_display,
+     i: this.i
    }));
  };
 
@@ -61,13 +62,15 @@ current content of the editor to the server. */
     if (this.i < this.question_array.length) {
         q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
         this.setState({ q_text_to_display: q_text_to_display })
-        console.log(q_text_to_display)
+        console.log(q_text_to_display)        
         this.sync(q_text_to_display)
         this.i++
       }
   }
 
   jump() {
+    // Need to sync the i value too.
+    this.question_array = this.full_question_test.split(" ")
     this.i = this.question_array.length
   }
 
