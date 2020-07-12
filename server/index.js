@@ -33,7 +33,7 @@ const sendMessage = (json) => {
 }
 
 const typesDef = {
-  USER_EVENT: "userevent",
+  JUMP: "jump",
   CONTENT_CHANGE: "contentchange"
 }
 
@@ -48,15 +48,23 @@ wsServer.on('request', function(request) {
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       const dataFromClient = JSON.parse(message.utf8Data);
-      question = dataFromClient.content;
-      i = dataFromClient.i
-      console.log('i')
-      console.log(i)
-      const json = { question, i };
-      console.log(json)
-      sendMessage(JSON.stringify(json));
+      if (dataFromClient.type === typesDef.CONTENT_CHANGE) {
+        question = dataFromClient.content;        
+        const json = { question, type: typesDef.CONTENT_CHANGE }
+        console.log(json)
+        sendMessage(JSON.stringify(json));
+      }
+      else if (dataFromClient.type === typesDef.JUMP) {
+        i = dataFromClient.i
+        console.log('i')
+        console.log(i)
+        i = dataFromClient.i
+        const json = { i, type: typesDef.JUMP }
+        sendMessage(JSON.stringify(json));
+      }      
     }
   });
+
   // user disconnected
   connection.on('close', function(connection) {
     console.log((new Date()) + " Peer " + userID + " disconnected.");

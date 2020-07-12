@@ -30,10 +30,17 @@ current content of the editor to the server. */
    client.send(JSON.stringify({
      type: "contentchange",
      username: this.state.username,
-     content: q_text_to_display,
-     i: this.i
+     content: q_text_to_display
    }));
  };
+
+ syncJump = (i) => {
+  client.send(JSON.stringify({
+    type: "jump",
+    username: this.state.username,
+    i: i
+  }));
+};
 
  componentWillMount() {
    client.onopen = () => {
@@ -42,11 +49,14 @@ current content of the editor to the server. */
    client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       const stateToChange = {};
-     console.log('dataFromServer')
-     console.log(dataFromServer)
-      stateToChange.q_text_to_display = dataFromServer.question;
+
+      if (dataFromServer.type === 'contentchange') {
+        stateToChange.q_text_to_display = dataFromServer.question;
+      }
+      if (dataFromServer.type === 'jump') {
+        stateToChange.i = dataFromServer.i;        
+      }
       
-      // stateToChange.userActivity = dataFromServer.data.userActivity;
       this.setState({
         ...stateToChange
       });
@@ -61,7 +71,7 @@ current content of the editor to the server. */
     this.question_array = this.full_question_test.split(" ")
     if (this.i < this.question_array.length) {
         q_text_to_display = q_text_to_display.concat(this.question_array[this.i]).concat(' ')
-        this.setState({ q_text_to_display: q_text_to_display })
+        this.setState({ q_text_to_display: q_text_to_display, i: this.i })
         console.log(q_text_to_display)        
         this.sync(q_text_to_display)
         this.i++
@@ -72,6 +82,7 @@ current content of the editor to the server. */
     // Need to sync the i value too.
     this.question_array = this.full_question_test.split(" ")
     this.i = this.question_array.length
+    this.syncJump(this.i)
   }
 
   nextQuestion() {
