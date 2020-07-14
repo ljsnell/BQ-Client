@@ -108,19 +108,28 @@ current content of the editor to the server. */
     )
   }
 
+  handleChange(event) {
+    console.log('event')
+    console.log(event.target.value)
+    // this.setState({ q_text_to_display: q_text_to_display, i: i })
+    this.setState({username: event.target.value});
+  }
+
+  //https://reactjs.org/docs/forms.html
   render() {
     const {
-      q_text_to_display
+      q_text_to_display,
+      username
     } = this.state;
-    
+
     return (
       <React.Fragment>
         <Navbar color="light" light>
           <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
         </Navbar>
         <div>
-          <label for="username">User name:</label>
-          <input type="text" id="username" name="user_name"></input>
+          User Name:          
+          <input value={this.state.username} onChange={evt =>this.handleChange(evt)} />
         </div>
         <div>
           <h1>Question: { q_text_to_display }</h1>
@@ -130,6 +139,9 @@ current content of the editor to the server. */
           {this.showQuizMasterSection()}
           <br></br>
           {this.showQuizzerSection()}
+        </div>
+        <div>
+          <h3>{username}</h3>
         </div>
       </React.Fragment>
     );
