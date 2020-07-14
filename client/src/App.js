@@ -116,8 +116,7 @@ current content of the editor to the server. */
 
   render() {
     const {
-      q_text_to_display,
-      username
+      q_text_to_display
     } = this.state;
 
     return (
