@@ -48,15 +48,15 @@ wsServer.on('request', function(request) {
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       const dataFromClient = JSON.parse(message.utf8Data);
+      username = dataFromClient.username
       if (dataFromClient.type === typesDef.CONTENT_CHANGE) {
         question = dataFromClient.content;        
-        const json = { question, type: typesDef.CONTENT_CHANGE }
+        const json = { question, type: typesDef.CONTENT_CHANGE, username: username }
         console.log(json)
         sendMessage(JSON.stringify(json));
       }
       else if (dataFromClient.type === typesDef.JUMP) {
         i = dataFromClient.i
-        username = dataFromClient.username
         const json = { i, type: typesDef.JUMP, username: username }
         sendMessage(JSON.stringify(json));
       }      

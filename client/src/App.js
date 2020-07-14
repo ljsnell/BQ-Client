@@ -50,13 +50,13 @@ current content of the editor to the server. */
    client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       const stateToChange = {};
+      stateToChange.jumper = dataFromServer.username
 
       if (dataFromServer.type === 'contentchange') {
-        stateToChange.q_text_to_display = dataFromServer.question;
+        stateToChange.q_text_to_display = dataFromServer.question
       }
       if (dataFromServer.type === 'jump') {
-        stateToChange.i = dataFromServer.i;
-        stateToChange.jumper = dataFromServer.username
+        stateToChange.i = dataFromServer.i;        
       }
       
       this.setState({
