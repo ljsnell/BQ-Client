@@ -56,10 +56,8 @@ wsServer.on('request', function(request) {
       }
       else if (dataFromClient.type === typesDef.JUMP) {
         i = dataFromClient.i
-        console.log('i')
-        console.log(i)
-        i = dataFromClient.i
-        const json = { i, type: typesDef.JUMP }
+        username = dataFromClient.username
+        const json = { i, type: typesDef.JUMP, username: username }
         sendMessage(JSON.stringify(json));
       }      
     }
