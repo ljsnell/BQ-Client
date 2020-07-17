@@ -17,7 +17,8 @@ class App extends Component {
     this.state = {
       currentUsers: [],
       userActivity: [],
-      username: 'QuizMaster',
+      username: '',
+      jumper: '',
       q_text_to_display: "",
       i: 0
     };
@@ -29,8 +30,7 @@ class App extends Component {
 current content of the editor to the server. */
  sync = (q_text_to_display) => {
    client.send(JSON.stringify({
-     type: "contentchange",
-     username: this.state.username,
+     type: "contentchange",     
      content: q_text_to_display
    }));
  };
@@ -50,9 +50,10 @@ current content of the editor to the server. */
    client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
       const stateToChange = {};
+      stateToChange.jumper = dataFromServer.username
 
       if (dataFromServer.type === 'contentchange') {
-        stateToChange.q_text_to_display = dataFromServer.question;
+        stateToChange.q_text_to_display = dataFromServer.question
       }
       if (dataFromServer.type === 'jump') {
         stateToChange.i = dataFromServer.i;        
@@ -81,6 +82,7 @@ current content of the editor to the server. */
 
   jump() {
     this.question_array = this.full_question_test.split(" ")
+    this.setState({username: this.state.username})
     this.i = this.question_array.length
     this.syncJump(this.i)
   }
@@ -108,16 +110,24 @@ current content of the editor to the server. */
     )
   }
 
+  handleChange(event) {
+    this.setState({username: event.target.value});
+  }
+
   render() {
     const {
       q_text_to_display
     } = this.state;
-    
+
     return (
       <React.Fragment>
         <Navbar color="light" light>
           <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
         </Navbar>
+        <div>
+          User Name:
+          <input onChange={evt =>this.handleChange(evt)} />
+        </div>
         <div>
           <h1>Question: { q_text_to_display }</h1>
         </div>
@@ -126,6 +136,9 @@ current content of the editor to the server. */
           {this.showQuizMasterSection()}
           <br></br>
           {this.showQuizzerSection()}
+        </div>
+        <div>
+          <h3>Current Jumper: {this.state.jumper}</h3>
         </div>
       </React.Fragment>
     );
