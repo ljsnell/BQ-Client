@@ -20,18 +20,23 @@ class App extends Component {
       username: '',
       jumper: '',
       q_text_to_display: "",
-      i: 0
+      i: 0,
+      full_question_text: "Welcome to the quiz!"
     };
   }
- 
-  full_question_test = "For God so Loved the World"
+
+  questionNumber = 0
+  questionIDs = [1, 2, 3]
+  bonusQuestionIDs = [4, 5, 6]
+  // Call api to get text
 
   /* When content changes, we send the
 current content of the editor to the server. */
- sync = (q_text_to_display) => {
+ sync = (q_text_to_display, full_question_text) => {
    client.send(JSON.stringify({
      type: "contentchange",     
-     content: q_text_to_display
+     content: q_text_to_display,
+     full_question_text: full_question_text
    }));
  };
 
@@ -54,6 +59,7 @@ current content of the editor to the server. */
 
       if (dataFromServer.type === 'contentchange') {
         stateToChange.q_text_to_display = dataFromServer.question
+        stateToChange.full_question_text = dataFromServer.full_question_text
       }
       if (dataFromServer.type === 'jump') {
         stateToChange.i = dataFromServer.i;        
@@ -68,29 +74,44 @@ current content of the editor to the server. */
   startQuiz() {
     var {
       q_text_to_display,
-      i
+      i,
+      full_question_text
     } = this.state
 
-    this.question_array = this.full_question_test.split(" ")
+    this.question_array = full_question_text.split(" ")
     if (i < this.question_array.length) {
         q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
         i++
         this.setState({ q_text_to_display: q_text_to_display, i: i })
-        this.sync(q_text_to_display)
+        this.setState({full_question_text: full_question_text})
+        console.log('full question test:')
+        console.log(full_question_text)
+        this.sync(q_text_to_display, full_question_text)
       }
   }
 
   jump() {
-    this.question_array = this.full_question_test.split(" ")
+    var {
+      full_question_text
+    } = this.state
+    this.question_array = full_question_text.split(" ")
     this.setState({username: this.state.username})
     this.i = this.question_array.length
     this.syncJump(this.i)
   }
 
   nextQuestion() {
+    console.log('inside next question')
+    // Need to sync full_question_text accross all sessions
+    fetch('http://localhost:5000/question_by_id/?QID=1')
+      .then(res => res.json()).then((data) => {
+        this.setState({full_question_text: data})        
+      });
+    console.log('after api call')
     this.i = 0
     this.setState({q_text_to_display: " "})
     this.setState({i:this.i})
+    console.log(this.full_question_text)
   }
 
   showQuizMasterSection = () => {    

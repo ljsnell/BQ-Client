@@ -50,8 +50,9 @@ wsServer.on('request', function(request) {
       const dataFromClient = JSON.parse(message.utf8Data);
       username = dataFromClient.username
       if (dataFromClient.type === typesDef.CONTENT_CHANGE) {
-        question = dataFromClient.content;        
-        const json = { question, type: typesDef.CONTENT_CHANGE, username: username }
+        question = dataFromClient.content;
+        full_question_text = dataFromClient.full_question_text;   
+        const json = { question, type: typesDef.CONTENT_CHANGE, full_question_text }
         console.log(json)
         sendMessage(JSON.stringify(json));
       }
