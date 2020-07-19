@@ -24,11 +24,13 @@ class App extends Component {
       full_question_text: "Welcome to the quiz!"
     };
   }
-
+  
   questionNumber = 0
+  bonusQuestionNumber = 0
+
   questionIDs = [1, 2, 3]
   bonusQuestionIDs = [4, 5, 6]
-  // Call api to get text
+  
 
   /* When content changes, we send the
 current content of the editor to the server. */
@@ -84,8 +86,6 @@ current content of the editor to the server. */
         i++
         this.setState({ q_text_to_display: q_text_to_display, i: i })
         this.setState({full_question_text: full_question_text})
-        console.log('full question test:')
-        console.log(full_question_text)
         this.sync(q_text_to_display, full_question_text)
       }
   }
@@ -101,17 +101,17 @@ current content of the editor to the server. */
   }
 
   nextQuestion() {
-    console.log('inside next question')
-    // Need to sync full_question_text accross all sessions
-    fetch('http://localhost:5000/question_by_id/?QID=1')
+    var questionID = this.questionIDs[this.questionNumber]
+    console.log('questionID')
+    console.log(questionID)
+    fetch('http://localhost:5000/question_by_id/?QID='+questionID)
       .then(res => res.json()).then((data) => {
         this.setState({full_question_text: data})        
       });
-    console.log('after api call')
     this.i = 0
     this.setState({q_text_to_display: " "})
     this.setState({i:this.i})
-    console.log(this.full_question_text)
+    this.questionNumber++
   }
 
   showQuizMasterSection = () => {    
