@@ -28,7 +28,7 @@ class App extends Component {
   questionNumber = 0
   bonusQuestionNumber = 0
 
-  questionIDs = [1, 2, 3]
+  questionIDs = [166, 3204, 277, 5]
   bonusQuestionIDs = [4, 5, 6]
   
 
@@ -101,13 +101,17 @@ current content of the editor to the server. */
   }
 
   nextQuestion() {
-    var questionID = this.questionIDs[this.questionNumber]
-    console.log('questionID')
-    console.log(questionID)
-    fetch('http://localhost:5000/question_by_id/?QID='+questionID)
-      .then(res => res.json()).then((data) => {
-        this.setState({full_question_text: data})        
-      });
+    if(this.questionNumber < this.questionIDs.length) {
+      var questionID = this.questionIDs[this.questionNumber]
+      console.log('questionID')
+      console.log(questionID)
+      fetch('http://localhost:5000/question_by_id/?QID='+questionID)
+        .then(res => res.json()).then((data) => {
+          this.setState({full_question_text: data})
+        });
+    } else {
+      this.setState({full_question_text: "*** End of the quiz! ***"})
+    }
     this.i = 0
     this.setState({q_text_to_display: " "})
     this.setState({i:this.i})
