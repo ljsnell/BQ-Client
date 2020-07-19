@@ -21,7 +21,7 @@ class App extends Component {
       jumper: '',
       q_text_to_display: "",
       i: 0,
-      full_question_text: "Welcome to the quiz!"
+      full_question_text: "*** Welcome to the quiz! ***"
     };
   }
   
@@ -118,7 +118,11 @@ current content of the editor to the server. */
     this.questionNumber++
   }
 
-  showQuizMasterSection = () => {    
+  showQuizMasterSection = () => {
+    console.log('in show quizmaster section')
+    var { username} = this.state
+    console.log(username)
+    if(username === 'quizmaster') {
       return (
         <div className="main-content">
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
@@ -126,6 +130,7 @@ current content of the editor to the server. */
         </div>
       )
     }
+  }
 
   showQuizzerSection = () => {
     return (
@@ -137,6 +142,7 @@ current content of the editor to the server. */
 
   handleChange(event) {
     this.setState({username: event.target.value});
+    this.showQuizMasterSection()
   }
 
   render() {
