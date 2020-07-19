@@ -23,8 +23,12 @@ class App extends Component {
       i: 0
     };
   }
- 
-  full_question_test = "For God so Loved the World"
+
+  questionNumber = 0
+  questionIDs = [1, 2, 3]
+  bonusQuestionIDs = [4, 5, 6]
+  // Call api to get text  
+  full_question_text = " "
 
   /* When content changes, we send the
 current content of the editor to the server. */
@@ -71,7 +75,7 @@ current content of the editor to the server. */
       i
     } = this.state
 
-    this.question_array = this.full_question_test.split(" ")
+    this.question_array = this.full_question_text.split(" ")
     if (i < this.question_array.length) {
         q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
         i++
@@ -81,7 +85,7 @@ current content of the editor to the server. */
   }
 
   jump() {
-    this.question_array = this.full_question_test.split(" ")
+    this.question_array = this.full_question_text.split(" ")
     this.setState({username: this.state.username})
     this.i = this.question_array.length
     this.syncJump(this.i)
@@ -91,6 +95,13 @@ current content of the editor to the server. */
     this.i = 0
     this.setState({q_text_to_display: " "})
     this.setState({i:this.i})
+    console.log('inside next question')
+    fetch('http://localhost:5000/question_by_id/?QID=1')
+      .then(res => res.json()).then((data) => {
+        this.full_question_text = data
+      })
+    console.log('after api call')
+    console.log(this.full_question_text)
   }
 
   showQuizMasterSection = () => {    
