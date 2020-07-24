@@ -8,7 +8,9 @@ import {
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
-
+// https://cloud.google.com/community/tutorials/deploy-react-nginx-cloud-run
+// Deploy command gcloud  beta run deploy --image gcr.io/promising-lamp-284223/cra-cloud-run --platform managed
+// https://stackoverflow.com/questions/40940420/can-a-web-browser-client-connect-directly-to-a-remote-websocket-server
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 class App extends Component {
@@ -27,11 +29,11 @@ class App extends Component {
   
   questionNumber = 0
   bonusQuestionNumber = 0
-
-  questionIDs = [166, 3204, 277, 5]
+  // Read from .dat files.
+  questionIDs = [166, 5]
   bonusQuestionIDs = [4, 5, 6]
   
-
+// Bonus question button.
   /* When content changes, we send the
 current content of the editor to the server. */
  sync = (q_text_to_display, full_question_text) => {
@@ -105,7 +107,7 @@ current content of the editor to the server. */
       var questionID = this.questionIDs[this.questionNumber]
       console.log('questionID')
       console.log(questionID)
-      fetch('http://localhost:5000/question_by_id/?QID='+questionID)
+      fetch('https://bq-questions-api.uc.r.appspot.com/?QID='+questionID)
         .then(res => res.json()).then((data) => {
           this.setState({full_question_text: data})
         });
