@@ -1,0 +1,26 @@
+{
+  "name": "connect4",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd server && node index.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run-script server\" \"npm run-script client\""
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "global": "^4.3.2",
+    "nodemon": "^1.17.3",
+    "react-scripts": "^3.4.1",
+    "socket.io": "^2.1.0",
+    "medium-editor": "^5.23.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-identicons": "^1.1.7",
+    "react-medium-editor": "^1.8.1",
+    "reactstrap": "^8.0.0",
+    "websocket": "^1.0.28"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  }
+}
