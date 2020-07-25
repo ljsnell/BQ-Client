@@ -4,7 +4,8 @@
   "scripts": {
     "client": "cd client && npm start",
     "server": "cd server && node index.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run-script server\" \"npm run-script client\""
+    "dev": "concurrently --kill-others-on-fail \"npm run-script server\" \"npm run-script client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run-script client\""
   },
   "dependencies": {
     "express": "^4.16.2",
@@ -18,9 +19,11 @@
     "react-identicons": "^1.1.7",
     "react-medium-editor": "^1.8.1",
     "reactstrap": "^8.0.0",
-    "websocket": "^1.0.28"
+    "websocket": "^1.0.28",
+    "concurrently": "^3.5.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
-  }
+  },
+  "proxy": "http://localhost:8000"
 }
