@@ -1,0 +1,3 @@
+Use first tab to handle quizmaster functions. 
+Click Jump part way through initial welcome.
+Confirm other jump works.
