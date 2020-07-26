@@ -11,7 +11,8 @@ import './App.css';
 // https://cloud.google.com/community/tutorials/deploy-react-nginx-cloud-run
 // Deploy command gcloud  beta run deploy --image gcr.io/promising-lamp-284223/cra-cloud-run --platform managed
 // https://stackoverflow.com/questions/40940420/can-a-web-browser-client-connect-directly-to-a-remote-websocket-server
-const client = new W3CWebSocket('ws://127.0.0.1:8000');
+const client = new W3CWebSocket('wss://mysterious-journey-90036.herokuapp.com');
+// const client = new W3CWebSocket('ws://localhost:8000');
 
 class App extends Component {
   constructor(props) {
@@ -37,6 +38,11 @@ class App extends Component {
   /* When content changes, we send the
 current content of the editor to the server. */
  sync = (q_text_to_display, full_question_text) => {
+   console.log(JSON.stringify({
+    type: "contentchange",     
+    content: q_text_to_display,
+    full_question_text: full_question_text
+    }))
    client.send(JSON.stringify({
      type: "contentchange",     
      content: q_text_to_display,

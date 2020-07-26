@@ -1,5 +1,5 @@
 {
-  "name": "connect4",
+  "name": "client-server",
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && npm start",
