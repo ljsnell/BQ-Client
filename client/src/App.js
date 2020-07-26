@@ -9,8 +9,9 @@ import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 // https://cloud.google.com/community/tutorials/deploy-react-nginx-cloud-run
-// Deploy command gcloud  beta run deploy --image gcr.io/promising-lamp-284223/cra-cloud-run --platform managed
-// https://stackoverflow.com/questions/40940420/can-a-web-browser-client-connect-directly-to-a-remote-websocket-server
+// Deploy commands
+// 1. gcloud config set project promising-lamp-284223
+// 2. gcloud app deploy
 const client = new W3CWebSocket('wss://mysterious-journey-90036.herokuapp.com');
 // const client = new W3CWebSocket('ws://localhost:8000');
 
