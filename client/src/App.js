@@ -61,11 +61,11 @@ current content of the editor to the server. */
 };
 
  componentWillMount() {
-   client.onopen = () => {
-     console.log('WebSocket Client Connected');
-   };
-   client.onmessage = (message) => {
-      const dataFromServer = JSON.parse(message.data);
+   var session = this;
+   client.on('contentchange', function(message) {
+      console.log('in componentWillMount')
+      console.log(message)
+      const dataFromServer = JSON.parse(message);
       const stateToChange = {};
       stateToChange.jumper = dataFromServer.username
 
@@ -77,12 +77,12 @@ current content of the editor to the server. */
         stateToChange.i = dataFromServer.i;        
       }
       
-      this.setState({
+      session.setState({
         ...stateToChange
       });
-    };
-  }
-
+  });
+ }
+ 
   startQuiz() {
     var {
       q_text_to_display,
