@@ -44,8 +44,8 @@ current content of the editor to the server. */
     content: q_text_to_display,
     full_question_text: full_question_text
     }))
-   client.emit('chat message', 'test_msg!')
-   client.emit("contentchange", JSON.stringify({
+   // client.emit('chat message', 'test_msg!')
+   client.emit('contentchange', JSON.stringify({
      type: "contentchange",     
      content: q_text_to_display,
      full_question_text: full_question_text
@@ -53,7 +53,7 @@ current content of the editor to the server. */
  };
 
  syncJump = (i) => {
-  client.emit(JSON.stringify({
+  client.emit('contentchange', JSON.stringify({
     type: "jump",
     username: this.state.username,
     i: i
