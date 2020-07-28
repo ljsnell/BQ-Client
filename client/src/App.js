@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 import {
   Navbar,
   NavbarBrand,
@@ -12,8 +11,9 @@ import './App.css';
 // Deploy commands
 // 1. gcloud config set project promising-lamp-284223
 // 2. gcloud app deploy
-const client = new W3CWebSocket('wss://mysterious-journey-90036.herokuapp.com');
-// const client = new W3CWebSocket('ws://localhost:8000');
+// const client = new W3CWebSocket('wss://mysterious-journey-90036.herokuapp.com');
+const io = require('socket.io-client');
+const client = io.connect('http://127.0.0.1:8000/');
 
 class App extends Component {
   constructor(props) {
@@ -44,7 +44,8 @@ current content of the editor to the server. */
     content: q_text_to_display,
     full_question_text: full_question_text
     }))
-   client.send(JSON.stringify({
+   // client.emit('chat message', 'test_msg!')
+   client.emit('contentchange', JSON.stringify({
      type: "contentchange",     
      content: q_text_to_display,
      full_question_text: full_question_text
@@ -52,7 +53,7 @@ current content of the editor to the server. */
  };
 
  syncJump = (i) => {
-  client.send(JSON.stringify({
+  client.emit('contentchange', JSON.stringify({
     type: "jump",
     username: this.state.username,
     i: i
@@ -60,11 +61,12 @@ current content of the editor to the server. */
 };
 
  componentWillMount() {
-   client.onopen = () => {
-     console.log('WebSocket Client Connected');
-   };
-   client.onmessage = (message) => {
-      const dataFromServer = JSON.parse(message.data);
+   var session = this;
+   // TODO update to just listen on either jump or contentchange
+   client.on('contentchange', function(message) {
+      console.log('in componentWillMount')
+      console.log(message)
+      const dataFromServer = JSON.parse(message);
       const stateToChange = {};
       stateToChange.jumper = dataFromServer.username
 
@@ -76,12 +78,12 @@ current content of the editor to the server. */
         stateToChange.i = dataFromServer.i;        
       }
       
-      this.setState({
+      session.setState({
         ...stateToChange
       });
-    };
-  }
-
+  });
+ }
+ 
   startQuiz() {
     var {
       q_text_to_display,
@@ -128,9 +130,7 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    console.log('in show quizmaster section')
     var { username} = this.state
-    console.log(username)
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
@@ -162,7 +162,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.2</NavbarBrand>
         </Navbar>
         <div>
           User Name:
