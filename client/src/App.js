@@ -11,9 +11,10 @@ import './App.css';
 // Deploy commands
 // 1. gcloud config set project promising-lamp-284223
 // 2. gcloud app deploy
-// const client = new W3CWebSocket('wss://mysterious-journey-90036.herokuapp.com');
+
 const io = require('socket.io-client');
-const client = io.connect('http://127.0.0.1:8000/');
+// const client = io.connect('http://127.0.0.1:8000/');
+const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
   constructor(props) {
@@ -161,7 +162,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz 1.2</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.3</NavbarBrand>
         </Navbar>
         <div>
           User Name:
