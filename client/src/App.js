@@ -62,6 +62,7 @@ current content of the editor to the server. */
 
  componentWillMount() {
    var session = this;
+   // TODO update to just listen on either jump or contentchange
    client.on('contentchange', function(message) {
       console.log('in componentWillMount')
       console.log(message)
@@ -161,7 +162,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz Zone</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.2</NavbarBrand>
         </Navbar>
         <div>
           User Name:
