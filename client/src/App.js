@@ -32,29 +32,23 @@ class App extends Component {
   questionNumber = 0
   bonusQuestionNumber = 0
   // Read from .dat files.
-  questionIDs = [166, 5]
+  // questionIDs = [166, 5]
+                //v
+  questionIDs = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
   bonusQuestionIDs = [4, 5, 6]
   
 // Bonus question button.
   /* When content changes, we send the
 current content of the editor to the server. */
  sync = (q_text_to_display, full_question_text) => {
-   console.log(JSON.stringify({
-    type: "contentchange",     
-    content: q_text_to_display,
-    full_question_text: full_question_text
-    }))
-   // client.emit('chat message', 'test_msg!')
    client.emit('contentchange', JSON.stringify({
-     type: "contentchange",     
      content: q_text_to_display,
      full_question_text: full_question_text
    }));
  };
 
  syncJump = (i) => {
-  client.emit('contentchange', JSON.stringify({
-    type: "jump",
+  client.emit('jump', JSON.stringify({
     username: this.state.username,
     i: i
   }));
@@ -62,27 +56,30 @@ current content of the editor to the server. */
 
  componentWillMount() {
    var session = this;
-   // TODO update to just listen on either jump or contentchange
+   
    client.on('contentchange', function(message) {
-      console.log('in componentWillMount')
-      console.log(message)
-      const dataFromServer = JSON.parse(message);
+      const dataFromServer = message
       const stateToChange = {};
       stateToChange.jumper = dataFromServer.username
-
-      if (dataFromServer.type === 'contentchange') {
-        stateToChange.q_text_to_display = dataFromServer.question
-        stateToChange.full_question_text = dataFromServer.full_question_text
-      }
-      if (dataFromServer.type === 'jump') {
-        stateToChange.i = dataFromServer.i;        
-      }
+      stateToChange.q_text_to_display = dataFromServer.question
+      stateToChange.full_question_text = dataFromServer.full_question_text
       
       session.setState({
         ...stateToChange
       });
   });
- }
+
+  client.on('jump', function(message) {
+    const dataFromServer = message;
+    const stateToChange = {};
+    stateToChange.jumper = dataFromServer.username
+    stateToChange.i = dataFromServer.i;
+
+    session.setState({
+      ...stateToChange
+    });
+  });
+}
  
   startQuiz() {
     var {
@@ -114,19 +111,21 @@ current content of the editor to the server. */
   nextQuestion() {
     if(this.questionNumber < this.questionIDs.length) {
       var questionID = this.questionIDs[this.questionNumber]
-      console.log('questionID')
-      console.log(questionID)
+      console.log(this.questionNumber)
       fetch('https://bq-questions-api.uc.r.appspot.com/?QID='+questionID)
         .then(res => res.json()).then((data) => {
+          console.log('question from api!')
+          console.log(data)
           this.setState({full_question_text: data})
+          this.i = 0
+          this.setState({q_text_to_display: " "})
+          this.setState({i:this.i})
+          this.questionNumber++
         });
     } else {
+      this.setState({q_text_to_display: "*** End of the quiz! "})
       this.setState({full_question_text: "*** End of the quiz! ***"})
-    }
-    this.i = 0
-    this.setState({q_text_to_display: " "})
-    this.setState({i:this.i})
-    this.questionNumber++
+    }    
   }
 
   showQuizMasterSection = () => {
