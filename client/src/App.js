@@ -117,14 +117,15 @@ current content of the editor to the server. */
           console.log('question from api!')
           console.log(data)
           this.setState({full_question_text: data})
+          this.i = 0
+          this.setState({q_text_to_display: " "})
+          this.setState({i:this.i})
+          this.questionNumber++
         });
     } else {
+      this.setState({q_text_to_display: "*** End of the quiz! "})
       this.setState({full_question_text: "*** End of the quiz! ***"})
-    }
-    this.i = 0
-    this.setState({q_text_to_display: " "})
-    this.setState({i:this.i})
-    this.questionNumber++
+    }    
   }
 
   showQuizMasterSection = () => {
