@@ -36,7 +36,7 @@ class App extends Component {
   // questionIDs = [166, 5]
                 //v
   questionIDs = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
-  bonusQuestionIDs = [4, 5, 6]
+  bonusQuestionIDs = [124, 3257, 171, 56, 256, 3281, 3187, 3256, 3177, 76]
   
 // Bonus question button.
   /* When content changes, we send the
@@ -112,6 +112,7 @@ current content of the editor to the server. */
   nextQuestion() {
     if(this.questionNumber < this.questionIDs.length) {
       var questionID = this.questionIDs[this.questionNumber]
+      console.log('question number:')
       console.log(this.questionNumber)
       fetch('https://bq-questions-api.uc.r.appspot.com/?QID='+questionID)
         .then(res => res.json()).then((data) => {
@@ -129,12 +130,34 @@ current content of the editor to the server. */
     }    
   }
 
+  bonusQuestion() {
+    if(this.bonusQuestionNumber < this.bonusQuestionIDs.length) {
+      var bonusQuestionID = this.bonusQuestionIDs[this.bonusQuestionNumber]
+      console.log('bonus question number:')
+      console.log(this.bonusQuestionNumber)
+      fetch('https://bq-questions-api.uc.r.appspot.com/?QID='+bonusQuestionID)
+        .then(res => res.json()).then((data) => {
+          console.log('question from api!')
+          console.log(data)
+          this.setState({full_question_text: data})
+          this.i = 0
+          this.setState({q_text_to_display: " "})
+          this.setState({i:this.i})
+          this.bonusQuestionNumber++
+        });
+    } else {
+      this.setState({q_text_to_display: "*** Out of bonus questions :/ ***"})
+      this.setState({full_question_text: "*** Out of bonus questions :/ ***"})
+    }    
+  }
+
   showQuizMasterSection = () => {
     var { username} = this.state
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
+          <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
         </div>
       )
