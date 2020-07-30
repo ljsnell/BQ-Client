@@ -20,8 +20,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUsers: [],
-      userActivity: [],
       username: '',
       jumper: '',
       q_text_to_display: "",
@@ -37,8 +35,7 @@ class App extends Component {
                 //v
   questionIDs = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
   bonusQuestionIDs = [124, 3257, 171, 56, 256, 3281, 3187, 3256, 3177, 76]
-  
-// Bonus question button.
+
   /* When content changes, we send the
 current content of the editor to the server. */
  sync = (q_text_to_display, full_question_text) => {
