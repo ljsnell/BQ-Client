@@ -190,7 +190,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz 1.3</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.4</NavbarBrand>
         </Navbar>
         <div>
           User Name:
