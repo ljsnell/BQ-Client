@@ -27,12 +27,11 @@ class App extends Component {
       full_question_text: "*** Welcome to the quiz! ***"
     };
   }
-  
+  // Question iterators
   questionNumber = 0
   bonusQuestionNumber = 0
-  // Read from .dat files.
-  // questionIDs = [166, 5]
-                //v
+  
+  // Quiz Questions
   questionIDs = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
   bonusQuestionIDs = [124, 3257, 171, 56, 256, 3281, 3187, 3256, 3177, 76]
 
