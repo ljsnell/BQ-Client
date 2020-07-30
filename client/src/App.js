@@ -104,7 +104,8 @@ current content of the editor to the server. */
     } = this.state
     console.log('jumper:')
     console.log(jumper) 
-    // If jumper is null nobody has jumped on the question we'll allow an update.
+    // If jumper is null nobody has jumped on the question and we'll\
+    // allow an update.
     if(jumper == null) {
       this.question_array = full_question_text.split(" ")
       this.setState({username: username})
