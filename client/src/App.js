@@ -33,7 +33,7 @@ class App extends Component {
 
   // Quiz Questions
   questionIDs = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
-  bonusQuestionIDs = [124, 3257, 171, 56, 256, 3281, 3187, 3256, 3177, 76]
+  bonusQuestionIDs = [3257, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
 
   /* When content changes, we send the
 current content of the editor to the server. */
