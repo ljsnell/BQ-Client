@@ -98,12 +98,19 @@ current content of the editor to the server. */
 
   jump() {
     var {
-      full_question_text
+      full_question_text,
+      username,
+      jumper
     } = this.state
-    this.question_array = full_question_text.split(" ")
-    this.setState({username: this.state.username})
-    this.i = this.question_array.length
-    this.syncJump(this.i)
+    console.log('jumper:')
+    console.log(jumper) 
+    // If jumper is null nobody has jumped on the question we'll allow an update.
+    if(jumper == null) {
+      this.question_array = full_question_text.split(" ")
+      this.setState({username: username})
+      this.i = this.question_array.length
+      this.syncJump(this.i)
+    }    
   }
 
   nextQuestion() {
