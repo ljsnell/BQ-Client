@@ -30,7 +30,7 @@ class App extends Component {
   // Question iterators
   questionNumber = 0
   bonusQuestionNumber = 0
-  
+
   // Quiz Questions
   questionIDs = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
   bonusQuestionIDs = [124, 3257, 171, 56, 256, 3281, 3187, 3256, 3177, 76]
@@ -68,8 +68,9 @@ current content of the editor to the server. */
 
   client.on('jump', function(message) {
     const dataFromServer = message;
-    const stateToChange = {};
-    stateToChange.jumper = dataFromServer.username
+    const stateToChange = {};    
+    stateToChange.jumper = dataFromServer.username    
+    console.log(stateToChange.jumper)
     stateToChange.i = dataFromServer.i;
 
     session.setState({
