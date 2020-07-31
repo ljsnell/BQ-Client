@@ -67,7 +67,7 @@ current content of the editor to the server. */
       msg.volume = 1; // 0 to 1
       msg.rate = 1; // 0.1 to 10
       msg.pitch = 2; //0 to 2
-      msg.text = dataFromServer.question;
+      msg.text = dataFromServer.full_question_text;
       msg.lang = 'en-US';
       speechSynthesis.speak(msg);
       session.setState({
