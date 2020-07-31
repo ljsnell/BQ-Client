@@ -9,6 +9,7 @@
     "react-identicons": "^1.1.7",
     "react-medium-editor": "^1.8.1",
     "react-scripts": "2.1.8",
+    "react-speech": "^1.0.2",
     "reactstrap": "^8.0.0",
     "socket.io": "^2.3.0",
     "websocket": "^1.0.28"
