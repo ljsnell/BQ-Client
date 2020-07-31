@@ -60,16 +60,7 @@ current content of the editor to the server. */
       stateToChange.jumper = dataFromServer.username
       stateToChange.q_text_to_display = dataFromServer.question
       stateToChange.full_question_text = dataFromServer.full_question_text
-      var msg = new SpeechSynthesisUtterance();
-      var voices = window.speechSynthesis.getVoices();
-      msg.voice = voices[1]; // Note: some voices don't support altering params
-      msg.voiceURI = 'native';
-      msg.volume = 1; // 0 to 1
-      msg.rate = 1; // 0.1 to 10
-      msg.pitch = 2; //0 to 2
-      msg.text = dataFromServer.full_question_text;
-      msg.lang = 'en-US';
-      speechSynthesis.speak(msg);
+      
       session.setState({
         ...stateToChange
       });
@@ -136,6 +127,16 @@ current content of the editor to the server. */
           this.i = 0
           this.setState({q_text_to_display: " "})
           this.setState({i:this.i})
+          var msg = new SpeechSynthesisUtterance();
+          var voices = window.speechSynthesis.getVoices();
+          msg.voice = voices[1]; // Note: some voices don't support altering params
+          msg.voiceURI = 'native';
+          msg.volume = 1; // 0 to 1
+          msg.rate = 0.1; // 0.1 to 10
+          msg.pitch = 2; //0 to 2
+          msg.text = data;
+          msg.lang = 'en-US';
+          speechSynthesis.speak(msg);
           this.questionNumber++
         });
     } else {
