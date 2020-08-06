@@ -15,7 +15,7 @@ import './App.css';
 const io = require('socket.io-client');
 // GitHub Example: https://gist.github.com/crtr0/2896891
                                 // TODO: Update to get from display modal
-const client = io.connect('http://127.0.0.1:8000/').emit('room', 'room1');
+const client = io.connect('http://127.0.0.1:8000/').emit('room', 'room1'); // Try adding initial page modal to change this value/quiz master control
 // const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
@@ -43,14 +43,16 @@ current content of the editor to the server. */
  sync = (q_text_to_display, full_question_text, room_id) => {
    client.emit('contentchange', JSON.stringify({
      content: q_text_to_display,
-     full_question_text: full_question_text
+     full_question_text: full_question_text,
+     room: room_id
    }));
  };
 
  syncJump = (i, room_id) => {
   client.emit('jump', JSON.stringify({
     username: this.state.username,
-    i: i
+    i: i,
+    room: room_id
   }));
 };
 
