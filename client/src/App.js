@@ -13,8 +13,8 @@ import './App.css';
 // 2. gcloud app deploy
 
 const io = require('socket.io-client');
-// const client = io.connect('http://127.0.0.1:8000/');
-const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
+const client = io.connect('http://127.0.0.1:8000/');
+// const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
   constructor(props) {
@@ -204,6 +204,11 @@ current content of the editor to the server. */
         </Navbar>
         <div>
           User Name:
+          <input onChange={evt =>this.handleChange(evt)} />
+        </div>
+        <br></br>
+        <div>
+          Room #:
           <input onChange={evt =>this.handleChange(evt)} />
         </div>
         <div>
