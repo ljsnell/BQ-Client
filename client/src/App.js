@@ -24,7 +24,8 @@ class App extends Component {
       jumper: '',
       q_text_to_display: "",
       i: 0,
-      full_question_text: "*** Welcome to the quiz! ***"
+      full_question_text: "*** Welcome to the quiz! ***",
+      room: ''
     };
   }
   // Question iterators
@@ -192,6 +193,11 @@ current content of the editor to the server. */
     this.showQuizMasterSection()
   }
 
+  handleRoomChange(event) {
+    this.setState({room: event.target.value});
+    console.log(event.target.value)    
+  }
+
   render() {
     const {
       q_text_to_display
@@ -209,7 +215,7 @@ current content of the editor to the server. */
         <br></br>
         <div>
           Room #:
-          <input onChange={evt =>this.handleChange(evt)} />
+          <input onChange={evt =>this.handleRoomChange(evt)} />
         </div>
         <div>
           <h1>Question: { q_text_to_display }</h1>
