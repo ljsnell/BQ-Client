@@ -13,7 +13,9 @@ import './App.css';
 // 2. gcloud app deploy
 
 const io = require('socket.io-client');
-const client = io.connect('http://127.0.0.1:8000/');
+// GitHub Example: https://gist.github.com/crtr0/2896891
+                                // TODO: Update to get from display modal
+const client = io.connect('http://127.0.0.1:8000/').emit('room', 'room1');
 // const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
@@ -38,14 +40,14 @@ class App extends Component {
 
   /* When content changes, we send the
 current content of the editor to the server. */
- sync = (q_text_to_display, full_question_text) => {
+ sync = (q_text_to_display, full_question_text, room_id) => {
    client.emit('contentchange', JSON.stringify({
      content: q_text_to_display,
      full_question_text: full_question_text
    }));
  };
 
- syncJump = (i) => {
+ syncJump = (i, room_id) => {
   client.emit('jump', JSON.stringify({
     username: this.state.username,
     i: i
@@ -94,7 +96,8 @@ current content of the editor to the server. */
     var {
       q_text_to_display,
       i,
-      full_question_text
+      full_question_text,
+      room
     } = this.state
 
     this.question_array = full_question_text.split(" ")
@@ -103,7 +106,7 @@ current content of the editor to the server. */
         i++
         this.setState({ q_text_to_display: q_text_to_display, i: i })
         this.setState({full_question_text: full_question_text})
-        this.sync(q_text_to_display, full_question_text)
+        this.sync(q_text_to_display, full_question_text, room)
       }
   }
 
@@ -111,7 +114,8 @@ current content of the editor to the server. */
     var {
       full_question_text,
       username,
-      jumper
+      jumper,
+      room
     } = this.state
     console.log('jumper:')
     console.log(jumper) 
@@ -121,7 +125,7 @@ current content of the editor to the server. */
       this.question_array = full_question_text.split(" ")
       this.setState({username: username})
       this.i = this.question_array.length
-      this.syncJump(this.i)
+      this.syncJump(this.i, room)
     }    
   }
 
