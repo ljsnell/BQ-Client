@@ -12,10 +12,13 @@ import './App.css';
 // 1. gcloud config set project promising-lamp-284223
 // 2. gcloud app deploy
 
+// Websocket server
+var server = 'http://127.0.0.1:8000/'
+// var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 // GitHub Example: https://gist.github.com/crtr0/2896891
                                 // TODO: Update to get from display modal
-const client = io.connect('http://127.0.0.1:8000/').emit('room', 'room1'); // Try adding initial page modal to change this value/quiz master control
+var client = io.connect(server).emit('room', 'room1'); // Try adding initial page modal to change this value/quiz master control
 // const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
@@ -173,6 +176,15 @@ current content of the editor to the server. */
     }    
   }
 
+  connect_to_room() {
+    var {
+      room
+    } = this.state
+    console.log('room')    
+    client = io.connect(server).emit('room', room);
+    console.log(room)
+  }
+
   showQuizMasterSection = () => {
     var { username} = this.state
     if(username === 'quizmaster') {
@@ -190,6 +202,7 @@ current content of the editor to the server. */
     return (
       <div className="quizzer-section">
         <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
+        <Button onClick={()=>this.connect_to_room()} variant="secondary">Connect to Room</Button>{' '}
       </div>
     )
   }
@@ -201,7 +214,6 @@ current content of the editor to the server. */
 
   handleRoomChange(event) {
     this.setState({room: event.target.value});
-    console.log(event.target.value)    
   }
 
   render() {
