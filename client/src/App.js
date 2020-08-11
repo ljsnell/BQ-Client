@@ -18,7 +18,8 @@ var server = 'http://127.0.0.1:8000/'
 const io = require('socket.io-client');
 // GitHub Example: https://gist.github.com/crtr0/2896891
                                 // TODO: Update to get from display modal
-var client = io.connect(server).emit('room', 'room1'); // Try adding initial page modal to change this value/quiz master control
+var user_room = prompt("Please enter your room #", "room");
+var client = io.connect(server).emit('room', user_room); // Try adding initial page modal to change this value/quiz master control
 // const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
