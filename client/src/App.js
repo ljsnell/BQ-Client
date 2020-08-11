@@ -13,13 +13,11 @@ import './App.css';
 // 2. gcloud app deploy
 
 // Websocket server
-var server = 'http://127.0.0.1:8000/'
-// var server = 'wss://mysterious-journey-90036.herokuapp.com'
+// var server = 'http://127.0.0.1:8000/'
+var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
-// GitHub Example: https://gist.github.com/crtr0/2896891
-                                // TODO: Update to get from display modal
 var user_room = prompt("Please enter your room #", "room");
-var client = io.connect(server).emit('room', user_room); // Try adding initial page modal to change this value/quiz master control
+var client = io.connect(server).emit('room', user_room);
 // const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
@@ -31,7 +29,7 @@ class App extends Component {
       q_text_to_display: "",
       i: 0,
       full_question_text: "*** Welcome to the quiz! ***",
-      room: ''
+      room: user_room
     };
   }
   // Question iterators
@@ -177,17 +175,8 @@ current content of the editor to the server. */
     }    
   }
 
-  connect_to_room() {
-    var {
-      room
-    } = this.state
-    console.log('room')    
-    client = io.connect(server).emit('room', room);
-    console.log(room)
-  }
-
   showQuizMasterSection = () => {
-    var { username} = this.state
+    var {username} = this.state
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
@@ -203,7 +192,6 @@ current content of the editor to the server. */
     return (
       <div className="quizzer-section">
         <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
-        <Button onClick={()=>this.connect_to_room()} variant="secondary">Connect to Room</Button>{' '}
       </div>
     )
   }
@@ -211,10 +199,6 @@ current content of the editor to the server. */
   handleChange(event) {
     this.setState({username: event.target.value});
     this.showQuizMasterSection()
-  }
-
-  handleRoomChange(event) {
-    this.setState({room: event.target.value});
   }
 
   render() {
@@ -232,10 +216,6 @@ current content of the editor to the server. */
           <input onChange={evt =>this.handleChange(evt)} />
         </div>
         <br></br>
-        <div>
-          Room #:
-          <input onChange={evt =>this.handleRoomChange(evt)} />
-        </div>
         <div>
           <h1>Question: { q_text_to_display }</h1>
         </div>
