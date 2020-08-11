@@ -12,9 +12,13 @@ import './App.css';
 // 1. gcloud config set project promising-lamp-284223
 // 2. gcloud app deploy
 
+// Websocket server
+// var server = 'http://127.0.0.1:8000/'
+var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
-// const client = io.connect('http://127.0.0.1:8000/');
-const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
+var user_room = prompt("Please enter your room #", "room");
+var client = io.connect(server).emit('room', user_room);
+// const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +28,8 @@ class App extends Component {
       jumper: '',
       q_text_to_display: "",
       i: 0,
-      full_question_text: "*** Welcome to the quiz! ***"
+      full_question_text: "*** Welcome to the quiz! ***",
+      room: user_room
     };
   }
   // Question iterators
@@ -37,17 +42,19 @@ class App extends Component {
 
   /* When content changes, we send the
 current content of the editor to the server. */
- sync = (q_text_to_display, full_question_text) => {
+ sync = (q_text_to_display, full_question_text, room_id) => {
    client.emit('contentchange', JSON.stringify({
      content: q_text_to_display,
-     full_question_text: full_question_text
+     full_question_text: full_question_text,
+     room: room_id
    }));
  };
 
- syncJump = (i) => {
+ syncJump = (i, room_id) => {
   client.emit('jump', JSON.stringify({
     username: this.state.username,
-    i: i
+    i: i,
+    room: room_id
   }));
 };
 
@@ -93,7 +100,8 @@ current content of the editor to the server. */
     var {
       q_text_to_display,
       i,
-      full_question_text
+      full_question_text,
+      room
     } = this.state
 
     this.question_array = full_question_text.split(" ")
@@ -102,7 +110,7 @@ current content of the editor to the server. */
         i++
         this.setState({ q_text_to_display: q_text_to_display, i: i })
         this.setState({full_question_text: full_question_text})
-        this.sync(q_text_to_display, full_question_text)
+        this.sync(q_text_to_display, full_question_text, room)
       }
   }
 
@@ -110,7 +118,8 @@ current content of the editor to the server. */
     var {
       full_question_text,
       username,
-      jumper
+      jumper,
+      room
     } = this.state
     console.log('jumper:')
     console.log(jumper) 
@@ -120,7 +129,7 @@ current content of the editor to the server. */
       this.question_array = full_question_text.split(" ")
       this.setState({username: username})
       this.i = this.question_array.length
-      this.syncJump(this.i)
+      this.syncJump(this.i, room)
     }    
   }
 
@@ -167,7 +176,7 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var { username} = this.state
+    var {username} = this.state
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
@@ -206,6 +215,7 @@ current content of the editor to the server. */
           User Name:
           <input onChange={evt =>this.handleChange(evt)} />
         </div>
+        <br></br>
         <div>
           <h1>Question: { q_text_to_display }</h1>
         </div>
