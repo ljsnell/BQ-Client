@@ -265,11 +265,16 @@ current content of the editor to the server. */
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
         </div>
-        --------------------------------------------------
-        <div>
-          <h3>Team 1 Score: { team1Score }</h3>
-          <h3>Team 2 Score: { team2Score }</h3>
-        </div>
+        <table border = "1" style={{width: '50%'}}>
+          <tr>
+            <th>Team 1</th>
+            <th>Team 2</th>
+          </tr>
+          <tr>
+            <td>{ team1Score }</td>
+            <td>{ team2Score }</td>
+          </tr>
+        </table>
       </React.Fragment>
     );
   }
