@@ -175,6 +175,13 @@ current content of the editor to the server. */
     }    
   }
 
+  addScore(teamNumber, pointsToAdd) {
+    console.log('teamNumber')
+    console.log(teamNumber)
+    console.log('pointsToAdd')
+    console.log(pointsToAdd)
+  }
+
   showQuizMasterSection = () => {
     var {username} = this.state
     if(username === 'quizmaster') {
