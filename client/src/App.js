@@ -195,6 +195,30 @@ current content of the editor to the server. */
       </div>
     )
   }
+  
+  showScoringSection = () => {
+    var {username} = this.state
+    if(username === 'scorekeeper') {
+      return (
+        <div className="main-content">
+          <h1>Scoring Section:</h1>
+          <br></br>
+          <Button onClick={()=>this.addScore(1, 20)} variant="secondary">Team 1: 20</Button>{' '}
+          <Button onClick={()=>this.addScore(2, 20)} variant="secondary">Team 2: 20</Button>{' '}
+          <br></br>
+          <br></br>
+          <Button onClick={()=>this.addScore(1, 10)} variant="secondary">Team 1: 10</Button>{' '}
+          <Button onClick={()=>this.addScore(2, 10)} variant="secondary">Team 2: 10</Button>{' '}
+          <br></br>
+          <br></br>
+          <Button onClick={()=>this.addScore(1, -10)} variant="secondary">Team 1: -10</Button>{' '}
+          <Button onClick={()=>this.addScore(2, -10)} variant="secondary">Team 2: -10</Button>{' '}
+          <br></br>
+          <br></br>
+        </div>
+      )
+    }
+  }
 
   handleChange(event) {
     this.setState({username: event.target.value});
@@ -224,6 +248,8 @@ current content of the editor to the server. */
           {this.showQuizMasterSection()}
           <br></br>
           {this.showQuizzerSection()}
+          <br></br>
+          {this.showScoringSection()}
         </div>
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
