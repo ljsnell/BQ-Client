@@ -29,7 +29,9 @@ class App extends Component {
       q_text_to_display: "",
       i: 0,
       full_question_text: "*** Welcome to the quiz! ***",
-      room: user_room
+      room: user_room,
+      team1Score: 0,
+      team2Score: 0
     };
   }
   // Question iterators
@@ -195,10 +197,10 @@ current content of the editor to the server. */
     }
   }
 
-  showQuizzerSection = () => {
+  showQuizzerSection = () => {    
     return (
       <div className="quizzer-section">
-        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
+        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}        
       </div>
     )
   }
@@ -234,7 +236,9 @@ current content of the editor to the server. */
 
   render() {
     const {
-      q_text_to_display
+      q_text_to_display,
+      team1Score,
+      team2Score
     } = this.state;
 
     return (
@@ -260,6 +264,11 @@ current content of the editor to the server. */
         </div>
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
+        </div>
+        --------------------------------------------------
+        <div>
+          <h3>Team 1 Score: { team1Score }</h3>
+          <h3>Team 2 Score: { team2Score }</h3>
         </div>
       </React.Fragment>
     );
