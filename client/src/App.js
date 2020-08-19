@@ -13,8 +13,8 @@ import './App.css';
 // 2. gcloud app deploy
 
 // Websocket server
-var server = 'http://127.0.0.1:8000/'
-// var server = 'wss://mysterious-journey-90036.herokuapp.com'
+// var server = 'http://127.0.0.1:8000/'
+var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var client = io.connect(server).emit('room', user_room);
@@ -191,8 +191,6 @@ current content of the editor to the server. */
 
   addScore(teamNumber, pointsToAdd) {
     var { team1Score, team2Score, room } = this.state
-    console.log('in addScore room_id')
-    console.log(room)
     if(teamNumber===1) {
       team1Score += pointsToAdd
       this.setState({team1Score: team1Score})
