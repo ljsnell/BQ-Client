@@ -29,7 +29,9 @@ class App extends Component {
       q_text_to_display: "",
       i: 0,
       full_question_text: "*** Welcome to the quiz! ***",
-      room: user_room
+      room: user_room,
+      team1Score: 0,
+      team2Score: 0
     };
   }
   // Question iterators
@@ -89,6 +91,18 @@ current content of the editor to the server. */
     stateToChange.jumper = dataFromServer.username    
     console.log(stateToChange.jumper)
     stateToChange.i = dataFromServer.i;
+
+    session.setState({
+      ...stateToChange
+    });
+  });
+
+  client.on('score', function(message) {
+    console.log('in score!')
+    const dataFromServer = message;
+    const stateToChange = {};    
+    stateToChange.team1Score = dataFromServer.team1Score
+    stateToChange.team2Score = dataFromServer.team2Score
 
     session.setState({
       ...stateToChange
@@ -175,6 +189,22 @@ current content of the editor to the server. */
     }    
   }
 
+  addScore(teamNumber, pointsToAdd) {
+    var { team1Score, team2Score, room } = this.state
+    if(teamNumber===1) {
+      team1Score += pointsToAdd
+      this.setState({team1Score: team1Score})
+    } else {
+      team2Score +=pointsToAdd
+      this.setState({team2Score: team2Score})      
+    }
+    client.emit('score', JSON.stringify({
+      team1Score: team1Score,
+      team2Score: team2Score,
+      room: room
+    }));
+  }
+
   showQuizMasterSection = () => {
     var {username} = this.state
     if(username === 'quizmaster') {
@@ -188,12 +218,36 @@ current content of the editor to the server. */
     }
   }
 
-  showQuizzerSection = () => {
+  showQuizzerSection = () => {    
     return (
       <div className="quizzer-section">
-        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
+        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}        
       </div>
     )
+  }
+  
+  showScoringSection = () => {
+    var {username} = this.state
+    if(username === 'scorekeeper') {
+      return (
+        <div className="main-content">
+          <h1>Scoring Section:</h1>
+          <br></br>
+          <Button onClick={()=>this.addScore(1, 20)} variant="secondary">Team 1: 20</Button>{' '}
+          <Button onClick={()=>this.addScore(2, 20)} variant="secondary">Team 2: 20</Button>{' '}
+          <br></br>
+          <br></br>
+          <Button onClick={()=>this.addScore(1, 10)} variant="secondary">Team 1: 10</Button>{' '}
+          <Button onClick={()=>this.addScore(2, 10)} variant="secondary">Team 2: 10</Button>{' '}
+          <br></br>
+          <br></br>
+          <Button onClick={()=>this.addScore(1, -10)} variant="secondary">Team 1: -10</Button>{' '}
+          <Button onClick={()=>this.addScore(2, -10)} variant="secondary">Team 2: -10</Button>{' '}
+          <br></br>
+          <br></br>
+        </div>
+      )
+    }
   }
 
   handleChange(event) {
@@ -203,7 +257,9 @@ current content of the editor to the server. */
 
   render() {
     const {
-      q_text_to_display
+      q_text_to_display,
+      team1Score,
+      team2Score
     } = this.state;
 
     return (
@@ -228,6 +284,24 @@ current content of the editor to the server. */
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
         </div>
+        <br></br>
+        <div>
+          <h3>Score Board:</h3>
+        </div>
+        <table border = "1" style={{width: '50%'}}>
+          <tbody>
+            <tr>
+              <th>Team 1</th>
+              <th>Team 2</th>
+            </tr>
+            <tr>
+              <td>{ team1Score }</td>
+              <td>{ team2Score }</td>
+            </tr>
+          </tbody>
+        </table>
+        <br></br>
+        {this.showScoringSection()}
       </React.Fragment>
     );
   }
