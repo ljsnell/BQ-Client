@@ -190,9 +190,9 @@ current content of the editor to the server. */
   }
 
   addScore(teamNumber, pointsToAdd) {
-    var { team1Score, team2Score, room_id } = this.state
+    var { team1Score, team2Score, room } = this.state
     console.log('in addScore room_id')
-    console.log(room_id)
+    console.log(room)
     if(teamNumber===1) {
       team1Score += pointsToAdd
       this.setState({team1Score: team1Score})
@@ -203,7 +203,7 @@ current content of the editor to the server. */
     client.emit('score', JSON.stringify({
       team1Score: team1Score,
       team2Score: team2Score,
-      room: 'room'
+      room: room
     }));
   }
 
