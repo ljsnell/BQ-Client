@@ -282,11 +282,13 @@ current content of the editor to the server. */
           {this.showQuizMasterSection()}
           <br></br>
           {this.showQuizzerSection()}
-          <br></br>
-          {this.showScoringSection()}
         </div>
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
+        </div>
+        <br></br>
+        <div>
+          <h3>Score Board:</h3>
         </div>
         <table border = "1" style={{width: '50%'}}>
           <tbody>
@@ -300,6 +302,8 @@ current content of the editor to the server. */
             </tr>
           </tbody>
         </table>
+        <br></br>
+        {this.showScoringSection()}
       </React.Fragment>
     );
   }
