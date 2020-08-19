@@ -13,8 +13,8 @@ import './App.css';
 // 2. gcloud app deploy
 
 // Websocket server
-// var server = 'http://127.0.0.1:8000/'
-var server = 'wss://mysterious-journey-90036.herokuapp.com'
+var server = 'http://127.0.0.1:8000/'
+// var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var client = io.connect(server).emit('room', user_room);
@@ -91,6 +91,18 @@ current content of the editor to the server. */
     stateToChange.jumper = dataFromServer.username    
     console.log(stateToChange.jumper)
     stateToChange.i = dataFromServer.i;
+
+    session.setState({
+      ...stateToChange
+    });
+  });
+
+  client.on('score', function(message) {
+    console.log('in score!')
+    const dataFromServer = message;
+    const stateToChange = {};    
+    stateToChange.team1Score = dataFromServer.team1Score
+    stateToChange.team2Score = dataFromServer.team2Score
 
     session.setState({
       ...stateToChange
@@ -178,18 +190,21 @@ current content of the editor to the server. */
   }
 
   addScore(teamNumber, pointsToAdd) {
-    var { team1Score, team2Score } = this.state
-    console.log('teamNumber')
-    console.log(teamNumber)
-    console.log('pointsToAdd')
-    console.log(pointsToAdd)
+    var { team1Score, team2Score, room_id } = this.state
+    console.log('in addScore room_id')
+    console.log(room_id)
     if(teamNumber===1) {
       team1Score += pointsToAdd
       this.setState({team1Score: team1Score})
     } else {
       team2Score +=pointsToAdd
-      this.setState({team2Score: team2Score})
+      this.setState({team2Score: team2Score})      
     }
+    client.emit('score', JSON.stringify({
+      team1Score: team1Score,
+      team2Score: team2Score,
+      room: 'room'
+    }));
   }
 
   showQuizMasterSection = () => {
