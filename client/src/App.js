@@ -161,8 +161,6 @@ current content of the editor to the server. */
   }
 
   nextQuestion() {
-    console.log('quizNumber!!!')
-    console.log(this.state.quizNumber)
     if(this.questionNumber < this.questionIDs.length) {
       var questionID = this.questionIDs[this.questionNumber]
       console.log('question number:')
