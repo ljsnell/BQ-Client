@@ -208,6 +208,12 @@ current content of the editor to the server. */
     }));
   }
 
+  setQuizNumber(selectedQuizNumber) {
+    console.log('selectedQuizNumber')
+    console.log(selectedQuizNumber)
+    this.setState({quizNumber: selectedQuizNumber})
+  }
+
   showQuizMasterSection = () => {
     var {username} = this.state
     if(username === 'quizmaster') {
@@ -217,7 +223,7 @@ current content of the editor to the server. */
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
           <label htmlFor="roundSelector">Choose a quiz round:</label>
-          <select onChange={(e) => this.setState({quizNumber: e.target.value})} name="quizSelector" id="quizSelector">
+          <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
