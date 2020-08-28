@@ -210,8 +210,22 @@ current content of the editor to the server. */
 
   setQuizNumber(selectedQuizNumber) {
     console.log('selectedQuizNumber')
-    console.log(selectedQuizNumber)
-    this.setState({quizNumber: selectedQuizNumber})
+    if(selectedQuizNumber==="1") {
+      console.log(selectedQuizNumber)
+      this.setState({quizNumber: selectedQuizNumber})
+    }
+    else if(selectedQuizNumber==="2") {
+      console.log(selectedQuizNumber)
+      this.setState({quizNumber: selectedQuizNumber})
+    }
+    else if(selectedQuizNumber==="3") {
+      console.log(selectedQuizNumber)
+      this.setState({quizNumber: selectedQuizNumber})
+    }
+    else if(selectedQuizNumber==="4") {
+      console.log(selectedQuizNumber)
+      this.setState({quizNumber: selectedQuizNumber})
+    }
   }
 
   showQuizMasterSection = () => {
