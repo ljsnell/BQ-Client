@@ -31,7 +31,8 @@ class App extends Component {
       full_question_text: "*** Welcome to the quiz! ***",
       room: user_room,
       team1Score: 0,
-      team2Score: 0
+      team2Score: 0,
+      quizNumber: 1
     };
   }
   // Question iterators
@@ -148,6 +149,8 @@ current content of the editor to the server. */
   }
 
   nextQuestion() {
+    console.log('quizNumber!!!')
+    console.log(this.state.quizNumber)
     if(this.questionNumber < this.questionIDs.length) {
       var questionID = this.questionIDs[this.questionNumber]
       console.log('question number:')
@@ -213,8 +216,8 @@ current content of the editor to the server. */
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
-          <label for="roundSelector">Choose a quiz round:</label>
-          <select name="quizSelector" id="quizSelector">
+          <label htmlFor="roundSelector">Choose a quiz round:</label>
+          <select onChange={(e) => this.setState({quizNumber: e.target.value})} name="quizSelector" id="quizSelector">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
