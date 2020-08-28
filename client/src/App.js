@@ -31,7 +31,8 @@ class App extends Component {
       full_question_text: "*** Welcome to the quiz! ***",
       room: user_room,
       team1Score: 0,
-      team2Score: 0
+      team2Score: 0,
+      quizNumber: 1
     };
   }
   // Question iterators
@@ -39,8 +40,20 @@ class App extends Component {
   bonusQuestionNumber = 0
 
   // Quiz Questions
-  questionIDs = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
-  bonusQuestionIDs = [3257, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+  questionIDs1 = [252, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
+  bonusQuestionIDs1 = [3257, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+
+  questionIDs2 = [253, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
+  bonusQuestionIDs2 = [3258, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+
+  questionIDs3 = [254, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
+  bonusQuestionIDs3 = [3259, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+
+  questionIDs4 = [255, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
+  bonusQuestionIDs4 = [3260, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+
+  questionIDs = this.questionIDs1
+  bonusQuestionIDs = this.bonusQuestionIDs1
 
   /* When content changes, we send the
 current content of the editor to the server. */
@@ -205,6 +218,29 @@ current content of the editor to the server. */
     }));
   }
 
+  setQuizNumber(selectedQuizNumber) {
+    console.log('selectedQuizNumber')
+    console.log(selectedQuizNumber)
+    this.setState({quizNumber: selectedQuizNumber})
+
+    if(selectedQuizNumber==="1") {
+      this.questionIDs = this.questionIDs1
+      this.bonusQuestionIDs = this.bonusQuestionIDs1
+    }
+    else if(selectedQuizNumber==="2") {
+      this.questionIDs = this.questionIDs2
+      this.bonusQuestionIDs = this.bonusQuestionIDs2
+    }
+    else if(selectedQuizNumber==="3") {
+      this.questionIDs = this.questionIDs3
+      this.bonusQuestionIDs = this.bonusQuestionIDs3
+    }
+    else if(selectedQuizNumber==="4") {
+      this.questionIDs = this.questionIDs4
+      this.bonusQuestionIDs = this.bonusQuestionIDs4
+    }
+  }
+
   showQuizMasterSection = () => {
     var {username} = this.state
     if(username === 'quizmaster') {
@@ -213,6 +249,13 @@ current content of the editor to the server. */
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
+          <label htmlFor="roundSelector">Choose a quiz number:</label>
+          <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
         </div>
       )
     }
