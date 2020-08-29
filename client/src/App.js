@@ -18,7 +18,6 @@ var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var client = io.connect(server).emit('room', user_room);
-// const client = io.connect('wss://mysterious-journey-90036.herokuapp.com');
 
 class App extends Component {
   constructor(props) {
@@ -41,16 +40,16 @@ class App extends Component {
 
   // Quiz Questions
   questionIDs1 = [184, 97, 115, 152, 3193, 3268, 88, 110, 277, 3206, 238, 47, 160, 50, 3277, 95, 63, 49, 17, 190]
-  bonusQuestionIDs1 = [3257, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+  bonusQuestionIDs1 = [76, 226, 83, 217, 3200, 261, 3258, 199, 56, 79]
 
-  questionIDs2 = [253, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
-  bonusQuestionIDs2 = [3258, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+  questionIDs2 = [67, 223, 3271, 3261, 236, 108, 133, 253, 89, 136, 75, 3259, 174, 3207, 228, 266, 247, 275, 116, 105]
+  bonusQuestionIDs2 = [94, 3187, 245, 256, 187, 51, 151, 280, 46, 3254]
 
-  questionIDs3 = [254, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
-  bonusQuestionIDs3 = [3259, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+  questionIDs3 = [3186, 209, 140, 175, 264, 113, 204, 197, 201, 98, 3263, 3214, 72, 163, 3183, 104, 252, 65, 177, 248]
+  bonusQuestionIDs3 = [260, 3179, 3256, 3197, 3184, 229, 246, 278, 3262, 3265]
 
-  questionIDs4 = [255, 166, 3204, 277, 1, 108, 3268, 70, 188, 67, 95, 228, 218, 84, 197, 165, 3261, 230, 181, 198]
-  bonusQuestionIDs4 = [3260, 171, 56, 256, 124, 3281, 3187, 3256, 3177, 76]
+  questionIDs4 = [225, 3195, 165, 3176, 187, 277, 3117, 169, 66, 273, 263, 74, 131, 246, 92, 3261, 3208, 99, 59, 3]
+  bonusQuestionIDs4 = [281, 18, 3191, 137, 265, 119, 93, 3260, 106, 198]
 
   questionIDs = this.questionIDs1
   bonusQuestionIDs = this.bonusQuestionIDs1
