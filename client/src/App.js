@@ -241,10 +241,13 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var {username} = this.state
+    var { username, full_question_text } = this.state
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
+          <div>
+            <h1>Full Question Text: { full_question_text }</h1>
+          </div>
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
