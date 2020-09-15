@@ -28,6 +28,7 @@ class App extends Component {
       q_text_to_display: "",
       i: 0,
       full_question_text: "*** Welcome to the quiz! ***",
+      answer_question_text: "🤔",
       room: user_room,
       team1Score: 0,
       team2Score: 0,
@@ -168,7 +169,8 @@ current content of the editor to the server. */
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
-          this.setState({full_question_text: data})
+          this.setState({full_question_text: data[0]})
+          this.setState({answer_question_text: data[1]})
           this.i = 0
           this.setState({q_text_to_display: " "})
           this.setState({i:this.i})
@@ -189,7 +191,8 @@ current content of the editor to the server. */
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
-          this.setState({full_question_text: data})
+          this.setState({full_question_text: data[0]})
+          this.setState({answer_question_text: data[1]})
           this.i = 0
           this.setState({q_text_to_display: " "})
           this.setState({i:this.i})
@@ -241,13 +244,16 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text } = this.state
+    var { username, full_question_text, answer_question_text } = this.state
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
           <div>
-            <h1>Full Question Text: { full_question_text }</h1>
+            <h1>Full Question: { full_question_text }</h1>
           </div>
+          <div>
+            <h1>Answer: { answer_question_text }</h1>
+          </div>          
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
