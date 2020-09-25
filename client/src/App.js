@@ -248,7 +248,8 @@ current content of the editor to the server. */
     var { timer, full_question_text } = this.state
     timer = 0;
     var max_count = 30
-    if (full_question_text.includes('Finish the Verse')){
+    if (full_question_text.includes('Finish the Verse') || 
+      full_question_text.includes('Multiple Part Answer')) {
       max_count = 45
     }
     const interval = setInterval(() => {
