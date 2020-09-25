@@ -242,9 +242,26 @@ current content of the editor to the server. */
       this.bonusQuestionIDs = this.bonusQuestionIDs4
     }
   }
+  
+  startCountUp() {
+    var { timer } = this.state
+    timer = 0;
+    
+    const interval = setInterval(() => {
+      console.log(timer);
+      timer++;
+      this.setState({timer: timer})
+      if (timer > 45 ) {
+        clearInterval(interval);
+        timer = 0
+        this.setState({timer: timer})
+        console.log('Ding!');
+      }
+    }, 1000);
+  }
 
-  showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text } = this.state
+  showQuizMasterSection = () => {    
+    var { username, full_question_text, answer_question_text, timer } = this.state
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
@@ -253,7 +270,7 @@ current content of the editor to the server. */
           </div>
           <div>
             <h1>Answer: { answer_question_text }</h1>
-          </div>          
+          </div>
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
@@ -264,6 +281,10 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
+          <br></br>
+          <br></br>
+          <Button onClick={()=>this.startCountUp()} variant="secondary">Start Timer</Button>{' '}
+          <h1>{ timer }</h1>
         </div>
       )
     }
