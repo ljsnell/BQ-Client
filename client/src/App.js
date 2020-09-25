@@ -32,7 +32,8 @@ class App extends Component {
       room: user_room,
       team1Score: 0,
       team2Score: 0,
-      quizNumber: 1
+      quizNumber: 1,
+      timer: 0
     };
   }
   // Question iterators
@@ -242,9 +243,28 @@ current content of the editor to the server. */
       this.bonusQuestionIDs = this.bonusQuestionIDs4
     }
   }
+  
+  startCountUp() {
+    var { timer, full_question_text } = this.state
+    timer = 0;
+    var max_count = 30
+    if (full_question_text.includes('Finish the Verse') || 
+      full_question_text.includes('Multiple Part Answer')) {
+      max_count = 45
+    }
+    const interval = setInterval(() => {
+      timer++;
+      this.setState({timer: timer})
+      if (timer > max_count) {
+        clearInterval(interval);
+        timer = "Time's up!"
+        this.setState({timer: timer})
+      }
+    }, 1000);
+  }
 
-  showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text } = this.state
+  showQuizMasterSection = () => {    
+    var { username, full_question_text, answer_question_text, timer } = this.state
     if(username === 'quizmaster') {
       return (
         <div className="main-content">
@@ -253,7 +273,7 @@ current content of the editor to the server. */
           </div>
           <div>
             <h1>Answer: { answer_question_text }</h1>
-          </div>          
+          </div>
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
           <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
@@ -264,6 +284,10 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
+          <br></br>
+          <br></br>
+          <Button onClick={()=>this.startCountUp()} variant="secondary">Start Timer</Button>{' '}          
+          <h1>{ timer }</h1>
         </div>
       )
     }
