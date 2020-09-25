@@ -32,7 +32,8 @@ class App extends Component {
       room: user_room,
       team1Score: 0,
       team2Score: 0,
-      quizNumber: 1
+      quizNumber: 1,
+      timer: 0
     };
   }
   // Question iterators
@@ -244,18 +245,19 @@ current content of the editor to the server. */
   }
   
   startCountUp() {
-    var { timer } = this.state
+    var { timer, full_question_text } = this.state
     timer = 0;
-    
+    var max_count = 30
+    if (full_question_text.includes('Finish the Verse')){
+      max_count = 45
+    }
     const interval = setInterval(() => {
-      console.log(timer);
       timer++;
       this.setState({timer: timer})
-      if (timer > 45 ) {
+      if (timer > max_count) {
         clearInterval(interval);
-        timer = 0
+        timer = "Time's up!"
         this.setState({timer: timer})
-        console.log('Ding!');
       }
     }, 1000);
   }
@@ -283,7 +285,7 @@ current content of the editor to the server. */
           </select>
           <br></br>
           <br></br>
-          <Button onClick={()=>this.startCountUp()} variant="secondary">Start Timer</Button>{' '}
+          <Button onClick={()=>this.startCountUp()} variant="secondary">Start Timer</Button>{' '}          
           <h1>{ timer }</h1>
         </div>
       )
