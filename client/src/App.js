@@ -123,7 +123,11 @@ current content of the editor to the server. */
     });
   });
 }
- 
+
+componentDidMount() {
+  setInterval(() => this.startQuiz(),1000)
+}
+
   startQuiz() {
     var {
       q_text_to_display,
@@ -151,14 +155,14 @@ current content of the editor to the server. */
     } = this.state
     console.log('jumper:')
     console.log(jumper) 
-    // If jumper is null nobody has jumped on the question and we'll\
+    // If jumper is null nobody has jumped on the question and we'll
     // allow an update.
     if(jumper == null) {
       this.question_array = full_question_text.split(" ")
       this.setState({username: username})
       this.i = this.question_array.length
       this.syncJump(this.i, room)
-    }    
+    }
   }
 
   nextQuestion() {
@@ -166,7 +170,7 @@ current content of the editor to the server. */
       var questionID = this.questionIDs[this.questionNumber]
       console.log('question number:')
       console.log(this.questionNumber)
-      fetch('https://bq-questions-api.uc.r.appspot.com/?QID='+questionID)
+      fetch('https://bible-questions-api.herokuapp.com/?QID='+questionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
@@ -188,7 +192,7 @@ current content of the editor to the server. */
       var bonusQuestionID = this.bonusQuestionIDs[this.bonusQuestionNumber]
       console.log('bonus question number:')
       console.log(this.bonusQuestionNumber)
-      fetch('https://bq-questions-api.uc.r.appspot.com/?QID='+bonusQuestionID)
+      fetch('https://bible-questions-api.herokuapp.com/?QID='+bonusQuestionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
@@ -275,8 +279,7 @@ current content of the editor to the server. */
             <h1>Answer: { answer_question_text }</h1>
           </div>
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
-          <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}
-          <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
+          <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}          
           <label htmlFor="roundSelector">Choose a quiz number:</label>
           <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
             <option value="1">1</option>
