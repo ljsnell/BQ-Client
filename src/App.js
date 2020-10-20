@@ -124,10 +124,6 @@ current content of the editor to the server. */
   });
 }
 
-componentDidMount() {
-  setInterval(() => this.startQuiz(),1000)
-}
-
   startQuiz() {
     var {
       q_text_to_display,
@@ -280,6 +276,7 @@ componentDidMount() {
           </div>
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}          
+          <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
           <label htmlFor="roundSelector">Choose a quiz number:</label>
           <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
             <option value="1">1</option>
@@ -343,7 +340,7 @@ componentDidMount() {
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz 1.6</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.7</NavbarBrand>
         </Navbar>
         <div>
           User Name:
