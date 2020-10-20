@@ -343,7 +343,7 @@ componentDidMount() {
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz 1.5</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.6</NavbarBrand>
         </Navbar>
         <div>
           User Name:
