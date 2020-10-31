@@ -36,6 +36,9 @@ class App extends Component {
       timer: 0
     };
   }
+  
+  play_audio = true
+
   // Question iterators
   questionNumber = 0
   bonusQuestionNumber = 0
@@ -74,8 +77,14 @@ current content of the editor to the server. */
   }));
 };
 
+  mute() {
+    this.play_audio = !this.play_audio
+  }
+
  componentWillMount() {
    var session = this;
+   console.log('session')
+   console.log(session)
    
    client.on('contentchange', function(message) {
       const dataFromServer = message
@@ -85,15 +94,18 @@ current content of the editor to the server. */
       stateToChange.full_question_text = dataFromServer.full_question_text
       
       // Speaks the text aloud.
-      var msg = new SpeechSynthesisUtterance();
-      var voices = window.speechSynthesis.getVoices();
-      msg.voice = voices[1]; // Note: some voices don't support altering params
-      msg.voiceURI = 'native';
-      msg.rate = 2.3; // 0.1 to 10
-      var tts = dataFromServer.question.split(" ")
-      msg.text = tts[tts.length-2]
-      msg.lang = 'en-US';
-      speechSynthesis.speak(msg);
+      if(session.play_audio === true) {
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[1]; // Note: some voices don't support altering params
+        msg.voiceURI = 'native';
+        msg.rate = 2.3; // 0.1 to 10
+        var tts = dataFromServer.question.split(" ")
+        msg.text = tts[tts.length-2]
+        msg.lang = 'en-US';
+        speechSynthesis.speak(msg);
+      }
+      
       session.setState({
         ...stateToChange
       });
@@ -261,7 +273,7 @@ current content of the editor to the server. */
         this.setState({timer: timer})
       }
     }, 1000);
-  }
+  }  
 
   showQuizMasterSection = () => {    
     var { username, full_question_text, answer_question_text, timer } = this.state
@@ -293,14 +305,19 @@ current content of the editor to the server. */
       )
     }
   }
-
+  
+  /*eslint-disable */
+  // Disabling linting so I can toss an emoji in without hassle.
   showQuizzerSection = () => {    
     return (
       <div className="quizzer-section">
         <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}        
+        <Button onClick={()=>this.mute()} variant="secondary">🔇</Button>{' '}
+        
       </div>
     )
   }
+  /*eslint-enable */
   
   showScoringSection = () => {
     var {username} = this.state
