@@ -335,7 +335,8 @@ current content of the editor to the server. */
     const {
       q_text_to_display,
       team1Score,
-      team2Score
+      team2Score,
+      room
     } = this.state;
 
     return (
@@ -346,6 +347,9 @@ current content of the editor to the server. */
         <div>
           User Name:
           <input onChange={evt =>this.handleChange(evt)} />
+        </div>
+        <div>
+          Current Room: { room }
         </div>
         <br></br>
         <div>
