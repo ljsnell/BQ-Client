@@ -273,6 +273,7 @@ current content of the editor to the server. */
           </div>
           <div>
             <h1>Answer: { answer_question_text }</h1>
+            <h1>Question #: { this.questionNumber } </h1>
           </div>
           <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
           <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}          
@@ -340,7 +341,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz 1.7</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.8</NavbarBrand>
         </Navbar>
         <div>
           User Name:
@@ -348,7 +349,7 @@ current content of the editor to the server. */
         </div>
         <br></br>
         <div>
-          <h1>Question: { q_text_to_display }</h1>
+          <h1>Question: { q_text_to_display }</h1>          
         </div>
         <div className="container-fluid">
           <br></br>
