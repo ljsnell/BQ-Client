@@ -79,7 +79,6 @@ current content of the editor to the server. */
 
   mute() {
     this.play_audio = !this.play_audio
-    console.log(this.play_audio)
   }
 
  componentWillMount() {
