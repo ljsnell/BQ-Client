@@ -59,6 +59,18 @@ class App extends Component {
   questionIDs = this.questionIDs1
   bonusQuestionIDs = this.bonusQuestionIDs1
 
+  footer_style = {
+    backgroundColor: "Black",
+    borderTop: "1px solid #E7E7E7",
+    textAlign: "center",
+    padding: "20px",
+    position: "fixed",
+    left: "0",
+    bottom: "0",
+    height: "60px",
+    width: "100%"
+  }
+
   /* When content changes, we send the
 current content of the editor to the server. */
  sync = (q_text_to_display, full_question_text, room_id) => {
@@ -273,8 +285,8 @@ current content of the editor to the server. */
         this.setState({timer: timer})
       }
     }, 1000);
-  }  
-
+  }
+  
   showQuizMasterSection = () => {    
     var { username, full_question_text, answer_question_text, timer } = this.state
     if(username === 'quizmaster') {
@@ -302,17 +314,14 @@ current content of the editor to the server. */
       )
     }
   }
-  
-  /*eslint-disable */
-  // Disabling linting so I can toss an emoji in without hassle.
-  showQuizzerSection = () => {    
+    
+  showQuizzerSection = () => { 
     return (
       <div className="quizzer-section">
-        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
+        <Button onClick={()=>this.jump()} variant="secondary" style={this.footer_style}>Jump</Button>{' '}
       </div>
     )
   }
-  /*eslint-enable */
   
   showScoringSection = () => {
     var {username} = this.state
@@ -369,7 +378,7 @@ current content of the editor to the server. */
         </div>
         <div className="container-fluid">
           <br></br>
-          <footer>{this.showQuizzerSection()}</footer>          
+          {this.showQuizzerSection()}  
           {this.showQuizMasterSection()}
           <br></br>          
         </div>
@@ -393,8 +402,8 @@ current content of the editor to the server. */
           </tbody>
         </table>
         <br></br>
-        {this.showScoringSection()}
-        <Button onClick={()=>this.mute()} variant="secondary">🔇</Button>{' '}
+        {this.showScoringSection()}        
+        <Button onClick={()=>this.mute()} variant="secondary">Mute Question Audio</Button>{' '}        
       </React.Fragment>
     );
   }
