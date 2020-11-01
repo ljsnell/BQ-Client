@@ -297,10 +297,7 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          <br></br>
-          <br></br>
-          <Button onClick={()=>this.startCountUp()} variant="secondary">Start Timer</Button>{' '}          
-          <h1>{ timer }</h1>
+          <br></br> 
         </div>
       )
     }
@@ -311,9 +308,7 @@ current content of the editor to the server. */
   showQuizzerSection = () => {    
     return (
       <div className="quizzer-section">
-        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}        
-        <Button onClick={()=>this.mute()} variant="secondary">🔇</Button>{' '}
-        
+        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}
       </div>
     )
   }
@@ -368,15 +363,15 @@ current content of the editor to the server. */
         <div>
           Current Room: { room }
         </div>
-        <br></br>
+        <br></br>        
         <div>
-          <h1>Question: { q_text_to_display }</h1>          
+          <h1>Question: { q_text_to_display }</h1>
         </div>
         <div className="container-fluid">
           <br></br>
+          <footer>{this.showQuizzerSection()}</footer>          
           {this.showQuizMasterSection()}
-          <br></br>
-          {this.showQuizzerSection()}
+          <br></br>          
         </div>
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
@@ -399,6 +394,7 @@ current content of the editor to the server. */
         </table>
         <br></br>
         {this.showScoringSection()}
+        <Button onClick={()=>this.mute()} variant="secondary">🔇</Button>{' '}
       </React.Fragment>
     );
   }
