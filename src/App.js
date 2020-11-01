@@ -45,16 +45,16 @@ class App extends Component {
 
   // Quiz Questions
   questionIDs1 = [674, 626, 504, 3331, 524, 97, 304, 3180, 198, 134, 3215, 321, 294, 3389, 459, 47, 322, 686, 49, 3310]
-  bonusQuestionIDs1 = [76, 226, 83, 217, 3200, 261, 3258, 199, 56, 79]
+  bonusQuestionIDs1 = [3384, 514, 246, 3197, 3387, 3348, 398, 331, 467, 18, 3314, 590]
 
-  questionIDs2 = [67, 223, 3271, 3261, 236, 108, 133, 253, 89, 136, 75, 3259, 174, 3207, 228, 266, 247, 275, 116, 105]
-  bonusQuestionIDs2 = [94, 3187, 245, 256, 187, 51, 151, 280, 46, 3254]
+  questionIDs2 = [498, 3195, 3117, 424, 352, 277, 461, 552, 588, 316, 536, 3295, 600, 684, 93, 99, 70, 630, 110, 127]
+  bonusQuestionIDs2 = [423, 252, 3365, 474, 3330, 281, 688, 450, 3190, 678]
 
-  questionIDs3 = [3186, 209, 140, 175, 264, 113, 204, 197, 201, 98, 3263, 3214, 72, 163, 3183, 104, 252, 65, 177, 248]
-  bonusQuestionIDs3 = [260, 3179, 3256, 3197, 3184, 229, 246, 278, 3262, 3265]
+  questionIDs3 = [306, 3194, 3347, 615, 50, 3174, 3319, 707, 343, 3118, 605, 629, 190, 3320, 113, 3219, 596, 575, 175, 3287]
+  bonusQuestionIDs3 = [358, 291, 3382, 62, 445, 3367, 103, 469, 361, 309]
 
-  questionIDs4 = [225, 3195, 165, 3176, 187, 277, 3117, 169, 66, 273, 263, 74, 131, 246, 92, 3261, 3208, 99, 59, 3]
-  bonusQuestionIDs4 = [281, 18, 3191, 137, 265, 119, 93, 3260, 106, 198]
+  questionIDs4 = [189, 3205, 203, 133, 602, 622, 116, 451, 239, 420, 330, 3439, 617, 75, 606, 372, 223, 473, 509, 303]
+  bonusQuestionIDs4 = [80, 657, 646, 205, 94, 593, 109, 137, 186, 3376]
 
   questionIDs = this.questionIDs1
   bonusQuestionIDs = this.bonusQuestionIDs1
@@ -388,7 +388,7 @@ current content of the editor to the server. */
           <h3>Current Jumper: {this.state.jumper}</h3>
         </div>
         <br></br>
-        <div>
+        {/*<div>
           <h3>Score Board:</h3>
         </div>
         <table border = "1" style={{width: '50%'}}>
@@ -403,7 +403,7 @@ current content of the editor to the server. */
             </tr>
           </tbody>
         </table>
-        <br></br>
+        <br></br>*/}
         {this.showScoringSection()}        
         <Button onClick={()=>this.mute()} variant="secondary">Mute Question Audio</Button>{' '}        
       </React.Fragment>
