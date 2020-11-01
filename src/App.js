@@ -59,6 +59,18 @@ class App extends Component {
   questionIDs = this.questionIDs1
   bonusQuestionIDs = this.bonusQuestionIDs1
 
+  footer_style = {
+    backgroundColor: "Black",
+    borderTop: "1px solid #E7E7E7",
+    textAlign: "center",
+    padding: "20px",
+    position: "fixed",
+    left: "0",
+    bottom: "0",
+    height: "60px",
+    width: "100%"
+  }
+
   /* When content changes, we send the
 current content of the editor to the server. */
  sync = (q_text_to_display, full_question_text, room_id) => {
@@ -273,8 +285,8 @@ current content of the editor to the server. */
         this.setState({timer: timer})
       }
     }, 1000);
-  }  
-
+  }
+  
   showQuizMasterSection = () => {    
     var { username, full_question_text, answer_question_text, timer } = this.state
     if(username === 'quizmaster') {
@@ -297,27 +309,19 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          <br></br>
-          <br></br>
-          <Button onClick={()=>this.startCountUp()} variant="secondary">Start Timer</Button>{' '}          
-          <h1>{ timer }</h1>
+          <br></br> 
         </div>
       )
     }
   }
-  
-  /*eslint-disable */
-  // Disabling linting so I can toss an emoji in without hassle.
-  showQuizzerSection = () => {    
+    
+  showQuizzerSection = () => { 
     return (
       <div className="quizzer-section">
-        <Button onClick={()=>this.jump()} variant="secondary">Jump</Button>{' '}        
-        <Button onClick={()=>this.mute()} variant="secondary">🔇</Button>{' '}
-        
+        <Button onClick={()=>this.jump()} variant="secondary" style={this.footer_style}>Jump</Button>{' '}
       </div>
     )
   }
-  /*eslint-enable */
   
   showScoringSection = () => {
     var {username} = this.state
@@ -368,15 +372,15 @@ current content of the editor to the server. */
         <div>
           Current Room: { room }
         </div>
-        <br></br>
+        <br></br>        
         <div>
-          <h1>Question: { q_text_to_display }</h1>          
+          <h1>Question: { q_text_to_display }</h1>
         </div>
         <div className="container-fluid">
           <br></br>
+          {this.showQuizzerSection()}  
           {this.showQuizMasterSection()}
-          <br></br>
-          {this.showQuizzerSection()}
+          <br></br>          
         </div>
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
@@ -398,7 +402,8 @@ current content of the editor to the server. */
           </tbody>
         </table>
         <br></br>
-        {this.showScoringSection()}
+        {this.showScoringSection()}        
+        <Button onClick={()=>this.mute()} variant="secondary">Mute Question Audio</Button>{' '}        
       </React.Fragment>
     );
   }
