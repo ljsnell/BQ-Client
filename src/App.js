@@ -44,7 +44,7 @@ class App extends Component {
   bonusQuestionNumber = 0
 
   // Quiz Questions
-  questionIDs1 = [184, 97, 115, 152, 3193, 3268, 88, 110, 277, 3206, 238, 47, 160, 50, 3277, 95, 63, 49, 17, 190]
+  questionIDs1 = [674, 626, 504, 3331, 524, 97, 304, 3180, 198, 134, 3215, 321, 294, 3389, 459, 47, 322, 686, 49, 3310]
   bonusQuestionIDs1 = [76, 226, 83, 217, 3200, 261, 3258, 199, 56, 79]
 
   questionIDs2 = [67, 223, 3271, 3261, 236, 108, 133, 253, 89, 136, 75, 3259, 174, 3207, 228, 266, 247, 275, 116, 105]
@@ -173,16 +173,18 @@ current content of the editor to the server. */
       jumper,
       room
     } = this.state
-    console.log('jumper:')
-    console.log(jumper) 
-    // If jumper is null nobody has jumped on the question and we'll
-    // allow an update.
-    if(jumper == null) {
-      this.question_array = full_question_text.split(" ")
-      this.setState({username: username})
-      this.i = this.question_array.length
-      this.syncJump(this.i, room)
-    }
+    if(username.length === 0) {
+      alert("Please enter your username in the User Name box (top of the page). E.G. 1-Jeff");      
+    } // If jumper is null nobody has jumped on the question and we'll
+      // allow an update.
+    else {
+      if(jumper == null) {
+        this.question_array = full_question_text.split(" ")
+        this.setState({username: username})
+        this.i = this.question_array.length
+        this.syncJump(this.i, room)
+      }
+    }    
   }
 
   nextQuestion() {
