@@ -7,10 +7,9 @@ import {
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
-// https://cloud.google.com/community/tutorials/deploy-react-nginx-cloud-run
-// Deploy commands
-// 1. gcloud config set project promising-lamp-284223
-// 2. gcloud app deploy
+import globals from './globals'
+
+const QUIZZES = globals.QUIZ_GLOBAL
 
 // Websocket server
 // var server = 'http://127.0.0.1:8000/'
@@ -43,21 +42,9 @@ class App extends Component {
   questionNumber = 0
   bonusQuestionNumber = 0
 
-  // Quiz Questions
-  questionIDs1 = [674, 626, 504, 3331, 524, 97, 304, 3180, 198, 134, 3215, 321, 294, 3389, 459, 47, 322, 686, 49, 3310]
-  bonusQuestionIDs1 = [3384, 514, 246, 3197, 3387, 3348, 398, 331, 467, 18, 3314, 590]
-
-  questionIDs2 = [498, 3195, 3117, 424, 352, 277, 461, 552, 588, 316, 536, 3295, 600, 684, 93, 99, 70, 630, 110, 127]
-  bonusQuestionIDs2 = [423, 252, 3365, 474, 3330, 281, 688, 450, 3190, 678]
-
-  questionIDs3 = [306, 3194, 3347, 615, 50, 3174, 3319, 707, 343, 3118, 605, 629, 190, 3320, 113, 3219, 596, 575, 175, 3287]
-  bonusQuestionIDs3 = [358, 291, 3382, 62, 445, 3367, 103, 469, 361, 309]
-
-  questionIDs4 = [189, 3205, 203, 133, 602, 622, 116, 451, 239, 420, 330, 3439, 617, 75, 606, 372, 223, 473, 509, 303]
-  bonusQuestionIDs4 = [80, 657, 646, 205, 94, 593, 109, 137, 186, 3376]
-
-  questionIDs = this.questionIDs1
-  bonusQuestionIDs = this.bonusQuestionIDs1
+  // Quiz Questions    
+  questionIDs = QUIZZES.quiz1.qs
+  bonusQuestionIDs = QUIZZES.quiz1.bonus
 
   footer_style = {
     backgroundColor: "Black",
@@ -251,23 +238,11 @@ current content of the editor to the server. */
     console.log('selectedQuizNumber')
     console.log(selectedQuizNumber)
     this.setState({quizNumber: selectedQuizNumber})
+    
+    let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
 
-    if(selectedQuizNumber==="1") {
-      this.questionIDs = this.questionIDs1
-      this.bonusQuestionIDs = this.bonusQuestionIDs1
-    }
-    else if(selectedQuizNumber==="2") {
-      this.questionIDs = this.questionIDs2
-      this.bonusQuestionIDs = this.bonusQuestionIDs2
-    }
-    else if(selectedQuizNumber==="3") {
-      this.questionIDs = this.questionIDs3
-      this.bonusQuestionIDs = this.bonusQuestionIDs3
-    }
-    else if(selectedQuizNumber==="4") {
-      this.questionIDs = this.questionIDs4
-      this.bonusQuestionIDs = this.bonusQuestionIDs4
-    }
+    this.questionIDs = selected_quiz.qs
+    this.bonusQuestionIDs = selected_quiz.bonus    
   }
   
   startCountUp() {
