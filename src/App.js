@@ -8,6 +8,7 @@ import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 import globals from './globals'
+import { fetchQuestion } from './webserviceCalls';
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -179,7 +180,7 @@ current content of the editor to the server. */
       var questionID = this.questionIDs[this.questionNumber]
       console.log('question number:')
       console.log(this.questionNumber)
-      fetch('https://bible-questions-api.herokuapp.com/?QID='+questionID)
+      fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
@@ -201,7 +202,7 @@ current content of the editor to the server. */
       var bonusQuestionID = this.bonusQuestionIDs[this.bonusQuestionNumber]
       console.log('bonus question number:')
       console.log(this.bonusQuestionNumber)
-      fetch('https://bible-questions-api.herokuapp.com/?QID='+bonusQuestionID)
+      fetchQuestion(bonusQuestionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
@@ -215,7 +216,7 @@ current content of the editor to the server. */
     } else {
       this.setState({q_text_to_display: "*** Out of bonus questions :/ ***"})
       this.setState({full_question_text: "*** Out of bonus questions :/ ***"})
-    }    
+    }
   }
 
   addScore(teamNumber, pointsToAdd) {
