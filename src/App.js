@@ -8,6 +8,7 @@ import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 import globals from './globals'
+import { fetchQuestion } from './webserviceCalls';
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -35,7 +36,7 @@ class App extends Component {
       timer: 0
     };
   }
-  
+
   play_audio = true
 
   // Question iterators
@@ -60,80 +61,80 @@ class App extends Component {
 
   /* When content changes, we send the
 current content of the editor to the server. */
- sync = (q_text_to_display, full_question_text, room_id) => {
-   client.emit('contentchange', JSON.stringify({
-     content: q_text_to_display,
-     full_question_text: full_question_text,
-     room: room_id
-   }));
- };
+  sync = (q_text_to_display, full_question_text, room_id) => {
+    client.emit('contentchange', JSON.stringify({
+      content: q_text_to_display,
+      full_question_text: full_question_text,
+      room: room_id
+    }));
+  };
 
- syncJump = (i, room_id) => {
-  client.emit('jump', JSON.stringify({
-    username: this.state.username,
-    i: i,
-    room: room_id
-  }));
-};
+  syncJump = (i, room_id) => {
+    client.emit('jump', JSON.stringify({
+      username: this.state.username,
+      i: i,
+      room: room_id
+    }));
+  };
 
   mute() {
     this.play_audio = !this.play_audio
   }
 
- componentWillMount() {
-   var session = this;
-   console.log('session')
-   console.log(session)
-   
-   client.on('contentchange', function(message) {
+  componentWillMount() {
+    var session = this;
+    console.log('session')
+    console.log(session)
+
+    client.on('contentchange', function (message) {
       const dataFromServer = message
       const stateToChange = {};
       stateToChange.jumper = dataFromServer.username
       stateToChange.q_text_to_display = dataFromServer.question
       stateToChange.full_question_text = dataFromServer.full_question_text
-      
+
       // Speaks the text aloud.
-      if(session.play_audio === true) {
+      if (session.play_audio === true) {
         var msg = new SpeechSynthesisUtterance();
         var voices = window.speechSynthesis.getVoices();
         msg.voice = voices[1]; // Note: some voices don't support altering params
         msg.voiceURI = 'native';
         msg.rate = 2.3; // 0.1 to 10
         var tts = dataFromServer.question.split(" ")
-        msg.text = tts[tts.length-2]
+        msg.text = tts[tts.length - 2]
         msg.lang = 'en-US';
         speechSynthesis.speak(msg);
       }
-      
+
       session.setState({
         ...stateToChange
       });
-  });
-
-  client.on('jump', function(message) {
-    const dataFromServer = message;
-    const stateToChange = {};    
-    stateToChange.jumper = dataFromServer.username    
-    console.log(stateToChange.jumper)
-    stateToChange.i = dataFromServer.i;
-
-    session.setState({
-      ...stateToChange
     });
-  });
 
-  client.on('score', function(message) {
-    console.log('in score!')
-    const dataFromServer = message;
-    const stateToChange = {};    
-    stateToChange.team1Score = dataFromServer.team1Score
-    stateToChange.team2Score = dataFromServer.team2Score
+    client.on('jump', function (message) {
+      const dataFromServer = message;
+      const stateToChange = {};
+      stateToChange.jumper = dataFromServer.username
+      console.log(stateToChange.jumper)
+      stateToChange.i = dataFromServer.i;
 
-    session.setState({
-      ...stateToChange
+      session.setState({
+        ...stateToChange
+      });
     });
-  });
-}
+
+    client.on('score', function (message) {
+      console.log('in score!')
+      const dataFromServer = message;
+      const stateToChange = {};
+      stateToChange.team1Score = dataFromServer.team1Score
+      stateToChange.team2Score = dataFromServer.team2Score
+
+      session.setState({
+        ...stateToChange
+      });
+    });
+  }
 
   startQuiz() {
     var {
@@ -145,12 +146,11 @@ current content of the editor to the server. */
 
     this.question_array = full_question_text.split(" ")
     if (i < this.question_array.length) {
-        q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
-        i++
-        this.setState({ q_text_to_display: q_text_to_display, i: i })
-        this.setState({full_question_text: full_question_text})
-        this.sync(q_text_to_display, full_question_text, room)
-      }
+      q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
+      i++
+      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text })      
+      this.sync(q_text_to_display, full_question_text, room)
+    }
   }
 
   jump() {
@@ -160,72 +160,56 @@ current content of the editor to the server. */
       jumper,
       room
     } = this.state
-    if(username.length === 0) {
-      alert("Please enter your username in the User Name box (top of the page). E.G. 1-Jeff");      
+    if (username.length === 0) {
+      alert("Please enter your username in the User Name box (top of the page). E.G. 1-Jeff");
     } // If jumper is null nobody has jumped on the question and we'll
-      // allow an update.
+    // allow an update.
     else {
-      if(jumper == null) {
+      if (jumper == null) {
         this.question_array = full_question_text.split(" ")
-        this.setState({username: username})
+        this.setState({ username: username })
         this.i = this.question_array.length
         this.syncJump(this.i, room)
       }
-    }    
+    }
   }
 
-  nextQuestion() {
-    if(this.questionNumber < this.questionIDs.length) {
-      var questionID = this.questionIDs[this.questionNumber]
+  async nextQuestion(isBonus, questionNumber) {
+    let questionsList = isBonus ? this.bonusQuestionIDs : this.questionIDs
+    if (questionNumber < questionsList.length) {
+      var questionID = questionsList[questionNumber]
       console.log('question number:')
-      console.log(this.questionNumber)
-      fetch('https://bible-questions-api.herokuapp.com/?QID='+questionID)
+      console.log(questionNumber)
+      await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
-          this.setState({full_question_text: data[0]})
-          this.setState({answer_question_text: data[1]})
           this.i = 0
-          this.setState({q_text_to_display: " "})
-          this.setState({i:this.i})
-          this.questionNumber++
+          this.setState({
+            full_question_text: data[0],
+            answer_question_text: data[1],
+            q_text_to_display: " ",
+            i: this.i
+          })
+          if (isBonus) this.bonusQuestionNumber++
+          else this.questionNumber++
         });
     } else {
-      this.setState({q_text_to_display: "*** End of the quiz! "})
-      this.setState({full_question_text: "*** End of the quiz! ***"})
-    }    
-  }
-
-  bonusQuestion() {
-    if(this.bonusQuestionNumber < this.bonusQuestionIDs.length) {
-      var bonusQuestionID = this.bonusQuestionIDs[this.bonusQuestionNumber]
-      console.log('bonus question number:')
-      console.log(this.bonusQuestionNumber)
-      fetch('https://bible-questions-api.herokuapp.com/?QID='+bonusQuestionID)
-        .then(res => res.json()).then((data) => {
-          console.log('question from api!')
-          console.log(data)
-          this.setState({full_question_text: data[0]})
-          this.setState({answer_question_text: data[1]})
-          this.i = 0
-          this.setState({q_text_to_display: " "})
-          this.setState({i:this.i})
-          this.bonusQuestionNumber++
-        });
-    } else {
-      this.setState({q_text_to_display: "*** Out of bonus questions :/ ***"})
-      this.setState({full_question_text: "*** Out of bonus questions :/ ***"})
-    }    
+      this.setState({
+        q_text_to_display: "*** Out of bonus questions :/ ***",
+        full_question_text: "*** Out of bonus questions :/ ***"
+      })
+    }
   }
 
   addScore(teamNumber, pointsToAdd) {
     var { team1Score, team2Score, room } = this.state
-    if(teamNumber===1) {
+    if (teamNumber === 1) {
       team1Score += pointsToAdd
-      this.setState({team1Score: team1Score})
+      this.setState({ team1Score: team1Score })
     } else {
-      team2Score +=pointsToAdd
-      this.setState({team2Score: team2Score})      
+      team2Score += pointsToAdd
+      this.setState({ team2Score: team2Score })
     }
     client.emit('score', JSON.stringify({
       team1Score: team1Score,
@@ -237,48 +221,48 @@ current content of the editor to the server. */
   setQuizNumber(selectedQuizNumber) {
     console.log('selectedQuizNumber')
     console.log(selectedQuizNumber)
-    this.setState({quizNumber: selectedQuizNumber})
-    
+    this.setState({ quizNumber: selectedQuizNumber })
+
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
 
     this.questionIDs = selected_quiz.qs
-    this.bonusQuestionIDs = selected_quiz.bonus    
+    this.bonusQuestionIDs = selected_quiz.bonus
   }
-  
+
   startCountUp() {
     var { timer, full_question_text } = this.state
     timer = 0;
     var max_count = 30
-    if (full_question_text.includes('Finish the Verse') || 
+    if (full_question_text.includes('Finish the Verse') ||
       full_question_text.includes('Multiple Part Answer')) {
       max_count = 45
     }
     const interval = setInterval(() => {
       timer++;
-      this.setState({timer: timer})
+      this.setState({ timer: timer })
       if (timer > max_count) {
         clearInterval(interval);
         timer = "Time's up!"
-        this.setState({timer: timer})
+        this.setState({ timer: timer })
       }
     }, 1000);
   }
-  
-  showQuizMasterSection = () => {    
+
+  showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, timer } = this.state
-    if(username === 'quizmaster') {
+    if (username === 'quizmaster') {
       return (
         <div className="main-content">
           <div>
-            <h1>Full Question: { full_question_text }</h1>
+            <h1>Full Question: {full_question_text}</h1>
           </div>
           <div>
-            <h1>Answer: { answer_question_text }</h1>
-            <h1>Question #: { this.questionNumber } </h1>
+            <h1>Answer: {answer_question_text}</h1>
+            <h1>Question #: {this.questionNumber} </h1>
           </div>
-          <Button onClick={()=>this.nextQuestion()} variant="secondary">Next Question</Button>{' '}
-          <Button onClick={()=>this.bonusQuestion()} variant="secondary">Bonus Question</Button>{' '}          
-          <Button onClick={()=>setInterval(() => this.startQuiz(),1000)} variant="secondary">Start Quiz</Button>{' '}
+          <Button onClick={() => this.nextQuestion(false, this.questionNumber)} variant="secondary">Next Question</Button>{' '}
+          <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)} variant="secondary">Bonus Question</Button>{' '}
+          <Button onClick={() => setInterval(() => this.startQuiz(), 1000)} variant="secondary">Start Quiz</Button>{' '}
           <label htmlFor="roundSelector">Choose a quiz number:</label>
           <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
             <option value="1">1</option>
@@ -286,37 +270,37 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          <br></br> 
+          <br></br>
         </div>
       )
     }
   }
-    
-  showQuizzerSection = () => { 
+
+  showQuizzerSection = () => {
     return (
       <div className="quizzer-section">
-        <Button onClick={()=>this.jump()} variant="secondary" style={this.footer_style}>Jump</Button>{' '}
+        <Button onClick={() => this.jump()} variant="secondary" style={this.footer_style}>Jump</Button>{' '}
       </div>
     )
   }
-  
+
   showScoringSection = () => {
-    var {username} = this.state
-    if(username === 'scorekeeper') {
+    var { username } = this.state
+    if (username === 'scorekeeper') {
       return (
         <div className="main-content">
           <h1>Scoring Section:</h1>
           <br></br>
-          <Button onClick={()=>this.addScore(1, 20)} variant="secondary">Team 1: 20</Button>{' '}
-          <Button onClick={()=>this.addScore(2, 20)} variant="secondary">Team 2: 20</Button>{' '}
+          <Button onClick={() => this.addScore(1, 20)} variant="secondary">Team 1: 20</Button>{' '}
+          <Button onClick={() => this.addScore(2, 20)} variant="secondary">Team 2: 20</Button>{' '}
           <br></br>
           <br></br>
-          <Button onClick={()=>this.addScore(1, 10)} variant="secondary">Team 1: 10</Button>{' '}
-          <Button onClick={()=>this.addScore(2, 10)} variant="secondary">Team 2: 10</Button>{' '}
+          <Button onClick={() => this.addScore(1, 10)} variant="secondary">Team 1: 10</Button>{' '}
+          <Button onClick={() => this.addScore(2, 10)} variant="secondary">Team 2: 10</Button>{' '}
           <br></br>
           <br></br>
-          <Button onClick={()=>this.addScore(1, -10)} variant="secondary">Team 1: -10</Button>{' '}
-          <Button onClick={()=>this.addScore(2, -10)} variant="secondary">Team 2: -10</Button>{' '}
+          <Button onClick={() => this.addScore(1, -10)} variant="secondary">Team 1: -10</Button>{' '}
+          <Button onClick={() => this.addScore(2, -10)} variant="secondary">Team 2: -10</Button>{' '}
           <br></br>
           <br></br>
         </div>
@@ -325,7 +309,7 @@ current content of the editor to the server. */
   }
 
   handleChange(event) {
-    this.setState({username: event.target.value});
+    this.setState({ username: event.target.value });
     this.showQuizMasterSection()
   }
 
@@ -344,20 +328,20 @@ current content of the editor to the server. */
         </Navbar>
         <div>
           User Name:
-          <input onChange={evt =>this.handleChange(evt)} />
+          <input onChange={evt => this.handleChange(evt)} />
         </div>
         <div>
-          Current Room: { room }
+          Current Room: {room}
         </div>
-        <br></br>        
+        <br></br>
         <div>
-          <h1>Question: { q_text_to_display }</h1>
+          <h1>Question: {q_text_to_display}</h1>
         </div>
         <div className="container-fluid">
           <br></br>
-          {this.showQuizzerSection()}  
+          {this.showQuizzerSection()}
           {this.showQuizMasterSection()}
-          <br></br>          
+          <br></br>
         </div>
         <div>
           <h3>Current Jumper: {this.state.jumper}</h3>
@@ -379,8 +363,8 @@ current content of the editor to the server. */
           </tbody>
         </table>
         <br></br>*/}
-        {this.showScoringSection()}        
-        <Button onClick={()=>this.mute()} variant="secondary">Mute Question Audio</Button>{' '}        
+        {this.showScoringSection()}
+        <Button onClick={() => this.mute()} variant="secondary">Mute Question Audio</Button>{' '}
       </React.Fragment>
     );
   }
