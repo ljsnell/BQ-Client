@@ -148,8 +148,7 @@ current content of the editor to the server. */
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
-      this.setState({ q_text_to_display: q_text_to_display, i: i })
-      this.setState({ full_question_text: full_question_text })
+      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text })      
       this.sync(q_text_to_display, full_question_text, room)
     }
   }
