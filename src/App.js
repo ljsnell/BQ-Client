@@ -33,12 +33,11 @@ class App extends Component {
       team1Score: 0,
       team2Score: 0,
       quizNumber: 1,
-      timer: 0
+      timer: 0,
+      play_audio: true
     };
   }
-
-  play_audio = true
-
+  
   // Question iterators
   questionNumber = 0
   bonusQuestionNumber = 0
@@ -78,7 +77,8 @@ current content of the editor to the server. */
   };
 
   mute() {
-    this.play_audio = !this.play_audio
+    this.state.play_audio = !this.state.play_audio
+    this.setState({play_audio: this.state.play_audio})
   }
 
   componentWillMount() {
@@ -94,7 +94,7 @@ current content of the editor to the server. */
       stateToChange.full_question_text = dataFromServer.full_question_text
 
       // Speaks the text aloud.
-      if (session.play_audio === true) {
+      if (session.state.play_audio === true) {
         var msg = new SpeechSynthesisUtterance();
         var voices = window.speechSynthesis.getVoices();
         msg.voice = voices[1]; // Note: some voices don't support altering params
@@ -362,9 +362,10 @@ current content of the editor to the server. */
             </tr>
           </tbody>
         </table>
-        <br></br>*/}
-        {this.showScoringSection()}
+        <br></br>
+        {this.showScoringSection()}*/}
         <Button onClick={() => this.mute()} variant="secondary">Mute Question Audio</Button>{' '}
+        <h3>Audio Enabled: {this.state.play_audio.toString()}</h3>
       </React.Fragment>
     );
   }
