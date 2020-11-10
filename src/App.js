@@ -17,13 +17,17 @@ const QUIZZES = globals.QUIZ_GLOBAL
 var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
-var client = io.connect(server).emit('room', user_room);
+var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
+var client = io.connect(server).emit('room', JSON.stringify({
+  room: user_room,
+  username: entered_username
+  }));
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props);    
     this.state = {
-      username: '',
+      username: entered_username,
       jumper: '',
       q_text_to_display: "",
       i: 0,
@@ -34,10 +38,16 @@ class App extends Component {
       team2Score: 0,
       quizNumber: 1,
       timer: 0,
-      play_audio: true
-    };
+      play_audio: true,
+      quizzers_in_room: []
+    };    
   }
-  
+
+  handleChange(entered_username) {
+    this.setState({ username: entered_username });
+    this.showQuizMasterSection()
+  }
+
   // Question iterators
   questionNumber = 0
   bonusQuestionNumber = 0
@@ -56,6 +66,10 @@ class App extends Component {
     bottom: "0",
     height: "60px",
     width: "100%"
+  }
+
+  start_quiz_button_style = {
+    backgroundColor: "Black"
   }
 
   /* When content changes, we send the
@@ -133,6 +147,12 @@ current content of the editor to the server. */
       session.setState({
         ...stateToChange
       });
+    });
+
+    client.on('joined', function (message) {
+      console.log('Joined!')
+      console.log(message)      
+      session.setState({ quizzers_in_room: message })
     });
   }
 
@@ -258,6 +278,10 @@ current content of the editor to the server. */
     }, 1000);
   }
 
+  clearAttendeeList() {
+    client.emit('clear_room', JSON.stringify({ room: this.state.room }))
+  }
+
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, timer } = this.state
     if (username === 'quizmaster') {
@@ -270,9 +294,9 @@ current content of the editor to the server. */
             <h1>Answer: {answer_question_text}</h1>
             <h1>Question #: {this.questionNumber} </h1>
           </div>
-          <Button onClick={() => this.nextQuestion(false, this.questionNumber)} variant="secondary">Next Question</Button>{' '}
-          <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)} variant="secondary">Bonus Question</Button>{' '}
-          <Button onClick={() => setInterval(() => this.startQuiz(), 1000)} variant="secondary">Start Quiz</Button>{' '}
+          <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
+          <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
+          <Button onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
           <label htmlFor="roundSelector">Choose a quiz number:</label>
           <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
             <option value="1">1</option>
@@ -280,6 +304,8 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
+          <h4>Quizzers in room: { this.state.quizzers_in_room.join(', ') }</h4>
+          <Button onClick={() => this.clearAttendeeList()}>Clear Quizzer List</Button>{' '}
           <br></br>
         </div>
       )
@@ -289,7 +315,7 @@ current content of the editor to the server. */
   showQuizzerSection = () => {
     return (
       <div className="quizzer-section">
-        <Button onClick={() => this.jump()} variant="secondary" style={this.footer_style}>Jump</Button>{' '}
+        <Button onClick={() => this.jump()} style={this.footer_style}>Jump</Button>{' '}
       </div>
     )
   }
@@ -301,16 +327,16 @@ current content of the editor to the server. */
         <div className="main-content">
           <h1>Scoring Section:</h1>
           <br></br>
-          <Button onClick={() => this.addScore(1, 20)} variant="secondary">Team 1: 20</Button>{' '}
-          <Button onClick={() => this.addScore(2, 20)} variant="secondary">Team 2: 20</Button>{' '}
+          <Button onClick={() => this.addScore(1, 20)}>Team 1: 20</Button>{' '}
+          <Button onClick={() => this.addScore(2, 20)}>Team 2: 20</Button>{' '}
           <br></br>
           <br></br>
-          <Button onClick={() => this.addScore(1, 10)} variant="secondary">Team 1: 10</Button>{' '}
-          <Button onClick={() => this.addScore(2, 10)} variant="secondary">Team 2: 10</Button>{' '}
+          <Button onClick={() => this.addScore(1, 10)}>Team 1: 10</Button>{' '}
+          <Button onClick={() => this.addScore(2, 10)}>Team 2: 10</Button>{' '}
           <br></br>
           <br></br>
-          <Button onClick={() => this.addScore(1, -10)} variant="secondary">Team 1: -10</Button>{' '}
-          <Button onClick={() => this.addScore(2, -10)} variant="secondary">Team 2: -10</Button>{' '}
+          <Button onClick={() => this.addScore(1, -10)}>Team 1: -10</Button>{' '}
+          <Button onClick={() => this.addScore(2, -10)}>Team 2: -10</Button>{' '}
           <br></br>
           <br></br>
         </div>
@@ -318,30 +344,24 @@ current content of the editor to the server. */
     }
   }
 
-  handleChange(event) {
-    this.setState({ username: event.target.value });
-    this.showQuizMasterSection()
-  }
-
   render() {
     const {
       q_text_to_display,
       team1Score,
       team2Score,
-      room
+      room,
+      username
     } = this.state;
-
     return (
       <React.Fragment>
         <Navbar color="light" light>
           <NavbarBrand href="/">Bible Quiz 1.8</NavbarBrand>
         </Navbar>
         <div>
-          User Name:
-          <input onChange={evt => this.handleChange(evt)} />
+          Current Room: <b>{room}</b>
         </div>
         <div>
-          Current Room: {room}
+          User Name: <b>{username}</b>
         </div>
         <br></br>
         <div>
@@ -374,7 +394,7 @@ current content of the editor to the server. */
         </table>
         <br></br>
         {this.showScoringSection()}*/}
-        <Button onClick={() => this.mute()} variant="secondary">Mute Question Audio</Button>{' '}
+        <Button onClick={() => this.mute()}>Mute Question Audio</Button>{' '}
         <h3>Audio Enabled: {this.state.play_audio.toString()}</h3>
       </React.Fragment>
     );
