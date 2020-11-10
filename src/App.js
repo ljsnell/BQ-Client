@@ -17,8 +17,11 @@ var server = 'http://127.0.0.1:8000/'
 // var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
-var client = io.connect(server).emit('room', user_room);
 var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
+var client = io.connect(server).emit('room', JSON.stringify({
+  room: user_room,
+  username: entered_username
+  }));
 
 class App extends Component {
   constructor(props) {
@@ -35,9 +38,9 @@ class App extends Component {
       team2Score: 0,
       quizNumber: 1,
       timer: 0,
-      play_audio: true
-    };
-    
+      play_audio: true,
+      quizzers_in_room: []
+    };    
   }
 
   handleChange(entered_username) {
@@ -140,6 +143,12 @@ current content of the editor to the server. */
       session.setState({
         ...stateToChange
       });
+    });
+
+    client.on('joined', function (message) {
+      console.log('Joined!')
+      console.log(message)      
+      session.setState({ quizzers_in_room: message })
     });
   }
 
@@ -287,6 +296,7 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
+          <h4>Quizzers in room: { this.state.quizzers_in_room.join(', ') }</h4>
           <br></br>
         </div>
       )
