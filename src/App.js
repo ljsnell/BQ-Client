@@ -13,8 +13,8 @@ import { fetchQuestion } from './webserviceCalls';
 const QUIZZES = globals.QUIZ_GLOBAL
 
 // Websocket server
-var server = 'http://127.0.0.1:8000/'
-// var server = 'wss://mysterious-journey-90036.herokuapp.com'
+// var server = 'http://127.0.0.1:8000/'
+var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
@@ -66,6 +66,10 @@ class App extends Component {
     bottom: "0",
     height: "60px",
     width: "100%"
+  }
+
+  start_quiz_button_style = {
+    backgroundColor: "Black"
   }
 
   /* When content changes, we send the
@@ -290,9 +294,9 @@ current content of the editor to the server. */
             <h1>Answer: {answer_question_text}</h1>
             <h1>Question #: {this.questionNumber} </h1>
           </div>
-          <Button onClick={() => this.nextQuestion(false, this.questionNumber)} variant="secondary">Next Question</Button>{' '}
-          <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)} variant="secondary">Bonus Question</Button>{' '}
-          <Button onClick={() => setInterval(() => this.startQuiz(), 1000)} variant="secondary">Start Quiz</Button>{' '}
+          <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
+          <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
+          <Button onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
           <label htmlFor="roundSelector">Choose a quiz number:</label>
           <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
             <option value="1">1</option>
@@ -301,7 +305,7 @@ current content of the editor to the server. */
             <option value="4">4</option>
           </select>
           <h4>Quizzers in room: { this.state.quizzers_in_room.join(', ') }</h4>
-          <Button onClick={() => this.clearAttendeeList()} variant="secondary">Clear Quizzer List</Button>{' '}
+          <Button onClick={() => this.clearAttendeeList()}>Clear Quizzer List</Button>{' '}
           <br></br>
         </div>
       )
@@ -311,7 +315,7 @@ current content of the editor to the server. */
   showQuizzerSection = () => {
     return (
       <div className="quizzer-section">
-        <Button onClick={() => this.jump()} variant="secondary" style={this.footer_style}>Jump</Button>{' '}
+        <Button onClick={() => this.jump()} style={this.footer_style}>Jump</Button>{' '}
       </div>
     )
   }
@@ -323,16 +327,16 @@ current content of the editor to the server. */
         <div className="main-content">
           <h1>Scoring Section:</h1>
           <br></br>
-          <Button onClick={() => this.addScore(1, 20)} variant="secondary">Team 1: 20</Button>{' '}
-          <Button onClick={() => this.addScore(2, 20)} variant="secondary">Team 2: 20</Button>{' '}
+          <Button onClick={() => this.addScore(1, 20)}>Team 1: 20</Button>{' '}
+          <Button onClick={() => this.addScore(2, 20)}>Team 2: 20</Button>{' '}
           <br></br>
           <br></br>
-          <Button onClick={() => this.addScore(1, 10)} variant="secondary">Team 1: 10</Button>{' '}
-          <Button onClick={() => this.addScore(2, 10)} variant="secondary">Team 2: 10</Button>{' '}
+          <Button onClick={() => this.addScore(1, 10)}>Team 1: 10</Button>{' '}
+          <Button onClick={() => this.addScore(2, 10)}>Team 2: 10</Button>{' '}
           <br></br>
           <br></br>
-          <Button onClick={() => this.addScore(1, -10)} variant="secondary">Team 1: -10</Button>{' '}
-          <Button onClick={() => this.addScore(2, -10)} variant="secondary">Team 2: -10</Button>{' '}
+          <Button onClick={() => this.addScore(1, -10)}>Team 1: -10</Button>{' '}
+          <Button onClick={() => this.addScore(2, -10)}>Team 2: -10</Button>{' '}
           <br></br>
           <br></br>
         </div>
@@ -390,7 +394,7 @@ current content of the editor to the server. */
         </table>
         <br></br>
         {this.showScoringSection()}*/}
-        <Button onClick={() => this.mute()} variant="secondary">Mute Question Audio</Button>{' '}
+        <Button onClick={() => this.mute()}>Mute Question Audio</Button>{' '}
         <h3>Audio Enabled: {this.state.play_audio.toString()}</h3>
       </React.Fragment>
     );
