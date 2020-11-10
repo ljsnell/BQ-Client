@@ -13,17 +13,18 @@ import { fetchQuestion } from './webserviceCalls';
 const QUIZZES = globals.QUIZ_GLOBAL
 
 // Websocket server
-// var server = 'http://127.0.0.1:8000/'
-var server = 'wss://mysterious-journey-90036.herokuapp.com'
+var server = 'http://127.0.0.1:8000/'
+// var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var client = io.connect(server).emit('room', user_room);
+var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props);    
     this.state = {
-      username: '',
+      username: entered_username,
       jumper: '',
       q_text_to_display: "",
       i: 0,
@@ -36,8 +37,14 @@ class App extends Component {
       timer: 0,
       play_audio: true
     };
+    
   }
-  
+
+  handleChange(entered_username) {
+    this.setState({ username: entered_username });
+    this.showQuizMasterSection()
+  }
+
   // Question iterators
   questionNumber = 0
   bonusQuestionNumber = 0
@@ -318,30 +325,24 @@ current content of the editor to the server. */
     }
   }
 
-  handleChange(event) {
-    this.setState({ username: event.target.value });
-    this.showQuizMasterSection()
-  }
-
   render() {
     const {
       q_text_to_display,
       team1Score,
       team2Score,
-      room
+      room,
+      username
     } = this.state;
-
     return (
       <React.Fragment>
         <Navbar color="light" light>
           <NavbarBrand href="/">Bible Quiz 1.8</NavbarBrand>
         </Navbar>
         <div>
-          User Name:
-          <input onChange={evt => this.handleChange(evt)} />
+          Current Room: <b>{room}</b>
         </div>
         <div>
-          Current Room: {room}
+          User Name: <b>{username}</b>
         </div>
         <br></br>
         <div>
