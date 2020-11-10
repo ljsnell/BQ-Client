@@ -274,6 +274,10 @@ current content of the editor to the server. */
     }, 1000);
   }
 
+  clearAttendeeList() {
+    client.emit('clear_room', JSON.stringify({ room: this.state.room }))
+  }
+
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, timer } = this.state
     if (username === 'quizmaster') {
@@ -297,6 +301,7 @@ current content of the editor to the server. */
             <option value="4">4</option>
           </select>
           <h4>Quizzers in room: { this.state.quizzers_in_room.join(', ') }</h4>
+          <Button onClick={() => this.clearAttendeeList()} variant="secondary">Clear Quizzer List</Button>{' '}
           <br></br>
         </div>
       )
