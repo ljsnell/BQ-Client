@@ -174,7 +174,7 @@ current content of the editor to the server. */
     }
   }
 
-  async nextQuestion(isBonus, questionNumber) {    
+  async nextQuestion(isBonus, questionNumber) {
     let questionsList = isBonus ? this.bonusQuestionIDs : this.questionIDs
     if (questionNumber < questionsList.length) {
       var questionID = questionsList[questionNumber]
