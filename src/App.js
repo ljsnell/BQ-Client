@@ -185,14 +185,24 @@ current content of the editor to the server. */
           console.log('question from api!')
           console.log(data)
           this.i = 0
-          this.setState({
-            full_question_text: data[0],
-            answer_question_text: data[1],
-            q_text_to_display: " ",
-            i: this.i
-          })
-          if (isBonus) this.bonusQuestionNumber++
-          else this.questionNumber++
+          if (isBonus) {
+            this.bonusQuestionNumber++
+            this.setState({
+              full_question_text: data[0],
+              answer_question_text: data[1],
+              q_text_to_display: data[0],
+              i: data[0].length
+            })                // Add two spaces to ensure no words get read aloud.
+            this.sync(data[0] + "  ", data[0], this.state.room)
+          } else {
+            this.questionNumber++
+            this.setState({
+              full_question_text: data[0],
+              answer_question_text: data[1],
+              q_text_to_display: " ",
+              i: this.i
+            })
+          }
         });
     } else {
       this.setState({
