@@ -36,7 +36,7 @@ class App extends Component {
       room: user_room,
       team1Score: 0,
       team2Score: 0,
-      quizNumber: 1,
+      quizNumber: "practice",
       timer: 0,
       play_audio: true,
       quizzers_in_room: []
@@ -53,8 +53,8 @@ class App extends Component {
   bonusQuestionNumber = 0
 
   // Quiz Questions    
-  questionIDs = QUIZZES.quiz1.qs
-  bonusQuestionIDs = QUIZZES.quiz1.bonus
+  questionIDs = QUIZZES.quizpractice.qs
+  bonusQuestionIDs = QUIZZES.quizpractice.bonus
 
   footer_style = {
     backgroundColor: "Black",
@@ -226,8 +226,8 @@ current content of the editor to the server. */
         });
     } else {
       this.setState({
-        q_text_to_display: "*** Out of bonus questions :/ ***",
-        full_question_text: "*** Out of bonus questions :/ ***"
+        q_text_to_display: "*** Out of questions :/ ***",
+        full_question_text: "*** Out of questions :/ ***"
       })
     }
   }
@@ -299,6 +299,7 @@ current content of the editor to the server. */
           <Button onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
           <label htmlFor="roundSelector">Choose a quiz number:</label>
           <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
+            <option value="practice">practice</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
