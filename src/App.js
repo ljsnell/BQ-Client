@@ -356,7 +356,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz 1.8</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.9</NavbarBrand>
         </Navbar>
         <div>
           Current Room: <b>{room}</b>
