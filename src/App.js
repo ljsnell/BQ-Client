@@ -169,10 +169,6 @@ current content of the editor to the server. */
     } = this.state
 
     this.question_array = full_question_text.split(" ")
-    console.log('in start quiz:i')
-    console.log(i)
-    console.log('in start quiz:length')
-    console.log(this.question_array.length)
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
@@ -297,7 +293,6 @@ current content of the editor to the server. */
     client.emit('clear_room', JSON.stringify({ room: this.state.room }))
   }
 
-  // Change tick rate?
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, timer } = this.state
     if (username === 'quizmaster') {
