@@ -21,14 +21,14 @@ var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhal
 var client = io.connect(server).emit('room', JSON.stringify({
   room: user_room,
   username: entered_username
-  }));
+}));
 
 class App extends Component {
   constructor(props) {
-    super(props);    
+    super(props);
     this.state = {
       username: entered_username,
-      jumper: '',
+      jumper: null,
       q_text_to_display: "",
       i: 0,
       full_question_text: "*** Welcome to the quiz! ***",
@@ -40,7 +40,7 @@ class App extends Component {
       timer: 0,
       play_audio: true,
       quizzers_in_room: []
-    };    
+    };
   }
 
   handleChange(entered_username) {
@@ -74,25 +74,25 @@ class App extends Component {
 
   /* When content changes, we send the
 current content of the editor to the server. */
-  sync = (q_text_to_display, full_question_text, room_id) => {
+  sync = (q_text_to_display, full_question_text, room_id, jumper) => {
     client.emit('contentchange', JSON.stringify({
       content: q_text_to_display,
       full_question_text: full_question_text,
-      room: room_id
+      room: room_id,
+      jumper: jumper
     }));
   };
 
-  syncJump = (i, room_id) => {
+  syncJump = (i, room_id, username) => {
     client.emit('jump', JSON.stringify({
-      username: this.state.username,
+      username: username,
       i: i,
       room: room_id
     }));
   };
 
   mute() {
-    this.state.play_audio = !this.state.play_audio
-    this.setState({play_audio: this.state.play_audio})
+    this.setState({ play_audio: !this.state.play_audio })
   }
 
   componentWillMount() {
@@ -101,28 +101,31 @@ current content of the editor to the server. */
     console.log(session)
 
     client.on('contentchange', function (message) {
-      const dataFromServer = message
-      const stateToChange = {};
-      stateToChange.jumper = dataFromServer.username
-      stateToChange.q_text_to_display = dataFromServer.question
-      stateToChange.full_question_text = dataFromServer.full_question_text
+      session.state.jumper = message.jumper
+      if (session.state.jumper == null) {
+        const dataFromServer = message
+        const stateToChange = {};
+        stateToChange.jumper = dataFromServer.jumper
+        stateToChange.q_text_to_display = dataFromServer.question
+        stateToChange.full_question_text = dataFromServer.full_question_text
 
-      // Speaks the text aloud.
-      if (session.state.play_audio === true) {
-        var msg = new SpeechSynthesisUtterance();
-        var voices = window.speechSynthesis.getVoices();
-        msg.voice = voices[1]; // Note: some voices don't support altering params
-        msg.voiceURI = 'native';
-        msg.rate = 2.3; // 0.1 to 10
-        var tts = dataFromServer.question.split(" ")
-        msg.text = tts[tts.length - 2]
-        msg.lang = 'en-US';
-        speechSynthesis.speak(msg);
+        // Speaks the text aloud.
+        if (session.state.play_audio === true) {
+          var msg = new SpeechSynthesisUtterance();
+          var voices = window.speechSynthesis.getVoices();
+          msg.voice = voices[1]; // Note: some voices don't support altering params
+          msg.voiceURI = 'native';
+          msg.rate = 2.3; // 0.1 to 10
+          var tts = dataFromServer.question.split(" ")
+          msg.text = tts[tts.length - 2]
+          msg.lang = 'en-US';
+          speechSynthesis.speak(msg);
+        }
+
+        session.setState({
+          ...stateToChange
+        });
       }
-
-      session.setState({
-        ...stateToChange
-      });
     });
 
     client.on('jump', function (message) {
@@ -151,7 +154,7 @@ current content of the editor to the server. */
 
     client.on('joined', function (message) {
       console.log('Joined!')
-      console.log(message)      
+      console.log(message)
       session.setState({ quizzers_in_room: message })
     });
   }
@@ -161,15 +164,16 @@ current content of the editor to the server. */
       q_text_to_display,
       i,
       full_question_text,
-      room
+      room,
+      jumper
     } = this.state
 
     this.question_array = full_question_text.split(" ")
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
-      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text })      
-      this.sync(q_text_to_display, full_question_text, room)
+      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text })
+      this.sync(q_text_to_display, full_question_text, room, jumper)
     }
   }
 
@@ -185,16 +189,17 @@ current content of the editor to the server. */
     } // If jumper is null nobody has jumped on the question and we'll
     // allow an update.
     else {
-      if (jumper == null) {
+      if (jumper == null) {        
         this.question_array = full_question_text.split(" ")
         this.setState({ username: username })
         this.i = this.question_array.length
-        this.syncJump(this.i, room)
+        this.syncJump(this.i, room, username)
       }
     }
   }
 
   async nextQuestion(isBonus, questionNumber) {
+    this.setState({ jumper: null })    
     let questionsList = isBonus ? this.bonusQuestionIDs : this.questionIDs
     if (questionNumber < questionsList.length) {
       var questionID = questionsList[questionNumber]
@@ -213,7 +218,7 @@ current content of the editor to the server. */
               q_text_to_display: data[0],
               i: data[0].length
             })                // Add two spaces to ensure no words get read aloud.
-            this.sync(data[0] + "  ", data[0], this.state.room)
+            this.sync(data[0] + "  ", data[0], this.state.room, this.state.jumper)
           } else {
             this.questionNumber++
             this.setState({
@@ -305,7 +310,7 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          <h4>Quizzers in room: { this.state.quizzers_in_room.join(', ') }</h4>
+          <h4>Quizzers in room: {this.state.quizzers_in_room.join(', ')}</h4>
           <Button onClick={() => this.clearAttendeeList()}>Clear Quizzer List</Button>{' '}
           <br></br>
         </div>
@@ -351,7 +356,8 @@ current content of the editor to the server. */
       team1Score,
       team2Score,
       room,
-      username
+      username,
+      jumper
     } = this.state;
     return (
       <React.Fragment>
@@ -375,7 +381,7 @@ current content of the editor to the server. */
           <br></br>
         </div>
         <div>
-          <h3>Current Jumper: {this.state.jumper}</h3>
+          <h3>Current Jumper: {jumper}</h3>
         </div>
         <br></br>
         {/*<div>
