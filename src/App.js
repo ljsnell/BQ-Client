@@ -13,8 +13,8 @@ import { fetchQuestion } from './webserviceCalls';
 const QUIZZES = globals.QUIZ_GLOBAL
 
 // Websocket server
-var server = 'http://127.0.0.1:8000/'
-// var server = 'wss://mysterious-journey-90036.herokuapp.com'
+// var server = 'http://127.0.0.1:8000/'
+var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
@@ -177,11 +177,6 @@ current content of the editor to the server. */
     }
   }
 
-  sleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay);
-  }
-
   jump() {
     var {
       full_question_text,
@@ -194,8 +189,7 @@ current content of the editor to the server. */
     } // If jumper is null nobody has jumped on the question and we'll
     // allow an update.
     else {
-      if (jumper == null) {
-        this.sleep(2000)
+      if (jumper == null) {        
         this.question_array = full_question_text.split(" ")
         this.setState({ username: username })
         this.i = this.question_array.length
