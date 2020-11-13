@@ -289,7 +289,7 @@ current content of the editor to the server. */
 
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, timer } = this.state
-    if (username === 'quizmaster') {
+    if (username === 'QM14') {
       return (
         <div className="main-content">
           <div>
