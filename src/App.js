@@ -257,6 +257,7 @@ current content of the editor to the server. */
   setQuizNumber(selectedQuizNumber) {
     console.log('selectedQuizNumber')
     console.log(selectedQuizNumber)
+    this.questionNumber = 0
     this.setState({ quizNumber: selectedQuizNumber })
 
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
