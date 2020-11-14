@@ -39,7 +39,8 @@ class App extends Component {
       quizNumber: "practice",
       timer: 0,
       play_audio: false,
-      quizzers_in_room: []
+      quizzers_in_room: [],
+      quiz_started: false
     };
   }
 
@@ -172,7 +173,7 @@ current content of the editor to the server. */
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
-      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text })
+      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text, quiz_started: true })
       this.sync(q_text_to_display, full_question_text, room, jumper)
     }
   }
@@ -288,7 +289,7 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text, timer } = this.state
+    var { username, full_question_text, answer_question_text, timer, quiz_started } = this.state
     if (username === 'QM14') {
       return (
         <div className="main-content">
@@ -301,7 +302,7 @@ current content of the editor to the server. */
           </div>
           <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
           <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
-          <Button onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
+          <Button disabled={quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
           <label htmlFor="roundSelector">Choose a quiz number:</label>
           <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
             <option value="practice">practice</option>
