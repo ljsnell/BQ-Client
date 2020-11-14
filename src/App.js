@@ -38,7 +38,7 @@ class App extends Component {
       team2Score: 0,
       quizNumber: "practice",
       timer: 0,
-      play_audio: true,
+      play_audio: false,
       quizzers_in_room: []
     };
   }
@@ -309,6 +309,7 @@ current content of the editor to the server. */
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
+            <option value="5">5</option>
           </select>
           <h4>Quizzers in room: {this.state.quizzers_in_room.join(', ')}</h4>
           <Button onClick={() => this.clearAttendeeList()}>Clear Quizzer List</Button>{' '}
@@ -362,7 +363,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Bible Quiz 1.8</NavbarBrand>
+          <NavbarBrand href="/">Bible Quiz 1.9</NavbarBrand>
         </Navbar>
         <div>
           Current Room: <b>{room}</b>
