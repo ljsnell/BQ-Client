@@ -8,7 +8,7 @@ import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 import globals from './globals'
-import { fetchQuestion } from './webserviceCalls';
+import { fetchQuestion, fetchRandomQuestion } from './webserviceCalls';
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -56,6 +56,8 @@ class App extends Component {
   // Quiz Questions    
   questionIDs = QUIZZES.quizpractice.qs
   bonusQuestionIDs = QUIZZES.quizpractice.bonus
+  randomQuestionType=1;
+
 
   footer_style = {
     backgroundColor: "Black",
@@ -238,6 +240,32 @@ current content of the editor to the server. */
     }
   }
 
+  async randomQuestion() {
+    this.setState({ jumper: null })
+    console.log('Random question')
+    console.log('question type selected', this.randomQuestionType)
+    await fetchRandomQuestion(this.randomQuestionType , 1, [1,2,3,4,5])
+    //await fetchRandomQuestion(this.randomQuestionType, 1, selectedChapters)
+      .then(res => res.json()).then((data) => {
+        console.log('random question from api!')
+        console.log(data)
+        this.i = 0
+        this.questionNumber++
+        if(data != null){
+          this.setState({
+            full_question_text: data[18]+' : '+data[15],
+            answer_question_text: data[11],
+            q_text_to_display: " ",
+          })
+        }else{
+          this.setState({
+            q_text_to_display: "*** No question found for selected criteria :/ ***",
+            full_question_text: "*** No question found for selected criteria :/ ***"
+          })
+        }
+      });
+  }
+
   addScore(teamNumber, pointsToAdd) {
     var { team1Score, team2Score, room } = this.state
     if (teamNumber === 1) {
@@ -312,7 +340,22 @@ current content of the editor to the server. */
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-          </select>
+          </select>  
+          <br></br>     
+          <br></br>    
+          <Button onClick={() => this.randomQuestion()}>Random Question</Button>{' '}
+          <label htmlFor="roundSelector">Choose a question type:</label>
+          <select onChange={(e) => this.randomQuestionType = e.target.value} name="questionType" id="questionType">
+            <option value="1">General</option>
+            <option value="2">Two Part</option>
+            <option value="3">Three Part</option>
+            <option value="4">Four Part</option>
+            <option value="5">Five Part</option>
+            <option value="6">Multiple Part</option>
+            <option value="7">FTV</option>
+            <option value="8">Reference</option>
+            <option value="9">Situation</option>
+          </select> 
           <h4>Quizzers in room: {this.state.quizzers_in_room.join(', ')}</h4>
           <Button onClick={() => this.clearAttendeeList()}>Clear Quizzer List</Button>{' '}
           <br></br>
