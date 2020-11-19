@@ -258,7 +258,6 @@ current content of the editor to the server. */
         console.log('random question from api!')
         console.log(data)
         this.i = 0
-        this.questionNumber++
         if(data != null){
           this.setState({
             full_question_text: data[18]+' : '+data[15],
@@ -272,6 +271,10 @@ current content of the editor to the server. */
             full_question_text: "*** No question found for selected criteria :/ ***"
           })
         }
+        if(this.questionNumber == 0){
+          setInterval(() => this.startQuiz(), 1000);
+        }
+        this.questionNumber++
       });
   }
 
