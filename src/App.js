@@ -4,11 +4,13 @@ import {
   NavbarBrand,
   Button
 } from 'reactstrap';
+import Select from 'react-select';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 import globals from './globals'
-import { fetchQuestion } from './webserviceCalls';
+import { fetchQuestion, fetchRandomQuestion } from './webserviceCalls';
+import chapters from './constants';
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -34,7 +36,7 @@ class App extends Component {
       full_question_text: "*** Welcome to the quiz! ***",
       answer_question_text: "🤔",
       room: user_room,
-      quizNumber: "practice",
+      quizNumber: "1",
       play_audio: false,
       quizzers_in_room: [],
       quiz_started: false
@@ -42,7 +44,7 @@ class App extends Component {
   }
 
   handleChange(entered_username) {
-    this.setState({ username: entered_username });
+    this.setState({ username: entered_username, selectedChapters: [] });
     this.showQuizMasterSection()
   }
 
@@ -53,6 +55,9 @@ class App extends Component {
   // Quiz Questions    
   questionIDs = QUIZZES.quizpractice.qs
   bonusQuestionIDs = QUIZZES.quizpractice.bonus
+  selectedRandomQuestionType = 1;
+  selectedRandomQuestionChapters = [];
+  formattedSelectedRandomQuestionChapters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 21, 22, 23, 24, 25, 26, 27, 28];
 
   footer_style = {
     backgroundColor: "Black",
@@ -175,7 +180,7 @@ current content of the editor to the server. */
     } // If jumper is null nobody has jumped on the question and we'll
     // allow an update.
     else {
-      if (jumper == null) {        
+      if (jumper == null) {
         this.question_array = full_question_text.split(" ")
         this.setState({ username: username })
         this.i = this.question_array.length
@@ -185,7 +190,7 @@ current content of the editor to the server. */
   }
 
   async nextQuestion(isBonus, questionNumber) {
-    this.setState({ jumper: null })    
+    this.setState({ jumper: null })
     let questionsList = isBonus ? this.bonusQuestionIDs : this.questionIDs
     if (questionNumber < questionsList.length) {
       var questionID = questionsList[questionNumber]
@@ -223,9 +228,45 @@ current content of the editor to the server. */
     }
   }
 
+  async randomQuestion() {
+    this.setState({ jumper: null })
+    console.log('Random question')
+    if (this.selectedRandomQuestionChapters.length > 0) {
+      this.formattedSelectedRandomQuestionChapters = [];
+      for (var i = 0; this.selectedRandomQuestionChapters.length > i; i++) {
+        this.formattedSelectedRandomQuestionChapters.push(this.selectedRandomQuestionChapters[i].value);
+      }
+      this.selectedRandomQuestionChapters = [];
+    }
+    await fetchRandomQuestion(this.selectedRandomQuestionType, 1, this.formattedSelectedRandomQuestionChapters)
+      .then(res => res.json()).then((data) => {
+        console.log('random question from api!')
+        console.log(data)
+        this.i = 0
+        if (data != null) {
+          this.setState({
+            full_question_text: data[18] + ' : ' + data[15],
+            answer_question_text: data[11],
+            q_text_to_display: " ",
+            i: this.i
+          })
+        } else {
+          this.setState({
+            q_text_to_display: "*** No question found for selected criteria :/ ***",
+            full_question_text: "*** No question found for selected criteria :/ ***"
+          })
+        }
+        if (!this.state.quiz_started) {
+          setInterval(() => this.startQuiz(), 1000);
+        }
+        this.questionNumber++
+      });
+  }
+
   setQuizNumber(selectedQuizNumber) {
     console.log('selectedQuizNumber')
     console.log(selectedQuizNumber)
+    
     this.questionNumber = 0
     this.setState({ quizNumber: selectedQuizNumber })
 
@@ -233,11 +274,52 @@ current content of the editor to the server. */
 
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
+    this.showQuestionControls()
+  } 
+
+  showQuestionControls = () => {
+    console.log('selectedQuizNumber')
+    console.log(this.state.quizNumber)
+    if (this.state.quizNumber === 'practice') {
+      return (<div id="practiceQuiz">
+        <Button onClick={() => this.randomQuestion()} style={this.start_quiz_button_style}>Random Question</Button>{' '}
+        <label htmlFor="questionTypeLabel">Choose a question type:</label>
+        <select onChange={(e) => this.selectedRandomQuestionType = e.target.value} name="questionType" id="questionType">
+          <option value="1">General</option>
+          <option value="2">Two Part</option>
+          <option value="3">Three Part</option>
+          <option value="4">Four Part</option>
+          <option value="5">Five Part</option>
+          <option value="6">Multiple Part</option>
+          <option value="7">FTV</option>
+          <option value="8">Reference</option>
+          <option value="9">Situation</option>
+        </select>
+        <div>
+          <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
+          <Select
+            defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27]]}
+            isMulti
+            name="questionchapters"
+            options={chapters}
+            onChange={(e) => this.selectedChapters = e}
+            className="basic-multi-select"
+            classNamePrefix="select"
+          />
+        </div>
+      </div>)
+    } else {
+      return (<div id="realQuiz">
+        <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
+        <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
+        <Button disabled={this.state.quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
+      </div>)
+    }
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text, quiz_started } = this.state
-    if (username === 'QM14') {
+    var { username, full_question_text, answer_question_text } = this.state
+    if (username === 'QM') {
       return (
         <div className="main-content">
           <div>
@@ -247,18 +329,18 @@ current content of the editor to the server. */
             <h1>Answer: {answer_question_text}</h1>
             <h1>Question #: {this.questionNumber} </h1>
           </div>
-          <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
-          <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
-          <Button disabled={quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
-          <label htmlFor="roundSelector">Choose a quiz number:</label>
-          <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
-            <option value="practice">practice</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
+          <div>
+            <label htmlFor="roundSelector">Choose a quiz number:</label>
+            <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="practice">practice</option>
+            </select>
+          </div>
+          <this.showQuestionControls></this.showQuestionControls>
           <h4>Quizzers in room: {this.state.quizzers_in_room.join(', ')}</h4>
           <br></br>
         </div>
