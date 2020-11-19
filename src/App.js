@@ -10,6 +10,7 @@ import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 import globals from './globals'
 import { fetchQuestion, fetchRandomQuestion } from './webserviceCalls';
+import chapters from './constants';
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -57,178 +58,9 @@ class App extends Component {
   // Quiz Questions    
   questionIDs = QUIZZES.quizpractice.qs
   bonusQuestionIDs = QUIZZES.quizpractice.bonus
-  randomQuestionType=1;
-  chapters=[{
-    value: 1,
-    label: 1,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 2,
-    label: 2,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 3,
-    label: 3,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 4,
-    label: 4,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 5,
-    label: 5,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 6,
-    label: 6,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 7,
-    label: 7,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 8,
-    label: 8,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 9,
-    label: 9,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 10,
-    label: 10,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 11,
-    label: 11,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 12,
-    label: 12,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 13,
-    label: 13,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 14,
-    label: 14,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 15,
-    label: 15,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 16,
-    label: 16,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 17,
-    label: 17,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 18,
-    label: 18,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 19,
-    label: 19,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 20,
-    label: 20,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 21,
-    label: 21,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 22,
-    label: 22,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 23,
-    label: 23,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 24,
-    label: 24,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 25,
-    label: 25,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 26,
-    label: 26,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 27,
-    label: 27,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  },{
-    value: 28,
-    label: 28,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false  
-  }];
-  selectedChapters=[];
-  FomatedSelectedChapters=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,10,21,22,23,24,25,26,27,28];
+  selectedRandomQuestionType=1;
+  selectedRandomQuestionChapters=[];
+  fomatedSelectedRandomQuestionChapters=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,10,21,22,23,24,25,26,27,28];
 
   footer_style = {
     backgroundColor: "Black",
@@ -414,15 +246,14 @@ current content of the editor to the server. */
   async randomQuestion() {
     this.setState({ jumper: null })
     console.log('Random question')
-    if(this.selectedChapters.length > 0){
-      this.FomatedSelectedChapters=[];
-      for(var i=0; this.selectedChapters.length > i; i++){
-        this.FomatedSelectedChapters.push(this.selectedChapters[i].value);
+    if(this.selectedRandomQuestionChapters.length > 0){
+      this.fomatedSelectedRandomQuestionChapters=[];
+      for(var i=0; this.selectedRandomQuestionChapters.length > i; i++){
+        this.fomatedSelectedRandomQuestionChapters.push(this.selectedRandomQuestionChapters[i].value);
       }
-      this.selectedChapters =[];
+      this.selectedRandomQuestionChapters =[];
     }
-    await fetchRandomQuestion(this.randomQuestionType , 1, this.FomatedSelectedChapters)
-    //await fetchRandomQuestion(this.randomQuestionType, 1, selectedthis.chapters)
+    await fetchRandomQuestion(this.selectedRandomQuestionType , 1, this.fomatedSelectedRandomQuestionChapters)
       .then(res => res.json()).then((data) => {
         console.log('random question from api!')
         console.log(data)
@@ -441,10 +272,6 @@ current content of the editor to the server. */
           })
         }
       });
-  }
-
-  handleChange = (selectedChapters) => {
-    this.setState({ selectedChapters });
   }
 
   addScore(teamNumber, pointsToAdd) {
@@ -526,7 +353,7 @@ current content of the editor to the server. */
           <br></br>    
           <Button onClick={() => this.randomQuestion()} style={this.start_quiz_button_style}>Random Question</Button>{' '}
           <label htmlFor="questionTypeLabel">Choose a question type:</label>
-          <select onChange={(e) => this.randomQuestionType = e.target.value} name="questionType" id="questionType">
+          <select onChange={(e) => this.selectedRandomQuestionType = e.target.value} name="questionType" id="questionType">
             <option value="1">General</option>
             <option value="2">Two Part</option>
             <option value="3">Three Part</option>
@@ -540,10 +367,10 @@ current content of the editor to the server. */
           <div>
             <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
             <Select
-              defaultValue={[this.chapters[0], this.chapters[1], this.chapters[2], this.chapters[3], this.chapters[4], this.chapters[5], this.chapters[6], this.chapters[7], this.chapters[8], this.chapters[9], this.chapters[10], this.chapters[11], this.chapters[12], this.chapters[13], this.chapters[14], this.chapters[15], this.chapters[16], this.chapters[17], this.chapters[18], this.chapters[19], this.chapters[20], this.chapters[21], this.chapters[22], this.chapters[23], this.chapters[24], this.chapters[25], this.chapters[26], this.chapters[27]]}
+              defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27]]}
               isMulti
-              name="questionthis.chapters"
-              options={this.chapters}
+              name="questionchapters"
+              options={chapters}
               onChange={(e) => this.selectedChapters = e}
               className="basic-multi-select"
               classNamePrefix="select"
