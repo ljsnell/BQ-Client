@@ -38,7 +38,7 @@ class App extends Component {
       room: user_room,
       team1Score: 0,
       team2Score: 0,
-      quizNumber: "practice",
+      quizNumber: "1",
       timer: 0,
       play_audio: false,
       quizzers_in_room: [],
@@ -341,45 +341,49 @@ current content of the editor to the server. */
             <h1>Answer: {answer_question_text}</h1>
             <h1>Question #: {this.questionNumber} </h1>
           </div>
-          <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
-          <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
-          <Button disabled={quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
-          <label htmlFor="roundSelector">Choose a quiz number:</label>
-          <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
-            <option value="practice">practice</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>  
-          <br></br>     
-          <br></br>    
-          <Button onClick={() => this.randomQuestion()} style={this.start_quiz_button_style}>Random Question</Button>{' '}
-          <label htmlFor="questionTypeLabel">Choose a question type:</label>
-          <select onChange={(e) => this.selectedRandomQuestionType = e.target.value} name="questionType" id="questionType">
-            <option value="1">General</option>
-            <option value="2">Two Part</option>
-            <option value="3">Three Part</option>
-            <option value="4">Four Part</option>
-            <option value="5">Five Part</option>
-            <option value="6">Multiple Part</option>
-            <option value="7">FTV</option>
-            <option value="8">Reference</option>
-            <option value="9">Situation</option>
-          </select> 
           <div>
-            <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
-            <Select
-              defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27]]}
-              isMulti
-              name="questionchapters"
-              options={chapters}
-              onChange={(e) => this.selectedChapters = e}
-              className="basic-multi-select"
-              classNamePrefix="select"
-            />
-          </div>  
+            <label htmlFor="roundSelector">Choose a quiz number:</label>
+            <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="practice">practice</option>
+            </select>
+          </div>
+          <div id="realQuiz">
+            <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
+            <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
+            <Button disabled={quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
+          </div>
+          <div id="practiceQuiz">
+            <Button onClick={() => this.randomQuestion()} style={this.start_quiz_button_style}>Random Question</Button>{' '}
+            <label htmlFor="questionTypeLabel">Choose a question type:</label>
+            <select onChange={(e) => this.selectedRandomQuestionType = e.target.value} name="questionType" id="questionType">
+              <option value="1">General</option>
+              <option value="2">Two Part</option>
+              <option value="3">Three Part</option>
+              <option value="4">Four Part</option>
+              <option value="5">Five Part</option>
+              <option value="6">Multiple Part</option>
+              <option value="7">FTV</option>
+              <option value="8">Reference</option>
+              <option value="9">Situation</option>
+            </select> 
+            <div>
+              <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
+              <Select
+                defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27]]}
+                isMulti
+                name="questionchapters"
+                options={chapters}
+                onChange={(e) => this.selectedChapters = e}
+                className="basic-multi-select"
+                classNamePrefix="select"
+              />
+            </div>  
+          </div>
           <h4>Quizzers in room: {this.state.quizzers_in_room.join(', ')}</h4>
           <Button onClick={() => this.clearAttendeeList()}>Clear Quizzer List</Button>{' '}
           <br></br>
