@@ -34,10 +34,7 @@ class App extends Component {
       full_question_text: "*** Welcome to the quiz! ***",
       answer_question_text: "🤔",
       room: user_room,
-      team1Score: 0,
-      team2Score: 0,
       quizNumber: "practice",
-      timer: 0,
       play_audio: false,
       quizzers_in_room: [],
       quiz_started: false
@@ -141,18 +138,6 @@ current content of the editor to the server. */
       });
     });
 
-    client.on('score', function (message) {
-      console.log('in score!')
-      const dataFromServer = message;
-      const stateToChange = {};
-      stateToChange.team1Score = dataFromServer.team1Score
-      stateToChange.team2Score = dataFromServer.team2Score
-
-      session.setState({
-        ...stateToChange
-      });
-    });
-
     client.on('joined', function (message) {
       console.log('Joined!')
       console.log(message)
@@ -238,22 +223,6 @@ current content of the editor to the server. */
     }
   }
 
-  addScore(teamNumber, pointsToAdd) {
-    var { team1Score, team2Score, room } = this.state
-    if (teamNumber === 1) {
-      team1Score += pointsToAdd
-      this.setState({ team1Score: team1Score })
-    } else {
-      team2Score += pointsToAdd
-      this.setState({ team2Score: team2Score })
-    }
-    client.emit('score', JSON.stringify({
-      team1Score: team1Score,
-      team2Score: team2Score,
-      room: room
-    }));
-  }
-
   setQuizNumber(selectedQuizNumber) {
     console.log('selectedQuizNumber')
     console.log(selectedQuizNumber)
@@ -266,31 +235,12 @@ current content of the editor to the server. */
     this.bonusQuestionIDs = selected_quiz.bonus
   }
 
-  startCountUp() {
-    var { timer, full_question_text } = this.state
-    timer = 0;
-    var max_count = 30
-    if (full_question_text.includes('Finish the Verse') ||
-      full_question_text.includes('Multiple Part Answer')) {
-      max_count = 45
-    }
-    const interval = setInterval(() => {
-      timer++;
-      this.setState({ timer: timer })
-      if (timer > max_count) {
-        clearInterval(interval);
-        timer = "Time's up!"
-        this.setState({ timer: timer })
-      }
-    }, 1000);
-  }
-
   clearAttendeeList() {
     client.emit('clear_room', JSON.stringify({ room: this.state.room }))
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text, timer, quiz_started } = this.state
+    var { username, full_question_text, answer_question_text, quiz_started } = this.state
     if (username === 'QM14') {
       return (
         <div className="main-content">
@@ -329,35 +279,9 @@ current content of the editor to the server. */
     )
   }
 
-  showScoringSection = () => {
-    var { username } = this.state
-    if (username === 'scorekeeper') {
-      return (
-        <div className="main-content">
-          <h1>Scoring Section:</h1>
-          <br></br>
-          <Button onClick={() => this.addScore(1, 20)}>Team 1: 20</Button>{' '}
-          <Button onClick={() => this.addScore(2, 20)}>Team 2: 20</Button>{' '}
-          <br></br>
-          <br></br>
-          <Button onClick={() => this.addScore(1, 10)}>Team 1: 10</Button>{' '}
-          <Button onClick={() => this.addScore(2, 10)}>Team 2: 10</Button>{' '}
-          <br></br>
-          <br></br>
-          <Button onClick={() => this.addScore(1, -10)}>Team 1: -10</Button>{' '}
-          <Button onClick={() => this.addScore(2, -10)}>Team 2: -10</Button>{' '}
-          <br></br>
-          <br></br>
-        </div>
-      )
-    }
-  }
-
   render() {
     const {
       q_text_to_display,
-      team1Score,
-      team2Score,
       room,
       username,
       jumper
@@ -387,23 +311,6 @@ current content of the editor to the server. */
           <h3>Current Jumper: {jumper}</h3>
         </div>
         <br></br>
-        {/*<div>
-          <h3>Score Board:</h3>
-        </div>
-        <table border = "1" style={{width: '50%'}}>
-          <tbody>
-            <tr>
-              <th>Team 1</th>
-              <th>Team 2</th>
-            </tr>
-            <tr>
-              <td>{ team1Score }</td>
-              <td>{ team2Score }</td>
-            </tr>
-          </tbody>
-        </table>
-        <br></br>
-        {this.showScoringSection()}*/}
         <Button onClick={() => this.mute()}>Mute Question Audio</Button>{' '}
         <h3>Audio Enabled: {this.state.play_audio.toString()}</h3>
       </React.Fragment>
