@@ -264,6 +264,7 @@ current content of the editor to the server. */
             full_question_text: data[18]+' : '+data[15],
             answer_question_text: data[11],
             q_text_to_display: " ",
+            i: this.i
           })
         }else{
           this.setState({
@@ -327,7 +328,7 @@ current content of the editor to the server. */
 
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, timer, quiz_started } = this.state
-    if (username === 'QM14') {
+    if (username === 'QM') {
       return (
         <div className="main-content">
           <div>
