@@ -60,7 +60,7 @@ class App extends Component {
   bonusQuestionIDs = QUIZZES.quizpractice.bonus
   selectedRandomQuestionType=1;
   selectedRandomQuestionChapters=[];
-  fomatedSelectedRandomQuestionChapters=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,10,21,22,23,24,25,26,27,28];
+  formattedSelectedRandomQuestionChapters=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,10,21,22,23,24,25,26,27,28];
 
   footer_style = {
     backgroundColor: "Black",
@@ -247,13 +247,13 @@ current content of the editor to the server. */
     this.setState({ jumper: null })
     console.log('Random question')
     if(this.selectedRandomQuestionChapters.length > 0){
-      this.fomatedSelectedRandomQuestionChapters=[];
+      this.formattedSelectedRandomQuestionChapters=[];
       for(var i=0; this.selectedRandomQuestionChapters.length > i; i++){
-        this.fomatedSelectedRandomQuestionChapters.push(this.selectedRandomQuestionChapters[i].value);
+        this.formattedSelectedRandomQuestionChapters.push(this.selectedRandomQuestionChapters[i].value);
       }
       this.selectedRandomQuestionChapters =[];
     }
-    await fetchRandomQuestion(this.selectedRandomQuestionType , 1, this.fomatedSelectedRandomQuestionChapters)
+    await fetchRandomQuestion(this.selectedRandomQuestionType , 1, this.formattedSelectedRandomQuestionChapters)
       .then(res => res.json()).then((data) => {
         console.log('random question from api!')
         console.log(data)
