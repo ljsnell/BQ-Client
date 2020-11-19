@@ -235,10 +235,6 @@ current content of the editor to the server. */
     this.bonusQuestionIDs = selected_quiz.bonus
   }
 
-  clearAttendeeList() {
-    client.emit('clear_room', JSON.stringify({ room: this.state.room }))
-  }
-
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, quiz_started } = this.state
     if (username === 'QM14') {
@@ -264,7 +260,6 @@ current content of the editor to the server. */
             <option value="5">5</option>
           </select>
           <h4>Quizzers in room: {this.state.quizzers_in_room.join(', ')}</h4>
-          <Button onClick={() => this.clearAttendeeList()}>Clear Quizzer List</Button>{' '}
           <br></br>
         </div>
       )
