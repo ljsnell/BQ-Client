@@ -52,9 +52,9 @@ class App extends Component {
   questionNumber = 0
   bonusQuestionNumber = 0
 
-  // Quiz Questions    
-  questionIDs = QUIZZES.quizpractice.qs
-  bonusQuestionIDs = QUIZZES.quizpractice.bonus
+  // Quiz Questions
+  questionIDs = QUIZZES.quiz1.qs
+  bonusQuestionIDs = QUIZZES.quiz1.bonus
   selectedRandomQuestionType = 1;
   selectedRandomQuestionChapters = [];
   formattedSelectedRandomQuestionChapters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 21, 22, 23, 24, 25, 26, 27, 28];
