@@ -81,8 +81,7 @@ current content of the editor to the server. */
     client.emit('contentchange', JSON.stringify({
       content: q_text_to_display,
       full_question_text: full_question_text,
-      room: room_id,
-      jumper: jumper
+      room: room_id
     }));
   };
 
@@ -104,43 +103,44 @@ current content of the editor to the server. */
     console.log(session)
 
     client.on('contentchange', function (message) {
-      session.state.jumper = message.jumper
-      if (session.state.jumper == null) {
-        const dataFromServer = message
-        const stateToChange = {};
-        stateToChange.jumper = dataFromServer.jumper
-        stateToChange.q_text_to_display = dataFromServer.question
-        stateToChange.full_question_text = dataFromServer.full_question_text
+      const dataFromServer = message
+      const stateToChange = {};
+      stateToChange.jumper = dataFromServer.jumper
+      stateToChange.q_text_to_display = dataFromServer.question
+      stateToChange.full_question_text = dataFromServer.full_question_text
 
-        // Speaks the text aloud.
-        if (session.state.play_audio === true) {
-          var msg = new SpeechSynthesisUtterance();
-          var voices = window.speechSynthesis.getVoices();
-          msg.voice = voices[1]; // Note: some voices don't support altering params
-          msg.voiceURI = 'native';
-          msg.rate = 2.3; // 0.1 to 10
-          var tts = dataFromServer.question.split(" ")
-          msg.text = tts[tts.length - 2]
-          msg.lang = 'en-US';
-          speechSynthesis.speak(msg);
-        }
-
-        session.setState({
-          ...stateToChange
-        });
+      // Speaks the text aloud.
+      if (session.state.play_audio === true) {
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[1]; // Note: some voices don't support altering params
+        msg.voiceURI = 'native';
+        msg.rate = 2.3; // 0.1 to 10
+        var tts = dataFromServer.question.split(" ")
+        msg.text = tts[tts.length - 2]
+        msg.lang = 'en-US';
+        speechSynthesis.speak(msg);
       }
+
+      session.setState({
+        ...stateToChange
+      });
     });
 
     client.on('jump', function (message) {
       const dataFromServer = message;
       const stateToChange = {};
-      stateToChange.jumper = dataFromServer.username
-      console.log(stateToChange.jumper)
-      stateToChange.i = dataFromServer.i;
+      console.log('Jumper!')
+      console.log(session.state.jumper)
+      if (session.state.jumper == null) {
+        stateToChange.jumper = dataFromServer.username
+        console.log(stateToChange.jumper)
+        stateToChange.i = dataFromServer.i;
 
-      session.setState({
-        ...stateToChange
-      });
+        session.setState({
+          ...stateToChange
+        });
+      }
     });
 
     client.on('joined', function (message) {
@@ -175,17 +175,11 @@ current content of the editor to the server. */
       jumper,
       room
     } = this.state
-    if (username.length === 0) {
-      alert("Please enter your username in the User Name box (top of the page). E.G. 1-Jeff");
-    } // If jumper is null nobody has jumped on the question and we'll
-    // allow an update.
-    else {
-      if (jumper == null) {
-        this.question_array = full_question_text.split(" ")
-        this.setState({ username: username })
-        this.i = this.question_array.length
-        this.syncJump(this.i, room, username)
-      }
+    if (jumper == null) {
+      this.question_array = full_question_text.split(" ")
+      this.setState({ username: username })
+      this.i = this.question_array.length
+      this.syncJump(this.i, room, username)
     }
   }
 
@@ -266,7 +260,7 @@ current content of the editor to the server. */
   setQuizNumber(selectedQuizNumber) {
     console.log('selectedQuizNumber')
     console.log(selectedQuizNumber)
-    
+
     this.questionNumber = 0
     this.setState({ quizNumber: selectedQuizNumber })
 
@@ -275,7 +269,7 @@ current content of the editor to the server. */
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
     this.showQuestionControls()
-  } 
+  }
 
   showQuestionControls = () => {
     console.log('selectedQuizNumber')
