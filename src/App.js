@@ -39,13 +39,9 @@ class App extends Component {
       quizNumber: "1",
       play_audio: false,
       quizzers_in_room: [],
-      quiz_started: false
+      quiz_started: false,
+      selectedChapters: chapters
     };
-  }
-
-  handleChange(entered_username) {
-    this.setState({ username: entered_username, selectedChapters: [] });
-    this.showQuizMasterSection()
   }
 
   // Question iterators
@@ -56,8 +52,6 @@ class App extends Component {
   questionIDs = QUIZZES.quiz1.qs
   bonusQuestionIDs = QUIZZES.quiz1.bonus
   selectedRandomQuestionType = 1;
-  selectedRandomQuestionChapters = [];
-  formattedSelectedRandomQuestionChapters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 21, 22, 23, 24, 25, 26, 27, 28];
 
   footer_style = {
     backgroundColor: "Black",
@@ -223,16 +217,16 @@ current content of the editor to the server. */
   }
 
   async randomQuestion() {
-    this.setState({ jumper: null })
-    console.log('Random question')
-    if (this.selectedRandomQuestionChapters.length > 0) {
-      this.formattedSelectedRandomQuestionChapters = [];
-      for (var i = 0; this.selectedRandomQuestionChapters.length > i; i++) {
-        this.formattedSelectedRandomQuestionChapters.push(this.selectedRandomQuestionChapters[i].value);
+    this.setState({ jumper: null })    
+    var selectedRandomChaptersList = []
+    console.log('selectedChapters!!!')
+    console.log(this.state.selectedChapters)
+    if (this.state.selectedChapters !== null && this.state.selectedChapters.length > 0) {     
+      for (var i = 0; this.state.selectedChapters.length > i; i++) {
+        selectedRandomChaptersList.push(this.state.selectedChapters[i].value);
       }
-      this.selectedRandomQuestionChapters = [];
     }
-    await fetchRandomQuestion(this.selectedRandomQuestionType, 1, this.formattedSelectedRandomQuestionChapters)
+    await fetchRandomQuestion(this.selectedRandomQuestionType, 1, selectedRandomChaptersList)
       .then(res => res.json()).then((data) => {
         console.log('random question from api!')
         console.log(data)
@@ -296,7 +290,7 @@ current content of the editor to the server. */
             isMulti
             name="questionchapters"
             options={chapters}
-            onChange={(e) => this.selectedChapters = e}
+            onChange={(e) => this.setState({ selectedChapters: e })}
             className="basic-multi-select"
             classNamePrefix="select"
           />
