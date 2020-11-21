@@ -257,12 +257,11 @@ current content of the editor to the server. */
 
     this.questionNumber = 0
     this.setState({ quizNumber: selectedQuizNumber })
-    // Practice quizzes will pull random questions.
-    if (selectedQuizNumber !== 'practice') {
-      let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
-      this.questionIDs = selected_quiz.qs
-      this.bonusQuestionIDs = selected_quiz.bonus
-    }
+
+    let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
+    this.questionIDs = selected_quiz.qs
+    this.bonusQuestionIDs = selected_quiz.bonus
+
     this.showQuestionControls()
   }
 

@@ -19,6 +19,10 @@ export default {
         quiz5: {
             qs: [3260, 586, 773, 738, 3120, 485, 419, 829, 162, 239, 3415, 435, 497, 65, 3324, 325, 740, 3208, 18, 226, 557, 251, 3387, 539, 3361],
             bonus: [3374, 411, 218, 3357, 293, 835, 3196, 523, 3327, 252] 
+        }, // quizpractice entries will pull random values from the api
+        quizpractice: {
+            qs: [],
+            bonus: []
         }
     }
 }
