@@ -217,11 +217,11 @@ current content of the editor to the server. */
   }
 
   async randomQuestion() {
-    this.setState({ jumper: null })    
+    this.setState({ jumper: null })
     var selectedRandomChaptersList = []
     console.log('selectedChapters!!!')
     console.log(this.state.selectedChapters)
-    if (this.state.selectedChapters !== null && this.state.selectedChapters.length > 0) {     
+    if (this.state.selectedChapters !== null && this.state.selectedChapters.length > 0) {
       for (var i = 0; this.state.selectedChapters.length > i; i++) {
         selectedRandomChaptersList.push(this.state.selectedChapters[i].value);
       }
@@ -257,11 +257,12 @@ current content of the editor to the server. */
 
     this.questionNumber = 0
     this.setState({ quizNumber: selectedQuizNumber })
-
-    let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
-
-    this.questionIDs = selected_quiz.qs
-    this.bonusQuestionIDs = selected_quiz.bonus
+    // Practice quizzes will pull random questions.
+    if (selectedQuizNumber !== 'practice') {
+      let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
+      this.questionIDs = selected_quiz.qs
+      this.bonusQuestionIDs = selected_quiz.bonus
+    }
     this.showQuestionControls()
   }
 
