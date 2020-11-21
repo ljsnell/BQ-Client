@@ -223,16 +223,14 @@ current content of the editor to the server. */
   }
 
   async randomQuestion() {
-    this.setState({ jumper: null })
-    console.log('Random question')
-    if (this.selectedRandomQuestionChapters.length > 0) {
-      this.formattedSelectedRandomQuestionChapters = [];
-      for (var i = 0; this.selectedRandomQuestionChapters.length > i; i++) {
-        this.formattedSelectedRandomQuestionChapters.push(this.selectedRandomQuestionChapters[i].value);
+    this.setState({ jumper: null })    
+    var selectedRandomChaptersList = []
+    if (this.selectedChapters !== null && this.selectedChapters.length > 0) {     
+      for (var i = 0; this.selectedChapters.length > i; i++) {
+        selectedRandomChaptersList.push(this.selectedChapters[i].value);
       }
-      this.selectedRandomQuestionChapters = [];
     }
-    await fetchRandomQuestion(this.selectedRandomQuestionType, 1, this.formattedSelectedRandomQuestionChapters)
+    await fetchRandomQuestion(this.selectedRandomQuestionType, 1, selectedRandomChaptersList)
       .then(res => res.json()).then((data) => {
         console.log('random question from api!')
         console.log(data)
