@@ -290,7 +290,7 @@ current content of the editor to the server. */
             isMulti
             name="questionchapters"
             options={chapters}
-            onChange={(e) => this.state.selectedChapters = e}
+            onChange={(e) => this.setState({ selectedChapters: e })}
             className="basic-multi-select"
             classNamePrefix="select"
           />
