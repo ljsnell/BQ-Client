@@ -8,6 +8,7 @@ To start the client, in client directory:
 1. Do `npm install`
 2. Run `npm start`
 
+# Using the app
 Go to https://bq-client.herokuapp.com/
 
 Create a room which you want everyone to join for your quiz
