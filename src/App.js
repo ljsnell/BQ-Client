@@ -15,8 +15,8 @@ import chapters from './constants';
 const QUIZZES = globals.QUIZ_GLOBAL
 
 // Websocket server
-// var server = 'http://127.0.0.1:8000/'
-var server = 'wss://mysterious-journey-90036.herokuapp.com'
+var server = 'http://127.0.0.1:8000/'
+// var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
@@ -32,6 +32,8 @@ class App extends Component {
       username: entered_username,
       jumper: null,
       q_text_to_display: "",
+      question_number: 0,
+      question_type: "asdf Type",
       i: 0,
       full_question_text: "*** Welcome to the quiz! ***",
       answer_question_text: "🤔",
@@ -45,7 +47,7 @@ class App extends Component {
   }
 
   // Question iterators
-  questionNumber = 0
+  temptQuestionNumber = 0
   bonusQuestionNumber = 0
 
   // Quiz Questions
@@ -71,10 +73,12 @@ class App extends Component {
 
   /* When content changes, we send the
 current content of the editor to the server. */
-  sync = (q_text_to_display, full_question_text, room_id, jumper) => {
+  sync = (q_text_to_display, full_question_text, room_id, question_number, question_type) => {
     client.emit('contentchange', JSON.stringify({
       content: q_text_to_display,
       full_question_text: full_question_text,
+      question_number: question_number,
+      question_type: question_type,
       room: room_id
     }));
   };
@@ -102,6 +106,8 @@ current content of the editor to the server. */
       stateToChange.jumper = dataFromServer.jumper
       stateToChange.q_text_to_display = dataFromServer.question
       stateToChange.full_question_text = dataFromServer.full_question_text
+      stateToChange.question_number = dataFromServer.question_number
+      stateToChange.question_type = dataFromServer.question_type
 
       // Speaks the text aloud.
       if (session.state.play_audio === true) {
@@ -147,6 +153,7 @@ current content of the editor to the server. */
   startQuiz() {
     var {
       q_text_to_display,
+      question_number,
       i,
       full_question_text,
       room,
@@ -157,8 +164,8 @@ current content of the editor to the server. */
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
-      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text, quiz_started: true })
-      this.sync(q_text_to_display, full_question_text, room, jumper)
+      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text, question_number:question_number, quiz_started: true })
+      this.sync(q_text_to_display, full_question_text, room, question_number, jumper)
     }
   }
 
@@ -177,13 +184,13 @@ current content of the editor to the server. */
     }
   }
 
-  async nextQuestion(isBonus, questionNumber) {
+  async nextQuestion(isBonus) {
     this.setState({ jumper: null })
     let questionsList = isBonus ? this.bonusQuestionIDs : this.questionIDs
-    if (questionNumber < questionsList.length) {
-      var questionID = questionsList[questionNumber]
+    if (this.temptQuestionNumber < questionsList.length) {
+      var questionID = questionsList[this.temptQuestionNumber]
       console.log('question number:')
-      console.log(questionNumber)
+      console.log(this.temptQuestionNumber)
       await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
@@ -199,11 +206,14 @@ current content of the editor to the server. */
             })                // Add two spaces to ensure no words get read aloud.
             this.sync(data[0] + "  ", data[0], this.state.room, this.state.jumper)
           } else {
-            this.questionNumber++
+            this.temptQuestionNumber++
+            // console.log('question number asdf:')
+            // console.log(questionNumber)
             this.setState({
               full_question_text: data[0],
               answer_question_text: data[1],
               q_text_to_display: " ",
+              question_number: this.temptQuestionNumber,
               i: this.i
             })
           }
@@ -232,10 +242,12 @@ current content of the editor to the server. */
         console.log(data)
         this.i = 0
         if (data != null) {
+          this.temptQuestionNumber++
           this.setState({
             full_question_text: data[18] + ' : ' + data[15],
             answer_question_text: data[11],
             q_text_to_display: " ",
+            question_number: this.temptQuestionNumber,
             i: this.i
           })
         } else {
@@ -247,16 +259,15 @@ current content of the editor to the server. */
         if (!this.state.quiz_started) {
           setInterval(() => this.startQuiz(), 1000);
         }
-        this.questionNumber++
       });
   }
 
   setQuizNumber(selectedQuizNumber) {
-    console.log('selectedQuizNumber')
-    console.log(selectedQuizNumber)
+    // console.log('selectedQuizNumber')
+    // console.log(selectedQuizNumber)
 
-    this.questionNumber = 0
-    this.setState({ quizNumber: selectedQuizNumber })
+    this.temptQuestionNumber = 0
+    this.setState({ quizNumber: selectedQuizNumber, question_number: 0})
 
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
@@ -266,8 +277,8 @@ current content of the editor to the server. */
   }
 
   showQuestionControls = () => {
-    console.log('selectedQuizNumber')
-    console.log(this.state.quizNumber)
+    // console.log('selectedQuizNumber')
+    // console.log(this.state.quizNumber)
     if (this.state.quizNumber === 'practice') {
       return (<div id="practiceQuiz">
         <Button onClick={() => this.randomQuestion()} style={this.start_quiz_button_style}>Random Question</Button>{' '}
@@ -298,7 +309,7 @@ current content of the editor to the server. */
       </div>)
     } else {
       return (<div id="realQuiz">
-        <Button onClick={() => this.nextQuestion(false, this.questionNumber)}>Next Question</Button>{' '}
+        <Button onClick={() => this.nextQuestion(false, this.question_number)}>Next Question</Button>{' '}
         <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
         <Button disabled={this.state.quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
       </div>)
@@ -306,7 +317,9 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text } = this.state
+    var { username, full_question_text, answer_question_text, question_number } = this.state
+    console.log("asdf question_number" + question_number);
+    console.log("asdf temptQuestionNumber" + this.temptQuestionNumber);
     if (username === 'QM') {
       return (
         <div className="main-content">
@@ -315,7 +328,8 @@ current content of the editor to the server. */
           </div>
           <div>
             <h1>Answer: {answer_question_text}</h1>
-            <h1>Question #: {this.questionNumber} </h1>
+            {/* <h1>Question #: {question_number} </h1> */}
+            <h1>Question #: {this.temptQuestionNumber} </h1>
           </div>
           <div>
             <label htmlFor="roundSelector">Choose a quiz number:</label>
@@ -347,6 +361,7 @@ current content of the editor to the server. */
   render() {
     const {
       q_text_to_display,
+      question_number,
       room,
       username,
       jumper
@@ -364,7 +379,7 @@ current content of the editor to the server. */
         </div>
         <br></br>
         <div>
-          <h1>Question: {q_text_to_display}</h1>
+          <h1>Question asdf{question_number}: {q_text_to_display}</h1>
         </div>
         <div className="container-fluid">
           <br></br>
