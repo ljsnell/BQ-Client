@@ -190,10 +190,11 @@ current content of the editor to the server. */
     this.setState({ jumper: null })
     var { question_number, question_type } = this.state
     let questionsList = isBonus ? this.bonusQuestionIDs : this.questionIDs
-    if (question_number < questionsList.length) {
-      var questionID = questionsList[question_number]
+    let questionNUMTemp = isBonus ? this.bonusQuestionNumber : question_number
+    if (questionNUMTemp < questionsList.length) {
+      var questionID = questionsList[questionNUMTemp]
       console.log('question number:')
-      console.log(question_number)
+      console.log(questionNUMTemp)
       await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
@@ -208,9 +209,11 @@ current content of the editor to the server. */
               q_text_to_display: data[1],
               answer_question_text: data[2],
               question_reference: data[3],
+              question_number: question_number,
               i: data[1].length
             })                // Add two spaces to ensure no words get read aloud.
-            this.sync(data[1] + "  ", data[1], this.state.room, question_type, this.state.jumper)
+            // q_text_to_display, full_question_text, room_id, question_number, question_type
+            this.sync(data[1], data[1], this.state.room,question_number, data[0])
           } else {
             this.setState({
               question_type: data[0],
