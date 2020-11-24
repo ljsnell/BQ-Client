@@ -32,8 +32,9 @@ class App extends Component {
       username: entered_username,
       jumper: null,
       q_text_to_display: "",
+      question_reference: "",
       question_number: 0,
-      question_type: "asdf Type",
+      question_type: "",
       i: 0,
       full_question_text: "*** Welcome to the quiz! ***",
       answer_question_text: "🤔",
@@ -47,8 +48,8 @@ class App extends Component {
   }
 
   // Question iterators
-  temptQuestionNumber = 0
   bonusQuestionNumber = 0
+  isBonus = false
 
   // Quiz Questions
   questionIDs = QUIZZES.quiz1.qs
@@ -154,6 +155,7 @@ current content of the editor to the server. */
     var {
       q_text_to_display,
       question_number,
+      question_type,
       i,
       full_question_text,
       room,
@@ -164,8 +166,8 @@ current content of the editor to the server. */
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
-      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text, question_number:question_number, quiz_started: true })
-      this.sync(q_text_to_display, full_question_text, room, question_number, jumper)
+      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text, question_number:question_number, question_type:question_type, quiz_started: true })
+      this.sync(q_text_to_display, full_question_text, room, question_number, question_type, jumper)
     }
   }
 
@@ -186,34 +188,37 @@ current content of the editor to the server. */
 
   async nextQuestion(isBonus) {
     this.setState({ jumper: null })
+    var { question_number, question_type } = this.state
     let questionsList = isBonus ? this.bonusQuestionIDs : this.questionIDs
-    if (this.temptQuestionNumber < questionsList.length) {
-      var questionID = questionsList[this.temptQuestionNumber]
+    if (question_number < questionsList.length) {
+      var questionID = questionsList[question_number]
       console.log('question number:')
-      console.log(this.temptQuestionNumber)
+      console.log(question_number)
       await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
           console.log(data)
           this.i = 0
+          this.isBonus = isBonus;
           if (isBonus) {
             this.bonusQuestionNumber++
             this.setState({
-              full_question_text: data[0],
-              answer_question_text: data[1],
-              q_text_to_display: data[0],
-              i: data[0].length
+              question_type: data[0],
+              full_question_text: data[1],
+              q_text_to_display: data[1],
+              answer_question_text: data[2],
+              question_reference: data[3],
+              i: data[1].length
             })                // Add two spaces to ensure no words get read aloud.
-            this.sync(data[0] + "  ", data[0], this.state.room, this.state.jumper)
+            this.sync(data[1] + "  ", data[1], this.state.room, question_type, this.state.jumper)
           } else {
-            this.temptQuestionNumber++
-            // console.log('question number asdf:')
-            // console.log(questionNumber)
             this.setState({
-              full_question_text: data[0],
-              answer_question_text: data[1],
+              question_type: data[0],
+              full_question_text: data[1],
+              answer_question_text: data[2],
+              question_reference: data[3],
               q_text_to_display: " ",
-              question_number: this.temptQuestionNumber,
+              question_number: question_number+1,
               i: this.i
             })
           }
@@ -228,6 +233,7 @@ current content of the editor to the server. */
 
   async randomQuestion() {
     this.setState({ jumper: null })
+    var { question_number } = this.state
     var selectedRandomChaptersList = []
     console.log('selectedChapters!!!')
     console.log(this.state.selectedChapters)
@@ -242,12 +248,12 @@ current content of the editor to the server. */
         console.log(data)
         this.i = 0
         if (data != null) {
-          this.temptQuestionNumber++
           this.setState({
             full_question_text: data[18] + ' : ' + data[15],
             answer_question_text: data[11],
             q_text_to_display: " ",
-            question_number: this.temptQuestionNumber,
+            // question_type: Data[_],
+            question_number: question_number+1,
             i: this.i
           })
         } else {
@@ -266,8 +272,8 @@ current content of the editor to the server. */
     // console.log('selectedQuizNumber')
     // console.log(selectedQuizNumber)
 
-    this.temptQuestionNumber = 0
-    this.setState({ quizNumber: selectedQuizNumber, question_number: 0})
+    // this.temptQuestionNumber = 0
+    this.setState({ quizNumber: selectedQuizNumber})
 
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
@@ -309,7 +315,7 @@ current content of the editor to the server. */
       </div>)
     } else {
       return (<div id="realQuiz">
-        <Button onClick={() => this.nextQuestion(false, this.question_number)}>Next Question</Button>{' '}
+        <Button onClick={() => this.nextQuestion(false)}>Next Question</Button>{' '}
         <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
         <Button disabled={this.state.quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
       </div>)
@@ -317,10 +323,14 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text, question_number } = this.state
-    console.log("asdf question_number" + question_number);
-    console.log("asdf temptQuestionNumber" + this.temptQuestionNumber);
+    var { username, full_question_text, answer_question_text, question_number, question_type, question_reference } = this.state
     if (username === 'QM') {
+      let questionTypeTemp;
+      if(this.isBonus){
+        questionTypeTemp = <h1>Question: Bonus</h1>
+      }else{
+        questionTypeTemp = <h1>Question: #{question_number} </h1>
+      }
       return (
         <div className="main-content">
           <div>
@@ -328,8 +338,9 @@ current content of the editor to the server. */
           </div>
           <div>
             <h1>Answer: {answer_question_text}</h1>
-            {/* <h1>Question #: {question_number} </h1> */}
-            <h1>Question #: {this.temptQuestionNumber} </h1>
+            {questionTypeTemp}
+            <h1>Question Type: {question_type} </h1>
+            <h1>Question Reference: {question_reference} </h1>
           </div>
           <div>
             <label htmlFor="roundSelector">Choose a quiz number:</label>
@@ -362,10 +373,17 @@ current content of the editor to the server. */
     const {
       q_text_to_display,
       question_number,
+      question_type,
       room,
       username,
       jumper
     } = this.state;
+    let questionTypeTemp;
+    if(this.isBonus){
+      questionTypeTemp = <h1>Question Bonus: {question_type}</h1>
+    }else{
+      questionTypeTemp = <h1>Question {question_number}: {question_type}</h1>
+    }
     return (
       <React.Fragment>
         <Navbar color="light" light>
@@ -379,7 +397,8 @@ current content of the editor to the server. */
         </div>
         <br></br>
         <div>
-          <h1>Question asdf{question_number}: {q_text_to_display}</h1>
+          {questionTypeTemp}
+          <h1>{q_text_to_display}</h1>
         </div>
         <div className="container-fluid">
           <br></br>
