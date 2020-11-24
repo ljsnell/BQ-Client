@@ -212,7 +212,6 @@ current content of the editor to the server. */
               question_number: question_number,
               i: data[1].length
             })                // Add two spaces to ensure no words get read aloud.
-            // q_text_to_display, full_question_text, room_id, question_number, question_type
             this.sync(data[1], data[1], this.state.room,question_number, data[0])
           } else {
             this.setState({
@@ -252,10 +251,11 @@ current content of the editor to the server. */
         this.i = 0
         if (data != null) {
           this.setState({
-            full_question_text: data[18] + ' : ' + data[15],
+            full_question_text: data[15],
+            question_reference: data[14],
+            question_type: data[18],
             answer_question_text: data[11],
             q_text_to_display: " ",
-            // question_type: Data[_],
             question_number: question_number+1,
             i: this.i
           })
@@ -272,11 +272,12 @@ current content of the editor to the server. */
   }
 
   setQuizNumber(selectedQuizNumber) {
-    // console.log('selectedQuizNumber')
-    // console.log(selectedQuizNumber)
-
-    // this.temptQuestionNumber = 0
-    this.setState({ quizNumber: selectedQuizNumber})
+    console.log('selectedQuizNumber')
+    console.log(selectedQuizNumber)
+    this.setState({ 
+      quizNumber: selectedQuizNumber,
+      question_number: 0
+    })
 
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
@@ -286,8 +287,8 @@ current content of the editor to the server. */
   }
 
   showQuestionControls = () => {
-    // console.log('selectedQuizNumber')
-    // console.log(this.state.quizNumber)
+    console.log('selectedQuizNumber')
+    console.log(this.state.quizNumber)
     if (this.state.quizNumber === 'practice') {
       return (<div id="practiceQuiz">
         <Button onClick={() => this.randomQuestion()} style={this.start_quiz_button_style}>Random Question</Button>{' '}
