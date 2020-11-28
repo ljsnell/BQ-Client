@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/icons": "^4.9.1",
     "medium-editor": "^5.23.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

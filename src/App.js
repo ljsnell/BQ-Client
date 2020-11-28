@@ -4,6 +4,8 @@ import {
   NavbarBrand,
   Button
 } from 'reactstrap';
+import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined';
+import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined';
 import Select from 'react-select';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
@@ -57,7 +59,7 @@ class App extends Component {
   selectedRandomQuestionType = 1;
 
   footer_style = {
-    backgroundColor: "Black",
+    backgroundColor: "#1976D2",
     borderTop: "1px solid #E7E7E7",
     textAlign: "center",
     padding: "20px",
@@ -101,6 +103,15 @@ current content of the editor to the server. */
   };
 
   mute() {
+    var audioOn = document.getElementById("audio-on");
+    var audioOff = document.getElementById("audio-off");
+    if(!this.state.play_audio){
+      audioOn.style.display = "block";
+      audioOff.style.display = "none";
+    }else{
+      audioOff.style.display = "block";
+      audioOn.style.display = "none";
+    }
     this.setState({ play_audio: !this.state.play_audio })
   }
 
@@ -394,15 +405,9 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
+          <span class="wrap-around">Welcome <b>{username}</b> to room <b>{room}</b>! </span>
           <NavbarBrand href="/">Bible Quiz 2.0</NavbarBrand>
         </Navbar>
-        <div>
-          Current Room: <b>{room}</b>
-        </div>
-        <div>
-          User Name: <b>{username}</b>
-        </div>
-        <br></br>
         <div>
           {questionTypeTemp}
           <h1>{q_text_to_display}</h1>
@@ -417,8 +422,7 @@ current content of the editor to the server. */
           <h3>Current Jumper: {jumper}</h3>
         </div>
         <br></br>
-        <Button onClick={() => this.mute()}>Mute Question Audio</Button>{' '}
-        <h3>Audio Enabled: {this.state.play_audio.toString()}</h3>
+        <Button onClick={() => this.mute()}><VolumeUpOutlinedIcon id="audio-on" style={{display:'none'}}/><VolumeOffOutlinedIcon id="audio-off"/></Button>
       </React.Fragment>
     );
   }
