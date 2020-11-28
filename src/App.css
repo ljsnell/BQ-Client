@@ -1,3 +1,8 @@
 .wrap-around {
     word-break: break-word;
 }
+
+.jump-in-page-alert {
+    text-align: center;
+    color: #1976D2;
+}

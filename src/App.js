@@ -402,12 +402,17 @@ current content of the editor to the server. */
     }else{
       questionTypeTemp = <h1>Question {question_number}: {question_type}</h1>
     }
+    let jumpTemp;
+    if(jumper != "" && jumper!= null){
+      jumpTemp= <div><h3 class="jump-in-page-alert"><b>{jumper}</b> has won the Jump!</h3></div>
+    }
     return (
       <React.Fragment>
         <Navbar color="light" light>
           <span class="wrap-around">Welcome <b>{username}</b> to room <b>{room}</b>! </span>
           <NavbarBrand href="/">Bible Quiz 2.0</NavbarBrand>
         </Navbar>
+        {jumpTemp}
         <div>
           {questionTypeTemp}
           <h1>{q_text_to_display}</h1>
@@ -417,9 +422,6 @@ current content of the editor to the server. */
           {this.showQuizzerSection()}
           {this.showQuizMasterSection()}
           <br></br>
-        </div>
-        <div>
-          <h3>Current Jumper: {jumper}</h3>
         </div>
         <br></br>
         <Button onClick={() => this.mute()}><VolumeUpOutlinedIcon id="audio-on" style={{display:'none'}}/><VolumeOffOutlinedIcon id="audio-off"/></Button>
