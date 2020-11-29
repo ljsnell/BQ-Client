@@ -39,7 +39,7 @@ class App extends Component {
       question_type: "",
       is_bonus: false,
       i: 0,
-      full_question_text: "*** Welcome to the quiz! ***",
+      full_question_text: "",
       answer_question_text: "🤔",
       room: user_room,
       quizNumber: "1",
@@ -181,6 +181,9 @@ current content of the editor to the server. */
       room
     } = this.state
 
+    if(question_number === 0){
+      this.setState({ full_question_text:"The quiz has started!" })
+    }
     this.question_array = full_question_text.split(" ")
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
@@ -391,19 +394,28 @@ current content of the editor to the server. */
       q_text_to_display,
       question_number,
       question_type,
+      full_question_text,
       is_bonus,
       room,
       username,
       jumper
     } = this.state;
-    let questionTypeTemp;
+    let questionNumberTemp;
+    let questionTemp=<h2>{q_text_to_display}</h2>
     if(is_bonus){
-      questionTypeTemp = <h1>Question Bonus: {question_type}</h1>
+      questionNumberTemp = <h4 class="question-information">Bonus Question: {question_type}</h4>
+    }else if(question_number>0){
+      questionNumberTemp = <h4 class="question-information">#{question_number}: {question_type}</h4>
     }else{
-      questionTypeTemp = <h1>Question {question_number}: {question_type}</h1>
+      questionTemp=<h2>👀 Watch for the question to appear here. 👀</h2>
+      questionNumberTemp = <h4 class="question-information">Quiz Master has not started the quiz.</h4>
+      if(full_question_text == "The quiz has started!"){
+        questionNumberTemp = <h4 class="question-information">Welcome to the Quiz!</h4>
+      }
     }
+    
     let jumpTemp;
-    if(jumper != "" && jumper!= null){
+    if(jumper !== "" && jumper!== null && typeof jumper !== "undefined"){
       jumpTemp= <div><h3 class="jump-in-page-alert"><b>{jumper}</b> has won the Jump!</h3></div>
     }
     return (
@@ -413,9 +425,19 @@ current content of the editor to the server. */
           <NavbarBrand href="/">Bible Quiz 2.0</NavbarBrand>
         </Navbar>
         {jumpTemp}
-        <div>
-          {questionTypeTemp}
-          <h1>{q_text_to_display}</h1>
+        <div style={{display:'flex', 'align-items': 'center', 'justify-content': 'center'}}>
+          <div style={{"text-align": "left"}}>
+            <Button id="audio-button" onClick={() => this.mute()}>
+              <VolumeUpOutlinedIcon id="audio-on" style={{display:'none'}}/>
+              <VolumeOffOutlinedIcon id="audio-off"/>
+            </Button>
+          </div>
+          {questionNumberTemp}
+        </div>
+        <div class="question" style={{display:'flex','align-items': 'center'}}>
+          <div style={{"margin": "10px", display:'flex', 'justify-content': 'center'}}>
+            {questionTemp}
+          </div>
         </div>
         <div className="container-fluid">
           <br></br>
@@ -424,7 +446,6 @@ current content of the editor to the server. */
           <br></br>
         </div>
         <br></br>
-        <Button onClick={() => this.mute()}><VolumeUpOutlinedIcon id="audio-on" style={{display:'none'}}/><VolumeOffOutlinedIcon id="audio-off"/></Button>
       </React.Fragment>
     );
   }

@@ -2,7 +2,30 @@
     word-break: break-word;
 }
 
+.flex {
+    display:'flex';
+    flex-wrap: 'wrap';
+}
+
 .jump-in-page-alert {
     text-align: center;
     color: #1976D2;
+}
+
+#audio-button{
+    margin: 10px;
+    height: 38px;
+}
+.question-information{
+    margin-top: 10px;
+    margin: 10px;
+}
+
+.question {
+    border-radius: 25px;
+    text-align: center;
+    min-height: 80px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #C0E6F6;
 }
