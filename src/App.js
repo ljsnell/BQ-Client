@@ -185,7 +185,7 @@ current content of the editor to the server. */
 
   startQuiz(){
     setInterval(() => this.iterativeSync(), 1000);
-    this.nextQuesitonType(true)
+    this.nextQuestionType(true)
   }
 
   iterativeSync() {
@@ -256,7 +256,7 @@ current content of the editor to the server. */
               i: this.i
             })
           }
-          this.nextQuesitonType()
+          this.nextQuestionType()
         });
     } else {
       this.setState({
@@ -266,7 +266,7 @@ current content of the editor to the server. */
     }
   }
 
-  async nextQuesitonType(isNewQuiz, selectedQuiz) {
+  async nextQuestionType(isNewQuiz, selectedQuiz) {
     var { question_number } = this.state
     if(typeof selectedQuiz !== undefined && selectedQuiz === 'practice'){
       this.setState({ futureQuestionType:questionTypes[0] })
@@ -327,7 +327,7 @@ current content of the editor to the server. */
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
-    this.nextQuesitonType(true, selectedQuizNumber);
+    this.nextQuestionType(true, selectedQuizNumber);
   }
 
   updateRandomQuestionType =(e) => {
