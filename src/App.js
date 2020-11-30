@@ -267,7 +267,7 @@ current content of the editor to the server. */
   }
 
   async nextQuesitonType(isNewQuiz, selectedQuiz) {
-    var { question_number, quizNumber } = this.state
+    var { question_number } = this.state
     if(typeof selectedQuiz !== undefined && selectedQuiz === 'practice'){
       this.setState({ futureQuestionType:questionTypes[0] })
     }else{
@@ -286,7 +286,7 @@ current content of the editor to the server. */
 
   async randomQuestion() {
     this.setState({ jumper: null })
-    var { question_number, futureQuestionType } = this.state
+    var { question_number } = this.state
     var selectedRandomChaptersList = []
     if (this.state.selectedChapters !== null && this.state.selectedChapters.length > 0) {
       for (var i = 0; this.state.selectedChapters.length > i; i++) {
