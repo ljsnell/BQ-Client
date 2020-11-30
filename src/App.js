@@ -54,7 +54,7 @@ class App extends Component {
 
   // Question iterators
   bonusQuestionNumber = 0
-  showMoreOpions = false;
+  showMoreOpions = true;
 
   // Quiz Questions
   questionIDs = QUIZZES.quiz1.qs
@@ -185,7 +185,6 @@ current content of the editor to the server. */
       i,
       full_question_text,
       room,
-      quiz_started
     } = this.state
     this.question_array = full_question_text.split(" ")
     if (i < this.question_array.length) {
@@ -363,12 +362,12 @@ current content of the editor to the server. */
           </div>
           <div className="flex">
             <Button id="showMoreButton" onClick={() => this.showMoreQuizOptions()}>
-              <ExpandLessIcon id="showLess" style={{display:'none'}}/>
-              <ExpandMoreIcon id="showMore"/>
+              <ExpandLessIcon id="showLess"/>
+              <ExpandMoreIcon id="showMore" style={{display:'none'}}/>
             </Button>
             <h6>More Quiz Options</h6>
           </div>
-          <div id="moreQuizOptions" className="flex" style={{display:'none'}}>
+          <div id="moreQuizOptions" className="flex">
             <label htmlFor="roundSelector">Choose a quiz number: </label>
             <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
               <option value="1">1</option>
