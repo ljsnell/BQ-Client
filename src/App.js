@@ -13,8 +13,8 @@ import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 import globals from './globals'
-import { fetchQuestion, fetchRandomQuestion } from './webserviceCalls';
-import chapters from './constants';
+import { fetchQuestion, fetchQuestionType, fetchRandomQuestion } from './webserviceCalls';
+import { chapters, questionTypes } from './constants';
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -41,6 +41,7 @@ class App extends Component {
       question_type: "",
       is_bonus: false,
       i: 0,
+      futureQuestionType: "",
       full_question_text: "",
       answer_question_text: "🤔",
       room: user_room,
@@ -182,7 +183,12 @@ current content of the editor to the server. */
     });
   }
 
-  startQuiz() {
+  startQuiz(){
+    setInterval(() => this.iterativeSync(), 1000);
+    this.nextQuestionType(true)
+  }
+
+  iterativeSync() {
     var {
       q_text_to_display,
       question_number,
@@ -222,8 +228,6 @@ current content of the editor to the server. */
     let questionNUMTemp = isNextBonus ? this.bonusQuestionNumber : question_number
     if (questionNUMTemp < questionsList.length) {
       var questionID = questionsList[questionNUMTemp]
-      console.log('question number:')
-      console.log(questionNUMTemp)
       await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
           console.log('question from api!')
@@ -252,6 +256,7 @@ current content of the editor to the server. */
               i: this.i
             })
           }
+          this.nextQuestionType()
         });
     } else {
       this.setState({
@@ -261,12 +266,28 @@ current content of the editor to the server. */
     }
   }
 
+  async nextQuestionType(isNewQuiz, selectedQuiz) {
+    var { question_number } = this.state
+    if(typeof selectedQuiz !== undefined && selectedQuiz === 'practice'){
+      this.setState({ futureQuestionType:questionTypes[0] })
+    }else{
+      const nextQuestionNumTemp = isNewQuiz? 0 : question_number;
+      if(nextQuestionNumTemp < this.questionIDs.length){
+        var nextQuestionID = this.questionIDs[nextQuestionNumTemp]
+        await fetchQuestionType(nextQuestionID)
+          .then(res => res.json()).then((data) => {
+            console.log('Next question type from api')
+            console.log(data)
+            this.setState({ futureQuestionType:data })
+          });
+      }
+    }
+  }
+
   async randomQuestion() {
     this.setState({ jumper: null })
     var { question_number } = this.state
     var selectedRandomChaptersList = []
-    console.log('selectedChapters!!!')
-    console.log(this.state.selectedChapters)
     if (this.state.selectedChapters !== null && this.state.selectedChapters.length > 0) {
       for (var i = 0; this.state.selectedChapters.length > i; i++) {
         selectedRandomChaptersList.push(this.state.selectedChapters[i].value);
@@ -293,7 +314,7 @@ current content of the editor to the server. */
           })
         }
         if (!this.state.quiz_started) {
-          setInterval(() => this.startQuiz(), 1000);
+          this.startQuiz()
         }
       });
   }
@@ -302,11 +323,16 @@ current content of the editor to the server. */
     this.setState({ 
       quizNumber: selectedQuizNumber,
       question_number: 0
-    })
-
+    })  
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
+    this.nextQuestionType(true, selectedQuizNumber);
+  }
+
+  updateRandomQuestionType =(e) => {
+    this.selectedRandomQuestionType = e.target.value
+    this.setState({ futureQuestionType:questionTypes[e.target.value - 1] })
   }
 
   showMoreQuizControls = () => {
@@ -314,16 +340,16 @@ current content of the editor to the server. */
       return (
         <div>
           <label htmlFor="questionTypeLabel">Choose a question type:</label>
-          <select onChange={(e) => this.selectedRandomQuestionType = e.target.value} name="questionType" id="questionType">
-            <option value="1">General</option>
-            <option value="2">Two Part</option>
-            <option value="3">Three Part</option>
-            <option value="4">Four Part</option>
-            <option value="5">Five Part</option>
-            <option value="6">Multiple Part</option>
-            <option value="7">FTV</option>
-            <option value="8">Reference</option>
-            <option value="9">Situation</option>
+          <select onChange={(e) => this.updateRandomQuestionType(e)} name="questionType" id="questionType">
+            <option value="1">{questionTypes[0]}</option>
+            <option value="2">{questionTypes[1]}</option>
+            <option value="3">{questionTypes[2]}</option>
+            <option value="4">{questionTypes[3]}</option>
+            <option value="5">{questionTypes[4]}</option>
+            <option value="6">{questionTypes[5]}</option>
+            <option value="7">{questionTypes[6]}</option>
+            <option value="8">{questionTypes[7]}</option>
+            <option value="9">{questionTypes[8]}</option>
           </select>
           <div>
             <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
@@ -344,7 +370,7 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text, question_number, question_type, question_reference, is_bonus } = this.state
+    var { username, full_question_text, answer_question_text, question_number, question_reference, is_bonus, futureQuestionType } = this.state
     if (username === 'QM') {
       let questionNumTemp;
       if(is_bonus){
@@ -362,7 +388,7 @@ current content of the editor to the server. */
               {questionNumTemp}
               <h6 className="quizMasterBody"><b>Question Reference:</b> {question_reference}</h6>
             </div>
-            <h6 className="quizMasterBody"><b>Question type:</b> {question_type}</h6>
+            <h6 className="quizMasterBody"><b>Next Question Type: </b>{futureQuestionType}</h6>
             <h6 className="quizMasterBody wrap_around"><b>Quizzers in room:</b> {this.state.quizzers_in_room.join(', ')}</h6>
           </div>
           <div className="flex">
@@ -403,7 +429,7 @@ current content of the editor to the server. */
         let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{'left': '0'}} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
         let bonusQuestion = <div className="twoFooterButtons" ><Button style={{'right': '0'}} onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button></div>
         if(!this.state.quiz_started){
-          startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => setInterval(() => this.startQuiz(), 1000)}><h2>Start Quiz</h2></Button></div>
+          startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => this.startQuiz()}><h2>Start Quiz</h2></Button></div>
           bonusQuestion = ""
         }
         return (

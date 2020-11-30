@@ -1,3 +1,15 @@
+const questionTypes = [
+    "General",
+    "Two Part",
+    "Three Part",
+    "Four Part",
+    "Five Part",
+    "Multiple Part",
+    "FTV",
+    "Reference",
+    "Situation"
+];
+
 const chapters = [{
     value: 1,
     label: 1,
@@ -167,4 +179,4 @@ const chapters = [{
     isFixed: false,
     isDisabled: false  
 }];
-export { chapters as default }
+export { chapters, questionTypes }
