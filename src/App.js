@@ -6,6 +6,8 @@ import {
 } from 'reactstrap';
 import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined';
 import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Select from 'react-select';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
@@ -52,27 +54,12 @@ class App extends Component {
 
   // Question iterators
   bonusQuestionNumber = 0
+  showMoreOpions = false;
 
   // Quiz Questions
   questionIDs = QUIZZES.quiz1.qs
   bonusQuestionIDs = QUIZZES.quiz1.bonus
   selectedRandomQuestionType = 1;
-
-  footer_style = {
-    backgroundColor: "#1976D2",
-    borderTop: "1px solid #E7E7E7",
-    textAlign: "center",
-    padding: "20px",
-    position: "fixed",
-    left: "0",
-    bottom: "0",
-    height: "60px",
-    width: "100%"
-  }
-
-  start_quiz_button_style = {
-    backgroundColor: "Black"
-  }
 
   /* When content changes, we send the
 current content of the editor to the server. */
@@ -83,6 +70,7 @@ current content of the editor to the server. */
       question_type,
       is_bonus,
       full_question_text,
+      quiz_started
     } = this.state
     client.emit('contentchange', JSON.stringify({
       content: q_text_to_display,
@@ -90,7 +78,8 @@ current content of the editor to the server. */
       question_number: question_number,
       question_type: question_type,
       is_bonus: is_bonus,
-      room: room_id
+      room: room_id,
+      quiz_started: quiz_started
     }));
   };
 
@@ -115,6 +104,22 @@ current content of the editor to the server. */
     this.setState({ play_audio: !this.state.play_audio })
   }
 
+  showMoreQuizOptions() {
+    var showMore = document.getElementById("showMore");
+    var showLess = document.getElementById("showLess");
+    var moreQuizOptions = document.getElementById("moreQuizOptions");
+    this.showMoreOpions=!this.showMoreOpions;
+    if(this.showMoreOpions){
+      showLess.style.display = "block";
+      showMore.style.display = "none";
+      moreQuizOptions.style.display = "block";
+    }else{
+      showMore.style.display = "block";
+      showLess.style.display = "none";
+      moreQuizOptions.style.display = "none";
+    }
+  }
+
   componentWillMount() {
     var session = this;
     console.log('session')
@@ -129,6 +134,7 @@ current content of the editor to the server. */
       stateToChange.question_number = dataFromServer.question_number
       stateToChange.question_type = dataFromServer.question_type
       stateToChange.is_bonus = dataFromServer.is_bonus
+      stateToChange.quiz_started = dataFromServer.quiz_started
 
       // Speaks the text aloud.
       if (session.state.play_audio === true) {
@@ -178,17 +184,14 @@ current content of the editor to the server. */
       question_type,
       i,
       full_question_text,
-      room
+      room,
+      quiz_started
     } = this.state
-
-    if(question_number === 0){
-      this.setState({ full_question_text:"The quiz has started!" })
-    }
     this.question_array = full_question_text.split(" ")
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
-      this.setState({ q_text_to_display: q_text_to_display, i: i, full_question_text: full_question_text, question_number:question_number, question_type:question_type, quiz_started: true })
+      this.setState({ q_text_to_display: q_text_to_display, i: i, question_number:question_number, question_type:question_type, full_question_text:full_question_text, quiz_started: true})
       this.sync(room)
     }
   }
@@ -300,70 +303,73 @@ current content of the editor to the server. */
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
-
-    this.showQuestionControls()
   }
 
-  showQuestionControls = () => {
+  showMoreQuizControls = () => {
     if (this.state.quizNumber === 'practice') {
-      return (<div id="practiceQuiz">
-        <Button onClick={() => this.randomQuestion()} style={this.start_quiz_button_style}>Random Question</Button>{' '}
-        <label htmlFor="questionTypeLabel">Choose a question type:</label>
-        <select onChange={(e) => this.selectedRandomQuestionType = e.target.value} name="questionType" id="questionType">
-          <option value="1">General</option>
-          <option value="2">Two Part</option>
-          <option value="3">Three Part</option>
-          <option value="4">Four Part</option>
-          <option value="5">Five Part</option>
-          <option value="6">Multiple Part</option>
-          <option value="7">FTV</option>
-          <option value="8">Reference</option>
-          <option value="9">Situation</option>
-        </select>
+      return (
         <div>
-          <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
-          <Select
-            defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27]]}
-            isMulti
-            name="questionchapters"
-            options={chapters}
-            onChange={(e) => this.setState({ selectedChapters: e })}
-            className="basic-multi-select"
-            classNamePrefix="select"
-          />
+          <label htmlFor="questionTypeLabel">Choose a question type:</label>
+          <select onChange={(e) => this.selectedRandomQuestionType = e.target.value} name="questionType" id="questionType">
+            <option value="1">General</option>
+            <option value="2">Two Part</option>
+            <option value="3">Three Part</option>
+            <option value="4">Four Part</option>
+            <option value="5">Five Part</option>
+            <option value="6">Multiple Part</option>
+            <option value="7">FTV</option>
+            <option value="8">Reference</option>
+            <option value="9">Situation</option>
+          </select>
+          <div>
+            <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
+            <Select
+              defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27]]}
+              isMulti
+              name="questionchapters"
+              options={chapters}
+              onChange={(e) => this.setState({ selectedChapters: e })}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            />
+          </div>
         </div>
-      </div>)
-    } else {
-      return (<div id="realQuiz">
-        <Button onClick={() => this.nextQuestion(false)}>Next Question</Button>{' '}
-        <Button onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button>{' '}
-        <Button disabled={this.state.quiz_started} onClick={() => setInterval(() => this.startQuiz(), 1000)} style={this.start_quiz_button_style}>Start Quiz</Button>{' '}
-      </div>)
+      )
     }
+    return ""
   }
 
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, question_number, question_type, question_reference, is_bonus } = this.state
     if (username === 'QM') {
-      let questionTypeTemp;
+      let questionNumTemp;
       if(is_bonus){
-        questionTypeTemp = <h1>Question: Bonus</h1>
+        questionNumTemp = <h6 className="quizMasterBody"><b>Question:</b> Bonus</h6>
       }else{
-        questionTypeTemp = <h1>Question: #{question_number} </h1>
+        questionNumTemp = <h6 className="quizMasterBody"><b>Question:</b> #{question_number} </h6>
       }
       return (
-        <div className="main-content">
-          <div>
-            <h1>Full Question: {full_question_text}</h1>
+        <div className="quiz_master_content">
+          <div className="flex">
+            <h4 className="quizMasterBody" style={{flex:'1 100%','textAlign': 'left'}}><b>Full Question:</b> {full_question_text}</h4>
+            <h4 className="quizMasterBody" style={{flex:'1 100%','textAlign': 'left'}}><b>Answer:</b> {answer_question_text}</h4>
+            <div className="quizMasterBody flex" style={{flex:'1 100%'}}>
+              <h6 className="quizMasterBody"><b>Quiz:</b> {this.state.quizNumber}</h6>
+              {questionNumTemp}
+              <h6 className="quizMasterBody"><b>Question Reference:</b> {question_reference}</h6>
+            </div>
+            <h6 className="quizMasterBody"><b>Question type:</b> {question_type}</h6>
+            <h6 className="quizMasterBody wrap_around"><b>Quizzers in room:</b> {this.state.quizzers_in_room.join(', ')}</h6>
           </div>
-          <div>
-            <h1>Answer: {answer_question_text}</h1>
-            {questionTypeTemp}
-            <h1>Question Type: {question_type} </h1>
-            <h1>Question Reference: {question_reference} </h1>
+          <div className="flex">
+            <Button id="showMoreButton" onClick={() => this.showMoreQuizOptions()}>
+              <ExpandLessIcon id="showLess" style={{display:'none'}}/>
+              <ExpandMoreIcon id="showMore"/>
+            </Button>
+            <h6>More Quiz Options</h6>
           </div>
-          <div>
-            <label htmlFor="roundSelector">Choose a quiz number:</label>
+          <div id="moreQuizOptions" className="flex" style={{display:'none'}}>
+            <label htmlFor="roundSelector">Choose a quiz number: </label>
             <select onChange={(e) => this.setQuizNumber(e.target.value)} name="quizSelector" id="quizSelector">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -372,21 +378,44 @@ current content of the editor to the server. */
               <option value="5">5</option>
               <option value="practice">practice</option>
             </select>
+            <this.showMoreQuizControls></this.showMoreQuizControls>
           </div>
-          <this.showQuestionControls></this.showQuestionControls>
-          <h4>Quizzers in room: {this.state.quizzers_in_room.join(', ')}</h4>
-          <br></br>
         </div>
       )
     }
+    return ""
   }
 
-  showQuizzerSection = () => {
-    return (
-      <div className="quizzer-section">
-        <Button onClick={() => this.jump()} style={this.footer_style}>Jump</Button>{' '}
-      </div>
-    )
+  footerButtons = () => {
+    var { username } = this.state
+    if (username === 'QM') {
+      if(this.state.quizNumber === 'practice'){
+        return(
+          <div id="practiceQuiz" className="footerButton">
+            <Button onClick={() => this.randomQuestion()}><h3>Next Random Question</h3></Button>{' '}
+          </div>
+        )
+      }else{
+        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{'left': '0'}} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
+        let bonusQuestion = <div className="twoFooterButtons" ><Button style={{'right': '0'}} onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button></div>
+        if(!this.state.quiz_started){
+          startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => setInterval(() => this.startQuiz(), 1000)}><h2>Start Quiz</h2></Button></div>
+          bonusQuestion = ""
+        }
+        return (
+          <div id="realQuiz">
+            {startQuizORnextQuestion}{' '}
+            {bonusQuestion}{' '}
+          </div>
+        )
+      }
+    }else{
+      return (
+        <div className="footerButton">
+          <Button onClick={() => this.jump()}><h2>Jump</h2></Button>
+        </div>
+      )
+    }
   }
 
   render() {
@@ -394,60 +423,58 @@ current content of the editor to the server. */
       q_text_to_display,
       question_number,
       question_type,
-      full_question_text,
       is_bonus,
       room,
       username,
+      quiz_started,
       jumper
     } = this.state;
-    let questionNumberTemp;
-    let questionTemp=<h2>{q_text_to_display}</h2>
+    let quizzerQuestionInformation;
+    let quizzerQuestion=<h2>{q_text_to_display}</h2>
     if(is_bonus){
-      questionNumberTemp = <h4 class="question-information">Bonus Question: {question_type}</h4>
+      quizzerQuestionInformation = <h4 className="question_information">Bonus Question: {question_type}</h4>
     }else if(question_number>0){
-      questionNumberTemp = <h4 class="question-information">#{question_number}: {question_type}</h4>
+      quizzerQuestionInformation = <h4 className="question_information">#{question_number}: {question_type}</h4>
     }else{
-      questionTemp=<h2>👀 Watch for the question to appear here. 👀</h2>
-      questionNumberTemp = <h4 class="question-information">Quiz Master has not started the quiz.</h4>
-      if(full_question_text == "The quiz has started!"){
-        questionNumberTemp = <h4 class="question-information">Welcome to the Quiz!</h4>
+      quizzerQuestion=<h2><span role="img" aria-label="eyes">👀</span> Watch for the question to appear here. <span role="img" aria-label="eyes">👀</span></h2>
+      quizzerQuestionInformation = <h4 className="question_information">Quiz Master has not started the quiz.</h4>
+      if(quiz_started){
+        quizzerQuestionInformation = <h4 className="question_information">Welcome to the Quiz!</h4>
       }
     }
-    
     let jumpTemp;
     if(jumper !== "" && jumper!== null && typeof jumper !== "undefined"){
-      jumpTemp= <div><h3 class="jump-in-page-alert"><b>{jumper}</b> has won the Jump!</h3></div>
+      jumpTemp= <div><h3 className="jump_in_page_alert"><b>{jumper}</b> has won the Jump!</h3></div>
     }
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <span class="wrap-around">Welcome <b>{username}</b> to room <b>{room}</b>! </span>
+          <span className="wrap_around">Welcome <b>{username}</b> to room <b>{room}</b>! </span>
           <NavbarBrand href="/">Bible Quiz 2.0</NavbarBrand>
         </Navbar>
         {jumpTemp}
-        <div style={{display:'flex', 'align-items': 'center', 'justify-content': 'center'}}>
-          <div style={{"text-align": "left"}}>
-            <Button id="audio-button" onClick={() => this.mute()}>
+        <div className="flex" style={{'justifyContent': 'center'}}>
+          <div>
+            <Button id="audioButton" onClick={() => this.mute()}>
               <VolumeUpOutlinedIcon id="audio-on" style={{display:'none'}}/>
               <VolumeOffOutlinedIcon id="audio-off"/>
             </Button>
           </div>
-          {questionNumberTemp}
+          {quizzerQuestionInformation}
         </div>
-        <div class="question" style={{display:'flex','align-items': 'center'}}>
-          <div style={{"margin": "10px", display:'flex', 'justify-content': 'center'}}>
-            {questionTemp}
+        <div className="question">
+          <div>
+            {quizzerQuestion}
           </div>
         </div>
-        <div className="container-fluid">
-          <br></br>
-          {this.showQuizzerSection()}
-          {this.showQuizMasterSection()}
-          <br></br>
-        </div>
         <br></br>
+        <div className="container-fluid">
+          <this.showQuizMasterSection></this.showQuizMasterSection>
+        </div>
+        <this.footerButtons></this.footerButtons>
+        <div style={{height:"60px"}}></div>{/* To enable the page to scroll and show all content due to footer buttons */}
       </React.Fragment>
-    );
+    )
   }
 }
 
