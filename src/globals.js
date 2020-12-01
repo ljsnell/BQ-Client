@@ -23,6 +23,10 @@ export default {
         quizpractice: {
             qs: [],
             bonus: []
+        }, // Light check's don't need question #'s.
+        quizlightcheck: {
+            qs: [],
+            bonus: []
         }
     }
 }
