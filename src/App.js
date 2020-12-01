@@ -341,7 +341,6 @@ current content of the editor to the server. */
       quizNumber: selectedQuizNumber,
       question_number: 0
     })
-    console.log('set_quiz_number')
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
@@ -390,6 +389,19 @@ current content of the editor to the server. */
         </div>
       )
     }
+    if (this.state.quizNumber === 'lightcheck') {
+      return (
+        <div>
+          <label htmlFor="chairSelector">Choose a chair to send a jump to: </label>
+          <select onChange={(e) => this.setTestChairNumber(e.target.value)} name="chairSelector" id="chairSelector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>)
+    }
     return ""
   }
 
@@ -431,16 +443,8 @@ current content of the editor to the server. */
               <option value="4">4</option>
               <option value="5">5</option>
               <option value="practice">practice</option>
+              <option value="lightcheck">light check</option>
             </select>
-            <label htmlFor="chairSelector">Choose a chair to send a jump to: </label>
-            <select onChange={(e) => this.setTestChairNumber(e.target.value)} name="chairSelector" id="chairSelector">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <Button onClick={() => this.testChair()}><h4>Send Test Jump</h4></Button>{' '}
             <this.showMoreQuizControls></this.showMoreQuizControls>
           </div>
         </div>
@@ -456,6 +460,13 @@ current content of the editor to the server. */
         return (
           <div id="practiceQuiz" className="footerButton">
             <Button onClick={() => this.randomQuestion()}><h3>Next Random Question</h3></Button>{' '}
+          </div>
+        )
+      }
+      else if (this.state.quizNumber === 'lightcheck') {
+        return (
+          <div id="practiceQuiz" className="footerButton">
+            <Button onClick={() => this.testChair()}><h3>Test Chair</h3></Button>{' '}
           </div>
         )
       } else {
