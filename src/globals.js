@@ -23,6 +23,10 @@ export default {
         quizpractice: {
             qs: [],
             bonus: []
+        },
+        quizlightcheck: {
+            qs: [],
+            bonus: []
         }
     }
 }
