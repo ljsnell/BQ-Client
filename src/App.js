@@ -322,16 +322,12 @@ current content of the editor to the server. */
 
   async testChair() {
     this.setState({ jumper: null })
-    var { chair_to_test, question_number, quiz_started } = this.state
+    var { chair_to_test, quiz_started } = this.state
     var jump_message = "Chair " + chair_to_test + " Jump"
-    this.setState({
-      question_type: jump_message,
+    this.setState({      
       full_question_text: jump_message,
-      answer_question_text: jump_message,
-      question_reference: jump_message,
-      q_text_to_display: " ",
-      question_number: question_number,
-      i: this.i
+      answer_question_text: jump_message,      
+      q_text_to_display: jump_message,      
     })                // Add two spaces to ensure no words get read aloud.
     this.sync(this.state.room)
     if (!quiz_started) {
@@ -442,7 +438,7 @@ current content of the editor to the server. */
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-            <Button onClick={() => this.testChair()}><h3>Send Test Jump</h3></Button>{' '}
+            <Button onClick={() => this.testChair()}><h4>Send Test Jump</h4></Button>{' '}
             <this.showMoreQuizControls></this.showMoreQuizControls>
           </div>
         </div>
