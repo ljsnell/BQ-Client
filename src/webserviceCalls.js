@@ -12,4 +12,4 @@ const fetchRandomQuestion = (qtype, books, chapters) => {
   return fetch('https://bible-questions-api.herokuapp.com/filtered?qtype='+qtype+'&books='+books+'&chapters='+chapters)
   // return fetch('http://localhost:5000/filtered?qtype='+qtype+'&books='+books+'&chapters='+chapters)
 }
-export { fetchQuestion, fetchRandomQuestion } 
+export { fetchQuestion, fetchRandomQuestion, fetchQuestionType } 
