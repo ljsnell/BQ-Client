@@ -320,16 +320,17 @@ current content of the editor to the server. */
       });
   }
 
-  async testChair() {
+  testChair() {
     this.setState({ jumper: null })
     var { chair_to_test, quiz_started } = this.state
     var jump_message = "Chair " + chair_to_test + " Jump"
-    this.setState({      
+    this.setState({
       full_question_text: jump_message,
-      answer_question_text: jump_message,      
-      q_text_to_display: jump_message,      
-    })                // Add two spaces to ensure no words get read aloud.
-    this.sync(this.state.room)
+      answer_question_text: jump_message,
+      q_text_to_display: jump_message,
+      question_number: 1,
+      i: jump_message.length
+    })                // Add two spaces to ensure no words get read aloud.    
     if (!quiz_started) {
       this.startQuiz()
     }
@@ -340,6 +341,7 @@ current content of the editor to the server. */
       quizNumber: selectedQuizNumber,
       question_number: 0
     })
+    console.log('set_quiz_number')
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
@@ -448,7 +450,7 @@ current content of the editor to the server. */
   }
 
   footerButtons = () => {
-    var { username } = this.state
+    var { username, quiz_started } = this.state
     if (username === 'QM') {
       if (this.state.quizNumber === 'practice') {
         return (
@@ -459,7 +461,7 @@ current content of the editor to the server. */
       } else {
         let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
         let bonusQuestion = <div className="twoFooterButtons" ><Button style={{ 'right': '0' }} onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button></div>
-        if (!this.state.quiz_started) {
+        if (!quiz_started) {
           startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => this.startQuiz()}><h2>Start Quiz</h2></Button></div>
           bonusQuestion = ""
         }
