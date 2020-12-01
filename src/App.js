@@ -202,10 +202,7 @@ current content of the editor to the server. */
     if (i < this.question_array.length) {
       q_text_to_display = q_text_to_display.concat(this.question_array[i]).concat(' ')
       i++
-      this.setState({
-        q_text_to_display: q_text_to_display, i: i, question_number: question_number,
-        question_type: question_type, full_question_text: full_question_text, quiz_started: true
-      })
+      this.setState({ q_text_to_display: q_text_to_display, i: i, question_number: question_number, question_type: question_type, full_question_text: full_question_text, quiz_started: true })
       this.sync(room)
     }
   }
@@ -333,9 +330,8 @@ current content of the editor to the server. */
       q_text_to_display: jump_message,
       question_number: 1,
       i: jump_message.length
-    })                // Add two spaces to ensure no words get read aloud.   
+    })                // Add two spaces to ensure no words get read aloud.    
     if (!quiz_started) {
-      this.setState({ quiz_started: true })
       this.startQuiz()
     }
   }
