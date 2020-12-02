@@ -91,10 +91,10 @@
 
 .question {
     border-radius: 25px;
+    border: 2px solid black;
     display:flex;
     align-items: center;
     min-height: 80px;
     padding: 10px;
     margin: 0px 10px 0px 10px;
-    background-color: #C0E6F6;
 }
