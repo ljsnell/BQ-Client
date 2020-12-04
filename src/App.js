@@ -544,15 +544,7 @@ current content of the editor to the server. */
     }
     return (
       <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
+        <div>          
           <Switch>
             <Route exact path="/">
               <React.Fragment>
