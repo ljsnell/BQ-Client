@@ -544,9 +544,12 @@ current content of the editor to the server. */
     }
     return (
       <Router>
-        <div>          
+        <div>
           <Switch>
             <Route exact path="/">
+              <Login />
+            </Route>
+            <Route path="/quiz">
               <React.Fragment>
                 <Navbar color="light" light>
                   <span className="wrap_around">Welcome <b>{username}</b> to room <b>{room}</b>! </span>
@@ -574,9 +577,6 @@ current content of the editor to the server. */
                 <this.footerButtons></this.footerButtons>
                 <div style={{ height: "60px" }}></div>{/* To enable the page to scroll and show all content due to footer buttons */}
               </React.Fragment>
-            </Route>
-            <Route path="/login">
-              <Login />
             </Route>
           </Switch>
         </div>
