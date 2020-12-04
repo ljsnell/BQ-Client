@@ -15,6 +15,13 @@ import './App.css';
 import globals from './globals'
 import { fetchQuestion, fetchQuestionType, fetchRandomQuestion } from './webserviceCalls';
 import { chapters, questionTypes } from './constants';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Login from "./login/Login";
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -536,33 +543,52 @@ current content of the editor to the server. */
       jumpTemp = <div><h3 className="jump_in_page_alert"><b>{jumper}</b> has won the Jump!</h3></div>
     }
     return (
-      <React.Fragment>
-        <Navbar color="light" light>
-          <span className="wrap_around">Welcome <b>{username}</b> to room <b>{room}</b>! </span>
-          <NavbarBrand href="/">Bible Quiz 2.0</NavbarBrand>
-        </Navbar>
-        {jumpTemp}
-        <div className="flex" style={{ 'justifyContent': 'center' }}>
-          <div>
-            <Button id="audioButton" onClick={() => this.mute()}>
-              <VolumeUpOutlinedIcon id="audio-on" style={{ display: 'none' }} />
-              <VolumeOffOutlinedIcon id="audio-off" />
-            </Button>
-          </div>
-          {quizzerQuestionInformation}
+      <Router>
+        <div>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </ul>
+          <Switch>
+            <Route exact path="/">
+              <React.Fragment>
+                <Navbar color="light" light>
+                  <span className="wrap_around">Welcome <b>{username}</b> to room <b>{room}</b>! </span>
+                  <NavbarBrand href="/">Bible Quiz 2.0</NavbarBrand>
+                </Navbar>
+                {jumpTemp}
+                <div className="flex" style={{ 'justifyContent': 'center' }}>
+                  <div>
+                    <Button id="audioButton" onClick={() => this.mute()}>
+                      <VolumeUpOutlinedIcon id="audio-on" style={{ display: 'none' }} />
+                      <VolumeOffOutlinedIcon id="audio-off" />
+                    </Button>
+                  </div>
+                  {quizzerQuestionInformation}
+                </div>
+                <div className="question">
+                  <div>
+                    {quizzerQuestion}
+                  </div>
+                </div>
+                <br></br>
+                <div className="container-fluid">
+                  <this.showQuizMasterSection></this.showQuizMasterSection>
+                </div>
+                <this.footerButtons></this.footerButtons>
+                <div style={{ height: "60px" }}></div>{/* To enable the page to scroll and show all content due to footer buttons */}
+              </React.Fragment>
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+          </Switch>
         </div>
-        <div className="question">
-          <div>
-            {quizzerQuestion}
-          </div>
-        </div>
-        <br></br>
-        <div className="container-fluid">
-          <this.showQuizMasterSection></this.showQuizMasterSection>
-        </div>
-        <this.footerButtons></this.footerButtons>
-        <div style={{ height: "60px" }}></div>{/* To enable the page to scroll and show all content due to footer buttons */}
-      </React.Fragment>
+      </Router>
     )
   }
 }
