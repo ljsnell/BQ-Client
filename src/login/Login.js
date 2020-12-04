@@ -5,27 +5,30 @@ import 'medium-editor/dist/css/themes/default.css';
 import '../App.css';
 
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [room, setRoom] = useState("");
+    const [username, setUsername] = useState("");
 
     function validateForm() {
-        return email.length > 0 && password.length > 0;
+        return room.length > 0 && username.length > 0;
     }
 
     function handleSubmit(event) {
-        event.preventDefault();
+        let validInput = validateForm();
+        console.log(validInput);
     }
 
     return ( // https://reactstrap.github.io/components/form/
         <Form>
             <FormGroup>
                 <Label for="roomNumber">Room #</Label>
-                <Input type="roomNum" name="roomNum" id="roomNumID" placeholder="room" />
+                <Input type="roomNum" name="roomNum" id="roomNumID" placeholder="room"
+                    onChange={event => setRoom(event.target.value)} />
             </FormGroup>
             <FormGroup>
-                <Label for="username">Room #</Label>
-                <Input type="userName" name="userName" id="userNameID" placeholder="E.G. 1-Jeff-Gnarwhals3.0" />
+                <Label for="username">Username</Label>
+                <Input type="userName" name="userName" id="userNameID" placeholder="E.G. 1-Jeff-Gnarwhals3.0"
+                    onChange={event => setUsername(event.target.value)} />
             </FormGroup>
-            <div className="footerButton" ><Button onClick={() => this.handleSubmit()}><h2>Login</h2></Button>{' '}</div>
+            <div className="footerButton" ><Button onClick={() => handleSubmit()}><h2>Login</h2></Button>{' '}</div>
         </Form>);
 }
