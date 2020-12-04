@@ -18,8 +18,7 @@ import { chapters, questionTypes } from './constants';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Login from "./login/Login";
 
