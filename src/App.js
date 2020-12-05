@@ -6,7 +6,6 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Login from "./login/Login";
 import Quiz from "./Quiz";
 
 class App extends Component {
@@ -16,9 +15,6 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/quiz">
               <Quiz />
             </Route>
           </Switch>
