@@ -18,11 +18,10 @@ export default function Login() {
     function handleSubmit(event) {
         let validInput = validateForm();
         console.log(validInput);
-        let path = `quiz`;
-        history.push(path);        
+        history.push({ pathname: `quiz`, state: { user_room: room, entered_username: username } });
     }
 
-    return ( // https://reactstrap.github.io/components/form/
+    return ( // https://reactstrap.github.io/components/form/        
         <Form>
             <FormGroup>
                 <Label for="roomNumber">Room #</Label>
