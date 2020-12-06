@@ -24,8 +24,6 @@ var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
-// var user_room = this.props.location.state.user_room
-// var entered_username = this.props.location.state.entered_username
 
 var client = io.connect(server).emit('room', JSON.stringify({
   room: user_room,
