@@ -313,10 +313,10 @@ current content of the editor to the server. */
         if (data != null) {
           console.log(data);
           this.setState({
-            full_question_text: data[15],
-            question_reference: data[14],
             question_type: data[18] + " " + data[9],
+            full_question_text: data[10],
             answer_question_text: data[11],
+            question_reference: data[14],
             q_text_to_display: " ",
             question_number: question_number + 1,
             i: this.i
