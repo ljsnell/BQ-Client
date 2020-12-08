@@ -396,6 +396,7 @@ current content of the editor to the server. */
               defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27]]}
               isMulti
               name="questionchapters"
+              closeMenuOnSelect={false}
               options={chapters}
               onChange={(e) => this.setState({ selectedChapters: e })}
               className="basic-multi-select"
