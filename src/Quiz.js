@@ -375,8 +375,10 @@ current content of the editor to the server. */
   }
 
   displayNextQuestionType() {
+    console.log('futureQuestionType')
+    console.log(this.state.futureQuestionType)
     this.setState({
-      
+      question_type: this.state.futureQuestionType
     })
   }
   showMoreQuizControls = () => {
@@ -491,8 +493,8 @@ current content of the editor to the server. */
           </div>
         )
       } else {
-        let nextQuestionType = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.displayNextQuestionType(false)}>Next Question Type</Button></div>
-        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'right': '0' }} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
+        let nextQuestionType = <div ><Button style={{ 'left': '0' }} onClick={() => this.displayNextQuestionType(false)}>Next Question Type</Button></div>
+        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
         let bonusQuestion = <div className="twoFooterButtons" ><Button style={{ 'right': '0' }} onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button></div>
         if (!quiz_started) {
           startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => this.startQuiz()}><h2>Start Quiz</h2></Button></div>
@@ -530,7 +532,7 @@ current content of the editor to the server. */
     let quizzerQuestion = <h2>{q_text_to_display}</h2>
     if (is_bonus) {
       quizzerQuestionInformation = <h4 className="question_information">Bonus Question: {question_type}</h4>
-    } else if (question_number > 0) {
+    } else if (question_number > 0) { // Need to add conditional logic for this I think.
       quizzerQuestionInformation = <h4 className="question_information">#{question_number}: {question_type}</h4>
     } else {
       quizzerQuestion = <h2><span role="img" aria-label="eyes">👀</span> Watch for the question to appear here. <span role="img" aria-label="eyes">👀</span></h2>
