@@ -23,7 +23,7 @@ const QUIZZES = globals.QUIZ_GLOBAL
 var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
-var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "QM");
+var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
 
 var client = io.connect(server).emit('room', JSON.stringify({
   room: user_room,
@@ -85,6 +85,13 @@ current content of the editor to the server. */
       quiz_started: quiz_started
     }));
   };
+
+  syncNextQuestionType = (room_id, nextQuestiontype) => {
+    client.emit('next_question_type', JSON.stringify({
+      question_type: nextQuestiontype,
+      room: room_id
+    }));
+  }
 
   syncJump = (i, room_id, username) => {
     client.emit('jump', JSON.stringify({
@@ -190,6 +197,10 @@ current content of the editor to the server. */
       console.log(message)
       session.setState({ quizzers_in_room: message })
     });
+
+    client.on('next_question_type', function (message) {
+      session.setState({question_type: message.question_type})
+    })
   }
 
   startQuiz() {
@@ -375,9 +386,7 @@ current content of the editor to the server. */
   }
 
   displayNextQuestionType() {
-    this.setState({
-      question_type: this.state.futureQuestionType
-    })
+    this.syncNextQuestionType(this.state.room, this.state.futureQuestionType)    
   }
 
   showMoreQuizControls = () => {
