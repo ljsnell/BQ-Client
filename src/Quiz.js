@@ -23,7 +23,7 @@ const QUIZZES = globals.QUIZ_GLOBAL
 var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
-var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
+var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "QM");
 
 var client = io.connect(server).emit('room', JSON.stringify({
   room: user_room,
@@ -374,6 +374,11 @@ current content of the editor to the server. */
     this.setState({ futureQuestionType: questionTypes[e.target.value - 1] })
   }
 
+  displayNextQuestionType() {
+    this.setState({
+      
+    })
+  }
   showMoreQuizControls = () => {
     if (this.state.quizNumber === 'practice') {
       return (
@@ -486,7 +491,8 @@ current content of the editor to the server. */
           </div>
         )
       } else {
-        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
+        let nextQuestionType = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.displayNextQuestionType(false)}>Next Question Type</Button></div>
+        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'right': '0' }} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
         let bonusQuestion = <div className="twoFooterButtons" ><Button style={{ 'right': '0' }} onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button></div>
         if (!quiz_started) {
           startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => this.startQuiz()}><h2>Start Quiz</h2></Button></div>
@@ -494,6 +500,7 @@ current content of the editor to the server. */
         }
         return (
           <div id="realQuiz">
+            { nextQuestionType }{' '}
             {startQuizORnextQuestion}{' '}
             {bonusQuestion}{' '}
           </div>
