@@ -375,12 +375,11 @@ current content of the editor to the server. */
   }
 
   displayNextQuestionType() {
-    console.log('futureQuestionType')
-    console.log(this.state.futureQuestionType)
     this.setState({
       question_type: this.state.futureQuestionType
     })
   }
+
   showMoreQuizControls = () => {
     if (this.state.quizNumber === 'practice') {
       return (
@@ -532,7 +531,7 @@ current content of the editor to the server. */
     let quizzerQuestion = <h2>{q_text_to_display}</h2>
     if (is_bonus) {
       quizzerQuestionInformation = <h4 className="question_information">Bonus Question: {question_type}</h4>
-    } else if (question_number > 0) { // Need to add conditional logic for this I think.
+    } else if (question_number > 0 || quiz_started) {
       quizzerQuestionInformation = <h4 className="question_information">#{question_number}: {question_type}</h4>
     } else {
       quizzerQuestion = <h2><span role="img" aria-label="eyes">👀</span> Watch for the question to appear here. <span role="img" aria-label="eyes">👀</span></h2>
