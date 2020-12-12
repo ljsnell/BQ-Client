@@ -311,12 +311,13 @@ current content of the editor to the server. */
       .then(res => res.json()).then((data) => {
         this.i = 0
         if (data != null) {
-          console.log(data);
+          console.log('random_question')
+          console.log(data)
           this.setState({
-            question_type: data[18] + " " + data[9],
-            full_question_text: data[10],
-            answer_question_text: data[11],
-            question_reference: data[14],
+            full_question_text: data[0],
+            question_type: data[1],
+            answer_question_text: data[2],
+            question_reference: data[3],
             q_text_to_display: " ",
             question_number: question_number + 1,
             i: this.i
