@@ -86,6 +86,14 @@ current content of the editor to the server. */
     }));
   };
 
+  syncNextQuestionType = (room_id, nextQuestiontype, nextQuestionNumber) => {
+    client.emit('next_question_type', JSON.stringify({
+      question_type: nextQuestiontype,
+      room: room_id,
+      question_number: nextQuestionNumber
+    }));
+  }
+
   syncJump = (i, room_id, username) => {
     client.emit('jump', JSON.stringify({
       username: username,
@@ -190,6 +198,11 @@ current content of the editor to the server. */
       console.log(message)
       session.setState({ quizzers_in_room: message })
     });
+
+    client.on('next_question_type', function (message) {
+      session.setState({question_type: message.question_type,
+        question_number: message.question_number})
+    })
   }
 
   startQuiz() {
@@ -257,7 +270,7 @@ current content of the editor to the server. */
               question_reference: data[3],
               question_number: question_number,
               i: data[1].length
-            })                // Add two spaces to ensure no words get read aloud.
+            }) // Add two spaces to ensure no words get read aloud.
             this.sync(this.state.room)
           } else {
             this.setState({
@@ -266,7 +279,7 @@ current content of the editor to the server. */
               answer_question_text: data[2],
               question_reference: data[3],
               q_text_to_display: " ",
-              question_number: question_number + 1,
+              question_number: question_number,
               i: this.i
             })
           }
@@ -373,6 +386,14 @@ current content of the editor to the server. */
   updateRandomQuestionType = (e) => {
     this.selectedRandomQuestionType = e.target.value
     this.setState({ futureQuestionType: questionTypes[e.target.value - 1] })
+  }
+
+  displayNextQuestionType() {
+    var { question_number, futureQuestionType, room } = this.state
+    this.setState({
+      question_number: question_number++
+    })
+    this.syncNextQuestionType(room, futureQuestionType, question_number)
   }
 
   showMoreQuizControls = () => {
@@ -487,7 +508,8 @@ current content of the editor to the server. */
           </div>
         )
       } else {
-        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
+        let nextQuestionType = <div ><Button style={{ 'left': '0' }} onClick={() => this.displayNextQuestionType(false)}>Next Question</Button></div>
+        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.nextQuestion(false)}>Start Question</Button></div>
         let bonusQuestion = <div className="twoFooterButtons" ><Button style={{ 'right': '0' }} onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button></div>
         if (!quiz_started) {
           startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => this.startQuiz()}><h2>Start Quiz</h2></Button></div>
@@ -495,6 +517,7 @@ current content of the editor to the server. */
         }
         return (
           <div id="realQuiz">
+            { nextQuestionType }{' '}
             {startQuizORnextQuestion}{' '}
             {bonusQuestion}{' '}
           </div>
@@ -524,7 +547,7 @@ current content of the editor to the server. */
     let quizzerQuestion = <h2>{q_text_to_display}</h2>
     if (is_bonus) {
       quizzerQuestionInformation = <h4 className="question_information">Bonus Question: {question_type}</h4>
-    } else if (question_number > 0) {
+    } else if (question_number > 0 || quiz_started) {
       quizzerQuestionInformation = <h4 className="question_information">#{question_number}: {question_type}</h4>
     } else {
       quizzerQuestion = <h2><span role="img" aria-label="eyes">👀</span> Watch for the question to appear here. <span role="img" aria-label="eyes">👀</span></h2>
