@@ -201,7 +201,13 @@ current content of the editor to the server. */
 
     client.on('next_question_type', function (message) {
       session.setState({question_type: message.question_type,
-        question_number: message.question_number})
+        question_number: message.question_number,
+        q_text_to_display: "",
+        full_question_text: "",
+        jumper: "",
+        question_reference: "",
+        answer_question_text: "",
+        futureQuestionType: ""})
     })
   }
 
