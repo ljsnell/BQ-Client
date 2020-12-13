@@ -86,10 +86,11 @@ current content of the editor to the server. */
     }));
   };
 
-  syncNextQuestionType = (room_id, nextQuestiontype) => {
+  syncNextQuestionType = (room_id, nextQuestiontype, nextQuestionNumber) => {
     client.emit('next_question_type', JSON.stringify({
       question_type: nextQuestiontype,
-      room: room_id
+      room: room_id,
+      question_number: nextQuestionNumber
     }));
   }
 
@@ -199,7 +200,8 @@ current content of the editor to the server. */
     });
 
     client.on('next_question_type', function (message) {
-      session.setState({question_type: message.question_type})
+      session.setState({question_type: message.question_type,
+        question_number: message.question_number})
     })
   }
 
@@ -268,7 +270,7 @@ current content of the editor to the server. */
               question_reference: data[3],
               question_number: question_number,
               i: data[1].length
-            })                // Add two spaces to ensure no words get read aloud.
+            }) // Add two spaces to ensure no words get read aloud.
             this.sync(this.state.room)
           } else {
             this.setState({
@@ -277,7 +279,7 @@ current content of the editor to the server. */
               answer_question_text: data[2],
               question_reference: data[3],
               q_text_to_display: " ",
-              question_number: question_number + 1,
+              question_number: question_number,
               i: this.i
             })
           }
@@ -387,7 +389,8 @@ current content of the editor to the server. */
   }
 
   displayNextQuestionType() {
-    this.syncNextQuestionType(this.state.room, this.state.futureQuestionType)    
+    this.state.question_number++
+    this.syncNextQuestionType(this.state.room, this.state.futureQuestionType, this.state.question_number)
   }
 
   showMoreQuizControls = () => {
