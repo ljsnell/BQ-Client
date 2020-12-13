@@ -206,7 +206,8 @@ current content of the editor to the server. */
         full_question_text: "",
         jumper: "",
         question_reference: "",
-        answer_question_text: ""})
+        answer_question_text: "",
+        futureQuestionType: ""})
     })
   }
 
