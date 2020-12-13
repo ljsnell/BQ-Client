@@ -389,8 +389,11 @@ current content of the editor to the server. */
   }
 
   displayNextQuestionType() {
-    this.state.question_number++
-    this.syncNextQuestionType(this.state.room, this.state.futureQuestionType, this.state.question_number)
+    var { question_number, futureQuestionType, room } = this.state
+    this.setState({
+      question_number: question_number++
+    })
+    this.syncNextQuestionType(room, futureQuestionType, question_number)
   }
 
   showMoreQuizControls = () => {
