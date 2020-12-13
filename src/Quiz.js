@@ -502,8 +502,8 @@ current content of the editor to the server. */
           </div>
         )
       } else {
-        let nextQuestionType = <div ><Button style={{ 'left': '0' }} onClick={() => this.displayNextQuestionType(false)}>Next Question Type</Button></div>
-        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.nextQuestion(false)}>Next Question</Button></div>
+        let nextQuestionType = <div ><Button style={{ 'left': '0' }} onClick={() => this.displayNextQuestionType(false)}>Next Question</Button></div>
+        let startQuizORnextQuestion = <div className="twoFooterButtons" ><Button style={{ 'left': '0' }} onClick={() => this.nextQuestion(false)}>Start Question</Button></div>
         let bonusQuestion = <div className="twoFooterButtons" ><Button style={{ 'right': '0' }} onClick={() => this.nextQuestion(true, this.bonusQuestionNumber)}>Bonus Question</Button></div>
         if (!quiz_started) {
           startQuizORnextQuestion = <div className="footerButton"><Button onClick={() => this.startQuiz()}><h2>Start Quiz</h2></Button></div>
