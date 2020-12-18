@@ -9,7 +9,7 @@
     /* justify-content: center; */
 }
 
-.twoFooterButtons>Button{
+.threeFooterButtons>Button{
     background-color: #1976D2;
     border: 1px solid black;
     text-align: center;
@@ -20,12 +20,12 @@
     width: 33%;
 }
 
-.twoFooterButtons>Button:hover{
+.threeFooterButtons>Button:hover{
     background-color:#13589D;
     border-top: 1px solid #1976D2;
 }
 
-.twoFooterButtons>Button:active:enabled:not([disabled]){
+.threeFooterButtons>Button:active:enabled:not([disabled]){
     background-color:#1976D2;
     border-top: 1px solid #1976D2;
 }
