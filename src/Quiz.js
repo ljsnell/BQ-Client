@@ -376,11 +376,12 @@ current content of the editor to the server. */
   setQuizNumber(selectedQuizNumber) {
     this.setState({
       quizNumber: selectedQuizNumber,
-      question_number: 0
+      question_number: 0,
     })
     let selected_quiz = QUIZZES[`quiz${selectedQuizNumber}`]
     this.questionIDs = selected_quiz.qs
     this.bonusQuestionIDs = selected_quiz.bonus
+    this.bonusQuestionNumber = 0
     this.nextQuestionType(true, selectedQuizNumber);
   }
 
