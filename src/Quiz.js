@@ -23,7 +23,7 @@ const QUIZZES = globals.QUIZ_GLOBAL
 var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
-var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-Gnarwhals3.0", "Username");
+var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-G3", "1-Username");
 
 var client = io.connect(server).emit('room', JSON.stringify({
   room: user_room,
@@ -200,7 +200,8 @@ current content of the editor to the server. */
     });
 
     client.on('next_question_type', function (message) {
-      session.setState({question_type: message.question_type,
+      session.setState({
+        question_type: message.question_type,
         question_number: message.question_number,
         q_text_to_display: "",
         full_question_text: "",
@@ -208,7 +209,8 @@ current content of the editor to the server. */
         question_reference: "",
         answer_question_text: "",
         futureQuestionType: "",
-        is_bonus: false})
+        is_bonus: false
+      })
     })
   }
 
@@ -523,12 +525,18 @@ current content of the editor to the server. */
         }
         return (
           <div id="realQuiz">
-            { nextQuestionType }{' '}
+            { nextQuestionType}{' '}
             {startQuizORnextQuestion}{' '}
             {bonusQuestion}{' '}
           </div>
         )
       }
+    } else if (isNaN(username.charAt(0))) {
+      return (
+        <div className="footerButton">
+          Spectator Mode. If you are a quizzer who needs the jump button please start your name with a  chair number.
+        </div>
+      )
     } else {
       return (
         <div className="footerButton">
