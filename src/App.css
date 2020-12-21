@@ -98,3 +98,15 @@
     padding: 10px;
     margin: 0px 10px 0px 10px;
 }
+
+.spectator {
+    background-color: #ffffff;
+    border-top: 1px solid #1976D2;
+    text-align: center;
+    padding:0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+}
