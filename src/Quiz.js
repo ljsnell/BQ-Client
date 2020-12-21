@@ -115,6 +115,13 @@ current content of the editor to the server. */
     this.setState({ play_audio: !this.state.play_audio })
   }
 
+  spectatorText() {
+    return (
+      <div className="spectator">
+        Spectator Mode. If you are a quizzer who needs the jump button please start your name with a  chair number. E.G. 1-Jeff
+      </div>)
+  }
+
   showMoreQuizOptions() {
     var showMore = document.getElementById("showMore");
     var showLess = document.getElementById("showLess");
@@ -540,18 +547,10 @@ current content of the editor to the server. */
           </div>
         )
       } else {
-        return (
-          <div className="spectator">
-            Spectator Mode. If you are a quizzer who needs the jump button please start your name with a  chair number. E.G. 1-Jeff
-          </div>
-        )
+        return this.spectatorText()
       }
     } else {
-      return (
-        <div className="spectator">
-          Spectator Mode. If you are a quizzer who needs the jump button please start your name with a  chair number. E.G. 1-Jeff
-        </div>
-      )
+      return this.spectatorText()
     }
   }
 
