@@ -534,7 +534,7 @@ current content of the editor to the server. */
     } else if (isNaN(username.charAt(0))) {
       return (
         <div className="spectator">
-          Spectator Mode. If you are a quizzer who needs the jump button please start your name with a  chair number.
+          Spectator Mode. If you are a quizzer who needs the jump button please start your name with a  chair number. E.G. 1-Jeff
         </div>
       )
     } else {
