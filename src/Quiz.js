@@ -462,7 +462,7 @@ current content of the editor to the server. */
 
   showQuizMasterSection = () => {
     var { username, full_question_text, answer_question_text, question_number, question_reference, is_bonus, futureQuestionType } = this.state
-    if (username === 'QM') {
+    if (username === 'QMJ') {
       let questionNumTemp;
       if (is_bonus) {
         questionNumTemp = <h6 className="quizMasterBody"><b>Question:</b> Bonus</h6>
@@ -495,6 +495,8 @@ current content of the editor to the server. */
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
               <option value="practice">practice</option>
               <option value="lightcheck">light check</option>
             </select>
@@ -508,7 +510,7 @@ current content of the editor to the server. */
 
   footerButtons = () => {
     var { username, quiz_started } = this.state
-    if (username === 'QM') {
+    if (username === 'QMJ') {
       if (this.state.quizNumber === 'practice') {
         return (
           <div id="practiceQuiz" className="footerButton">
