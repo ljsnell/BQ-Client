@@ -73,7 +73,8 @@ current content of the editor to the server. */
       question_type,
       is_bonus,
       full_question_text,
-      quiz_started
+      quiz_started,
+      jumper
     } = this.state
     client.emit('contentchange', JSON.stringify({
       content: q_text_to_display,
@@ -82,7 +83,8 @@ current content of the editor to the server. */
       question_type: question_type,
       is_bonus: is_bonus,
       room: room_id,
-      quiz_started: quiz_started
+      quiz_started: quiz_started,
+      jumper: jumper
     }));
   };
 
