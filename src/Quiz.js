@@ -189,8 +189,6 @@ current content of the editor to the server. */
     client.on('jump', function (message) {
       const dataFromServer = message;
       const stateToChange = {};
-      // Check if statement has username
-      // Add username to list of jumpers / increment # of jumpers by one.
       console.log('Jumper!')
       console.log(session.state.jumper)
       if (session.state.jumper == null) {
