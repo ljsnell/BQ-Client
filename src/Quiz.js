@@ -19,8 +19,8 @@ import { chapters, questionTypes } from './constants';
 const QUIZZES = globals.QUIZ_GLOBAL
 
 // Websocket server
-// var server = 'http://127.0.0.1:8000/'
-var server = 'wss://mysterious-journey-90036.herokuapp.com'
+var server = 'http://127.0.0.1:8000/'
+// var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
 var user_room = prompt("Please enter your room #", "room");
 var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-G3", "1-Username");
@@ -73,7 +73,8 @@ current content of the editor to the server. */
       question_type,
       is_bonus,
       full_question_text,
-      quiz_started
+      quiz_started,
+      jumper
     } = this.state
     client.emit('contentchange', JSON.stringify({
       content: q_text_to_display,
@@ -82,7 +83,8 @@ current content of the editor to the server. */
       question_type: question_type,
       is_bonus: is_bonus,
       room: room_id,
-      quiz_started: quiz_started
+      quiz_started: quiz_started,
+      jumper: jumper
     }));
   };
 
@@ -146,6 +148,9 @@ current content of the editor to the server. */
     client.on('contentchange', function (message) {
       const dataFromServer = message
       const stateToChange = {};
+      // If we listen for jumper we should be sending it.
+      console.log('datafromserver.jumper')
+      console.log(dataFromServer.jumper)
       stateToChange.jumper = dataFromServer.jumper
       stateToChange.q_text_to_display = dataFromServer.question
       stateToChange.full_question_text = dataFromServer.full_question_text
@@ -187,6 +192,8 @@ current content of the editor to the server. */
     client.on('jump', function (message) {
       const dataFromServer = message;
       const stateToChange = {};
+      // Check if statement has username
+      // Add username to list of jumpers / increment # of jumpers by one.
       console.log('Jumper!')
       console.log(session.state.jumper)
       if (session.state.jumper == null) {
