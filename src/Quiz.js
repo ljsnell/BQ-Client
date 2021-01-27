@@ -22,7 +22,7 @@ const QUIZZES = globals.QUIZ_GLOBAL
 // var server = 'http://127.0.0.1:8000/'
 var server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
-var user_room = prompt("Please enter your room #", "room");
+var user_room = "69" //prompt("Please enter your room #", "room");
 var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-G3", "1-Username");
 
 var client = io.connect(server).emit('room', JSON.stringify({
@@ -67,7 +67,7 @@ class Quiz extends Component {
   /* When content changes, we send the
 current content of the editor to the server. */
   sync = (room_id) => {
-    var {
+    const {
       q_text_to_display,
       question_number,
       question_type,
@@ -97,6 +97,8 @@ current content of the editor to the server. */
   }
 
   syncJump = (i, room_id, username) => {
+    // const start = new Date().getTime();
+    // while (new Date().getTime() < start + 1500);
     client.emit('jump', JSON.stringify({
       username: username,
       i: i,
@@ -141,10 +143,6 @@ current content of the editor to the server. */
   }
 
   componentWillMount() {
-    var session = this;
-    console.log('session')
-    console.log(session)
-
     client.on('contentchange', function (message) {
       const dataFromServer = message
       const stateToChange = {};
@@ -157,7 +155,7 @@ current content of the editor to the server. */
       stateToChange.quiz_started = dataFromServer.quiz_started
 
       // Speaks the text aloud.
-      if (session.state.play_audio === true) {
+      if (this.state.play_audio === true) {
         try {
           var msg = new SpeechSynthesisUtterance();
           var voices = window.speechSynthesis.getVoices();
@@ -181,35 +179,30 @@ current content of the editor to the server. */
         }
       }
 
-      session.setState({
+      this.setState({
         ...stateToChange
       });
     });
 
     client.on('jump', function (message) {
       const dataFromServer = message;
-      const stateToChange = {};
-      console.log('Jumper!')
-      console.log(session.state.jumper)
-      if (session.state.jumper == null) {
-        stateToChange.jumper = dataFromServer.username
-        console.log(stateToChange.jumper)
-        stateToChange.i = dataFromServer.i;
+      console.log('Jumper!', message)
+      if (this.state.jumper == null) {
+        const jumper = dataFromServer.username
+        const index = dataFromServer.i;
 
-        session.setState({
-          ...stateToChange
-        });
+        console.log('Jumper is null', dataFromServer)
+        this.setState({ jumper: jumper, i: index });
       }
     });
 
     client.on('joined', function (message) {
-      console.log('Joined!')
-      console.log(message)
-      session.setState({ quizzers_in_room: message })
+      console.log('Joined!', message)
+      this.setState({ quizzers_in_room: message })
     });
 
     client.on('next_question_type', function (message) {
-      session.setState({
+      this.setState({
         question_type: message.question_type,
         question_number: message.question_number,
         q_text_to_display: "",
@@ -224,7 +217,7 @@ current content of the editor to the server. */
   }
 
   startQuiz() {
-    setInterval(() => this.iterativeSync(), 1000);
+    setInterval(() => this.iterativeSync(), 300);
     this.nextQuestionType(true)
   }
 
@@ -260,13 +253,19 @@ current content of the editor to the server. */
       console.log('full_question_text')
       console.log(full_question_text)
       this.question_array = full_question_text.split(" ")
-      this.setState({ username: username })
       this.i = this.question_array.length
       this.syncJump(this.i, room, username)
     }
   }
 
   async nextQuestion(isNextBonus) {
+    setTimeout(() => {
+      client.emit('jump', JSON.stringify({
+        username: '1-Username',
+        i: 9,
+        room: 69
+      }))
+    }, 300)
     this.setState({ jumper: null, is_bonus: isNextBonus })
     var { question_number } = this.state
     let questionsList = isNextBonus ? this.bonusQuestionIDs : this.questionIDs
@@ -559,16 +558,7 @@ current content of the editor to the server. */
   }
 
   render() {
-    const {
-      q_text_to_display,
-      question_number,
-      question_type,
-      is_bonus,
-      room,
-      username,
-      quiz_started,
-      jumper
-    } = this.state;
+    const { q_text_to_display, question_number, question_type, is_bonus, room, username, quiz_started, jumper } = this.state;
     let quizzerQuestionInformation;
     let quizzerQuestion = <h2>{q_text_to_display}</h2>
     if (is_bonus) {
