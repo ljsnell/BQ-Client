@@ -185,11 +185,11 @@ current content of the editor to the server. */
     client.on('jump', function (message) {
       const dataFromServer = message;
       const stateToChange = {};
-      console.log('Jumper!')
-      console.log(this.state.jumper)
+      console.log('Jumper!', this.state.jumper)
+
       if (this.state.jumper == null) {
         stateToChange.jumper = dataFromServer.username
-        console.log(stateToChange.jumper)
+        console.log('Jumper in state update: ', stateToChange.jumper)
         stateToChange.i = dataFromServer.i;
 
         this.setState({
@@ -199,8 +199,7 @@ current content of the editor to the server. */
     }.bind(this));
 
     client.on('joined', function (message) {
-      console.log('Joined!')
-      console.log(message)
+      console.log('Joined!', message)      
       this.setState({ quizzers_in_room: message })
     }.bind(this));
 
@@ -253,8 +252,7 @@ current content of the editor to the server. */
       room
     } = this.state
     if (jumper == null) {
-      console.log('full_question_text')
-      console.log(full_question_text)
+      console.log('full_question_text', full_question_text)
       this.question_array = full_question_text.split(" ")
       this.setState({ username: username })
       this.i = this.question_array.length
@@ -271,8 +269,7 @@ current content of the editor to the server. */
       var questionID = questionsList[questionNUMTemp]
       await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
-          console.log('question from api!')
-          console.log(data)
+          console.log('question from api!', data)          
           this.i = 0
           if (isNextBonus) {
             this.bonusQuestionNumber++
@@ -317,8 +314,7 @@ current content of the editor to the server. */
         var nextQuestionID = this.questionIDs[nextQuestionNumTemp]
         await fetchQuestionType(nextQuestionID)
           .then(res => res.json()).then((data) => {
-            console.log('Next question type from api')
-            console.log(data)
+            console.log('Next question type from api:', data)
             this.setState({ futureQuestionType: data })
           });
       }
@@ -338,8 +334,7 @@ current content of the editor to the server. */
       .then(res => res.json()).then((data) => {
         this.i = 0
         if (data != null) {
-          console.log('random_question')
-          console.log(data)
+          console.log('random_question', data)
           this.setState({
             full_question_text: data[0],
             question_type: data[1],
