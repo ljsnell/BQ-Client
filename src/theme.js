@@ -9,6 +9,7 @@ export const COLORS = {
     DARK_NAV: '#146aaf',
     LIGHT_NAV: '#90caf9',
     BACKGROUND: '#f7f7f7',
+    GREY: '#424242',
     WHITE: '#f7f7f7',
     BLACK: '#1b1b1b',
 }
