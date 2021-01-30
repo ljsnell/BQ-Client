@@ -1,0 +1,5 @@
+export default {
+    SIGN_IN: "SIGN_IN",
+    SET_USERNAME: "SET_USERNAME",
+    SET_ROOM_NUMBER: "SET_ROOM_NUMBER",
+} 
