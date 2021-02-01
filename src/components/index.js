@@ -1,6 +1,7 @@
 import QuestionBar from './QuestionBar'
-import QuizzerDropdown from './QuizzerDropdown'
+import QuizzerPopup from './QuizzerPopup'
 import ToolBar from './ToolBar'
-import AnswerBar from './AnswerBar'
+import AnswerPanel from './AnswerPanel'
+import ActionBar from './ActionBar'
 
-export { QuestionBar, ToolBar, QuizzerDropdown, AnswerBar }
+export { QuestionBar, ToolBar, QuizzerPopup, AnswerPanel, ActionBar }

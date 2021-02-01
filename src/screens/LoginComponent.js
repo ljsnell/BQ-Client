@@ -25,7 +25,7 @@ class LoginForm extends Component {
 
         const username = !qm ? `${ch}-${un}${tm && '-' + tm}` : `QM${un && '-' + un}`
 
-        this.props.setLogin({ user_name: username, room_number: parseInt(rm) })
+        this.props.setLogin({ user_name: username, room_number: parseInt(rm), qm: qm })
     }
 
     render() {

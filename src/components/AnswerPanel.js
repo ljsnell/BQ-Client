@@ -2,7 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary, List, Typography } from 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 
-const AnswerBar = ({ question, type, answer, reference, questionNumber, style }) => {
+const AnswerPanel = ({ question, type, answer, reference, questionNumber, style }) => {
     return (
         <Accordion style={style}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="qm-panel-content" id="qm-panel-header" >
@@ -20,4 +20,4 @@ const AnswerBar = ({ question, type, answer, reference, questionNumber, style })
     )
 }
 
-export default AnswerBar
+export default AnswerPanel
