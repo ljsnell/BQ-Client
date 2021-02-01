@@ -5,6 +5,7 @@ import './App.css';
 import Login from './screens/LoginComponent';
 import { connect } from "react-redux";
 import QuizComponent from './screens/QuizComponent';
+// import Quiz_backup from './Quiz_backup';
 
 class Quiz extends Component {
     render() {
@@ -12,6 +13,7 @@ class Quiz extends Component {
         return <div>
             {!signed_in && < Login />}
             {signed_in && < QuizComponent />}
+            {/* {signed_in && < Quiz_backup />} */}
         </div>
     }
 }

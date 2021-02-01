@@ -18,7 +18,7 @@ class App extends Component {
         <AppBar position="fixed" style={{ backgroundColor: COLORS.LIGHT_NAV }}>
           <Toolbar>
             <Typography variant="h6" style={{ flexGrow: 1 }}>
-              Bible Quiz
+              Bible Quiz 3.0
               </Typography>
             {signed_in && <Button color="inherit">{user_name} | Rm. #{room_number}</Button>}
           </Toolbar>

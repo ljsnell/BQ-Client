@@ -18,9 +18,14 @@ class LoginForm extends Component {
     updateLogin = (val, key) => { this.setState({ [key]: val }); }
 
     submitLogin = () => {
-        const { un, rm } = this.state;
-        if (un === "" || rm === 0) return
-        this.props.setLogin({ user_name: un, room_number: parseInt(rm) })
+        const { un, rm, tm, ch, qm } = this.state;
+        if (!qm && un === "") return alert("Please specify a username")
+        if (rm === 0) return alert("Please specify a room number")
+        if (!qm && ch === 0) return alert("Please specify a chair number")
+
+        const username = !qm ? `${ch}-${un}${tm && '-' + tm}` : `QM${un && '-' + un}`
+
+        this.props.setLogin({ user_name: username, room_number: parseInt(rm) })
     }
 
     render() {
@@ -36,8 +41,8 @@ class LoginForm extends Component {
                     <TextField onChange={({ target }) => this.updateLogin(target.value, "rm")} id="outlined-basic" label="Room Number" type="number" variant="outlined" helperText="Enter a number" style={LOGIN_STYLE.input} />
                     <TextField onChange={({ target }) => this.updateLogin(target.value, "un")} id="outlined-basic" label="Your Username" variant="outlined" helperText="E.G. LukeIsCool" style={LOGIN_STYLE.input} />
                     <br />
-                    <TextField onChange={({ target }) => this.updateLogin(target.value, "tm")} id="outlined-basic" label="Team" type="number" variant="outlined" helperText="E.G. Unicorns" style={LOGIN_STYLE.input} />
-                    <TextField onChange={({ target }) => this.updateLogin(target.value, "ch")} id="outlined-basic" label="Chair Number" variant="outlined" helperText="Enter a number" style={LOGIN_STYLE.input} />
+                    <TextField onChange={({ target }) => this.updateLogin(target.value, "tm")} id="outlined-basic" label="Team" variant="outlined" helperText="E.G. Unicorns" style={LOGIN_STYLE.input} />
+                    <TextField onChange={({ target }) => this.updateLogin(target.value, "ch")} id="outlined-basic" label="Chair Number" type="number" variant="outlined" helperText="Enter a number" style={LOGIN_STYLE.input} />
                     <br />
                     <Button variant="contained" style={LOGIN_STYLE.submit} onClick={this.submitLogin}>Submit</Button>
                 </form>
@@ -48,7 +53,7 @@ class LoginForm extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setLogin: (payload) => { console.log("dispatching ... "); return dispatch({ type: types.SIGN_IN, payload: payload }) },
+        setLogin: (payload) => dispatch({ type: types.SIGN_IN, payload: payload }),
     }
 }
 

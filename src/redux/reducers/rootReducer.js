@@ -1,17 +1,24 @@
 import types from '../actions/types';
 
 const INITIAL_STATE = {
-    userName: "",
-    roomNumber: 0,
-    signedIn: false
+    userName: "QM-sergei",
+    roomNumber: 1,
+    signedIn: true,
+    qm: true
 };
+// const INITIAL_STATE = {
+//     userName: "",
+//     roomNumber: 0,
+//     signedIn: false,
+//     qm: false
+// };
 
 const rootReducer = (state = INITIAL_STATE, action) => {
     let newState = state;
     switch (action.type) {
         case types.SIGN_IN:
-            const { user_name, room_number } = action.payload;
-            newState = { ...state, userName: user_name, roomNumber: room_number, signedIn: true }
+            const { user_name, room_number, qm } = action.payload;
+            newState = { ...state, qm: qm, userName: user_name, roomNumber: room_number, signedIn: true }
             return newState
         case types.SET_USERNAME:
             newState = { ...state, userName: action.payload }

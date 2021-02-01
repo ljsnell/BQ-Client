@@ -1,8 +1,8 @@
 const io = require('socket.io-client');
 
 // Websocket server
-// const server = 'http://127.0.0.1:8000/'
-const server = 'wss://mysterious-journey-90036.herokuapp.com'
+const server = 'http://127.0.0.1:8000/'
+// const server = 'wss://mysterious-journey-90036.herokuapp.com'
 
 const CLIENT_CODES = {
     ROOM: "room",

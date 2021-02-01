@@ -19,13 +19,13 @@ import { chapters, questionTypes } from './constants';
 const QUIZZES = globals.QUIZ_GLOBAL
 
 // Websocket server
-// var server = 'http://127.0.0.1:8000/'
-var server = 'wss://mysterious-journey-90036.herokuapp.com'
+// let server = 'http://127.0.0.1:8000/'
+let server = 'wss://mysterious-journey-90036.herokuapp.com'
 const io = require('socket.io-client');
-var user_room = "69" //prompt("Please enter your room #", "room");
-var entered_username = prompt("Please enter your user name. E.G. 1-Jeff-G3", "1-Username");
+let user_room = prompt("Please enter your room #", "room");
+let entered_username = prompt("Please enter your user name. E.G. 1-Jeff-G3", "1-Username");
 
-var client = io.connect(server).emit('room', JSON.stringify({
+let client = io.connect(server).emit('room', JSON.stringify({
   room: user_room,
   username: entered_username
 }));
@@ -67,7 +67,7 @@ class Quiz extends Component {
   /* When content changes, we send the
 current content of the editor to the server. */
   sync = (room_id) => {
-    const {
+    let {
       q_text_to_display,
       question_number,
       question_type,
@@ -97,8 +97,6 @@ current content of the editor to the server. */
   }
 
   syncJump = (i, room_id, username) => {
-    // const start = new Date().getTime();
-    // while (new Date().getTime() < start + 1500);
     client.emit('jump', JSON.stringify({
       username: username,
       i: i,
@@ -107,8 +105,8 @@ current content of the editor to the server. */
   };
 
   mute() {
-    var audioOn = document.getElementById("audio-on");
-    var audioOff = document.getElementById("audio-off");
+    let audioOn = document.getElementById("audio-on");
+    let audioOff = document.getElementById("audio-off");
     if (!this.state.play_audio) {
       audioOn.style.display = "block";
       audioOff.style.display = "none";
@@ -127,9 +125,9 @@ current content of the editor to the server. */
   }
 
   showMoreQuizOptions() {
-    var showMore = document.getElementById("showMore");
-    var showLess = document.getElementById("showLess");
-    var moreQuizOptions = document.getElementById("moreQuizOptions");
+    let showMore = document.getElementById("showMore");
+    let showLess = document.getElementById("showLess");
+    let moreQuizOptions = document.getElementById("moreQuizOptions");
     this.showMoreOpions = !this.showMoreOpions;
     if (this.showMoreOpions) {
       showLess.style.display = "block";
@@ -157,8 +155,8 @@ current content of the editor to the server. */
       // Speaks the text aloud.
       if (this.state.play_audio === true) {
         try {
-          var msg = new SpeechSynthesisUtterance();
-          var voices = window.speechSynthesis.getVoices();
+          let msg = new SpeechSynthesisUtterance();
+          let voices = window.speechSynthesis.getVoices();
           msg.voice = voices[1]; // Note: some voices don't support altering params
           msg.voiceURI = 'native';
           msg.lang = 'en-US';
@@ -167,14 +165,14 @@ current content of the editor to the server. */
             msg.text = dataFromServer.question
           } else {
             msg.rate = 2.3; // 0.1 to 10
-            var tts = dataFromServer.question.split(" ")
+            let tts = dataFromServer.question.split(" ")
             msg.text = tts[tts.length - 2]
           }
           speechSynthesis.speak(msg);
         } catch {
           alert("Audio does not work on this device.")
           this.mute();
-          var audiobutton = document.getElementById("audioButton");
+          let audiobutton = document.getElementById("audioButton");
           audiobutton.disabled = true;
         }
       }
@@ -182,24 +180,28 @@ current content of the editor to the server. */
       this.setState({
         ...stateToChange
       });
-    });
+    }.bind(this));
 
     client.on('jump', function (message) {
       const dataFromServer = message;
-      console.log('Jumper!', message)
-      if (this.state.jumper == null) {
-        const jumper = dataFromServer.username
-        const index = dataFromServer.i;
+      const stateToChange = {};
+      console.log('Jumper!', this.state.jumper)
 
-        console.log('Jumper is null', dataFromServer)
-        this.setState({ jumper: jumper, i: index });
+      if (this.state.jumper == null) {
+        stateToChange.jumper = dataFromServer.username
+        console.log('Jumper in state update: ', stateToChange.jumper)
+        stateToChange.i = dataFromServer.i;
+
+        this.setState({
+          ...stateToChange
+        });
       }
-    });
+    }.bind(this));
 
     client.on('joined', function (message) {
       console.log('Joined!', message)
       this.setState({ quizzers_in_room: message })
-    });
+    }.bind(this));
 
     client.on('next_question_type', function (message) {
       this.setState({
@@ -213,16 +215,16 @@ current content of the editor to the server. */
         futureQuestionType: "",
         is_bonus: false
       })
-    })
+    }.bind(this));
   }
 
   startQuiz() {
-    setInterval(() => this.iterativeSync(), 300);
+    setInterval(() => this.iterativeSync(), 1000);
     this.nextQuestionType(true)
   }
 
   iterativeSync() {
-    var {
+    let {
       q_text_to_display,
       question_number,
       question_type,
@@ -243,39 +245,31 @@ current content of the editor to the server. */
   }
 
   jump() {
-    var {
+    let {
       full_question_text,
       username,
       jumper,
       room
     } = this.state
     if (jumper == null) {
-      console.log('full_question_text')
-      console.log(full_question_text)
+      console.log('full_question_text', full_question_text)
       this.question_array = full_question_text.split(" ")
+      this.setState({ username: username })
       this.i = this.question_array.length
       this.syncJump(this.i, room, username)
     }
   }
 
   async nextQuestion(isNextBonus) {
-    setTimeout(() => {
-      client.emit('jump', JSON.stringify({
-        username: '1-Username',
-        i: 9,
-        room: 69
-      }))
-    }, 300)
     this.setState({ jumper: null, is_bonus: isNextBonus })
-    var { question_number } = this.state
+    let { question_number } = this.state
     let questionsList = isNextBonus ? this.bonusQuestionIDs : this.questionIDs
     let questionNUMTemp = isNextBonus ? this.bonusQuestionNumber : question_number
     if (questionNUMTemp < questionsList.length) {
-      var questionID = questionsList[questionNUMTemp]
+      let questionID = questionsList[questionNUMTemp]
       await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
-          console.log('question from api!')
-          console.log(data)
+          console.log('question from api!', data)
           this.i = 0
           if (isNextBonus) {
             this.bonusQuestionNumber++
@@ -311,17 +305,16 @@ current content of the editor to the server. */
   }
 
   async nextQuestionType(isNewQuiz, selectedQuiz) {
-    var { question_number } = this.state
+    let { question_number } = this.state
     if (typeof selectedQuiz !== undefined && selectedQuiz === 'practice') {
       this.setState({ futureQuestionType: questionTypes[0] })
     } else {
       const nextQuestionNumTemp = isNewQuiz ? 0 : question_number + 1;
       if (nextQuestionNumTemp < this.questionIDs.length) {
-        var nextQuestionID = this.questionIDs[nextQuestionNumTemp]
+        let nextQuestionID = this.questionIDs[nextQuestionNumTemp]
         await fetchQuestionType(nextQuestionID)
           .then(res => res.json()).then((data) => {
-            console.log('Next question type from api')
-            console.log(data)
+            console.log('Next question type from api:', data)
             this.setState({ futureQuestionType: data })
           });
       }
@@ -330,10 +323,10 @@ current content of the editor to the server. */
 
   async randomQuestion() {
     this.setState({ jumper: null })
-    var { question_number, quiz_started } = this.state
-    var selectedRandomChaptersList = []
+    let { question_number, quiz_started } = this.state
+    let selectedRandomChaptersList = []
     if (this.state.selectedChapters !== null && this.state.selectedChapters.length > 0) {
-      for (var i = 0; this.state.selectedChapters.length > i; i++) {
+      for (let i = 0; this.state.selectedChapters.length > i; i++) {
         selectedRandomChaptersList.push(this.state.selectedChapters[i].value);
       }
     }
@@ -341,8 +334,7 @@ current content of the editor to the server. */
       .then(res => res.json()).then((data) => {
         this.i = 0
         if (data != null) {
-          console.log('random_question')
-          console.log(data)
+          console.log('random_question', data)
           this.setState({
             full_question_text: data[0],
             question_type: data[1],
@@ -366,9 +358,9 @@ current content of the editor to the server. */
 
   async testChair() {
     this.setState({ jumper: null })
-    var { quiz_started, chair_to_test } = this.state
+    let { quiz_started, chair_to_test } = this.state
     this.i = 0
-    var result = chair_to_test + " Jump"
+    let result = chair_to_test + " Jump"
     this.setState({
       full_question_text: result,
       question_reference: result,
@@ -407,7 +399,7 @@ current content of the editor to the server. */
   }
 
   displayNextQuestionType() {
-    var { question_number, futureQuestionType, room } = this.state
+    let { question_number, futureQuestionType, room } = this.state
     this.setState({
       question_number: question_number++
     })
@@ -462,7 +454,7 @@ current content of the editor to the server. */
   }
 
   showQuizMasterSection = () => {
-    var { username, full_question_text, answer_question_text, question_number, question_reference, is_bonus, futureQuestionType } = this.state
+    let { username, full_question_text, answer_question_text, question_number, question_reference, is_bonus, futureQuestionType } = this.state
     if (username === 'QM') {
       let questionNumTemp;
       if (is_bonus) {
@@ -510,7 +502,7 @@ current content of the editor to the server. */
   }
 
   footerButtons = () => {
-    var { username, quiz_started } = this.state
+    let { username, quiz_started } = this.state
     if (username === 'QM') {
       if (this.state.quizNumber === 'practice') {
         return (
@@ -558,7 +550,16 @@ current content of the editor to the server. */
   }
 
   render() {
-    const { q_text_to_display, question_number, question_type, is_bonus, room, username, quiz_started, jumper } = this.state;
+    const {
+      q_text_to_display,
+      question_number,
+      question_type,
+      is_bonus,
+      room,
+      username,
+      quiz_started,
+      jumper
+    } = this.state;
     let quizzerQuestionInformation;
     let quizzerQuestion = <h2>{q_text_to_display}</h2>
     if (is_bonus) {
