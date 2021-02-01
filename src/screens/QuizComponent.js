@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Alert from 'reactstrap/lib/Alert';
 import { ActionBar, AnswerPanel, QuestionBar, QuizzerPopup } from '../components';
-import { QUIZ_GLOBAL as QUIZZES, QUIZ_STATE } from '../globals';
+import { QUIZ_GLOBAL as QUIZZES, QUIZ_STATE, ACTION_BAR_HEIGHT } from '../globals';
 import BQClient from '../services/client';
 import { COLORS } from '../theme';
 import { fetchQuestion } from '../webserviceCalls';
@@ -62,7 +62,7 @@ class Quiz extends Component {
 
         return (
             <div style={QUIZ_STYLE.root}>
-                <Snackbar open={jumper_user_name ? true : false}>
+                <Snackbar open={jumper_user_name ? true : false} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} style={{ marginBottom: ACTION_BAR_HEIGHT - 15 }}>
                     <Alert severity="info">Jumped by {jumper_user_name}!</Alert>
                 </Snackbar>
                 <QuestionBar
@@ -82,6 +82,7 @@ class Quiz extends Component {
                     />
                 }
                 <ActionBar
+                    allQuizzers={quizzers_in_room}
                     isQuizMaster={quiz_master}
                     state={quiz_state}
                     questionNumber={current_question_number}
@@ -90,16 +91,10 @@ class Quiz extends Component {
                     nextAction={this.nextQuestion}
                     bonusAction={this.startQuiz}
                     jumpAction={this.jumpQuestion}
-                    resumeAction={() => this.setState({ quiz_state: QUIZ_STATE.ASKED })}
+                    resumeAction={this.resumeQuestion}
                     completeAction={this.completeQuestion}
+                    resetRoom={this.resetRoom}
                 />
-                {quiz_master &&
-                    <div>
-                        <Button fullWidth variant="outlined" onClick={() => this.setState({ showQuizzers: true })} style={QUIZ_STYLE.viewButton}>View Quizzers</Button>
-                        <QuizzerPopup open={showQuizzers || false} onClose={() => this.setState({ showQuizzers: false })} quizzers={quizzers_in_room} style={QUIZ_STYLE.quizzers} />
-                        <Button fullWidth variant="outlined" onClick={this.resetRoom} style={QUIZ_STYLE.resetButton}>Reset Room</Button>
-                    </div>
-                }
             </div>
         )
     }
@@ -140,13 +135,20 @@ class Quiz extends Component {
         this.syncJump()
     }
 
+    resumeQuestion = async () => {
+        await this.setState({ quiz_state: QUIZ_STATE.ASKED, jumper_user_name: null })
+        this.syncQuiz()
+    }
+
     completeQuestion = async () => {
         const { current_question_text, current_question_list } = this.state
         await this.setState({
+            jumper_user_name: null,
             quiz_state: QUIZ_STATE.ASKED,
             current_index: current_question_list.length + 1,
             current_display_text: current_question_text
         })
+        this.syncQuiz()
     }
 
     async iterativeSyncQuiz() {
@@ -185,7 +187,7 @@ class Quiz extends Component {
 
     syncQuiz = () => {
         const { room_number } = this.props
-        const { quiz_state, current_display_text, current_question_text, current_question_list, current_question_type, current_question_number } = this.state
+        const { quiz_state, jumper_user_name, current_display_text, current_question_text, current_question_list, current_question_type, current_question_number } = this.state
         client.emit(client.CLIENT_CODES.CONTENTCHANGE, JSON.stringify({
             room_number: room_number,
             current_display_text: current_display_text,
@@ -193,7 +195,8 @@ class Quiz extends Component {
             current_question_list: current_question_list,
             current_question_number: current_question_number,
             current_question_type: current_question_type,
-            quiz_state: quiz_state
+            quiz_state: quiz_state,
+            jumper_user_name: jumper_user_name
         }));
     };
 
@@ -214,7 +217,7 @@ class Quiz extends Component {
     }
 
     _contentChange = (res) => {
-        const { current_display_text, current_question_text, current_question_list, current_question_number, current_question_type, room_number, quiz_state } = res
+        const { jumper_user_name, current_display_text, current_question_text, current_question_list, current_question_number, current_question_type, room_number, quiz_state } = res
         this.setState({
             current_display_text: current_display_text,
             current_question_text: current_question_text,
@@ -222,7 +225,8 @@ class Quiz extends Component {
             current_question_number: current_question_number,
             current_question_type: current_question_type,
             room_number: room_number,
-            quiz_state: quiz_state
+            quiz_state: quiz_state,
+            jumper_user_name: jumper_user_name
         })
     }
 
@@ -260,9 +264,6 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(Quiz)
 
 const QUIZ_STYLE = {
-    root: { paddingBottom: 20 },
-    quizzers: { marginTop: 10 },
+    root: { paddingBottom: 20, marginBottom: ACTION_BAR_HEIGHT },
     questions: { marginTop: 10 },
-    resetButton: { marginTop: 10, color: COLORS.WARNING },
-    viewButton: { marginTop: 10, color: COLORS.GREY }
 }

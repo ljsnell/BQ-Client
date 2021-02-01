@@ -1,37 +1,79 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { AppBar, Box, Button, Container, Fab, IconButton, Toolbar } from '@material-ui/core';
 import { COLORS } from '../theme';
-import { QUIZ_STATE } from '../globals';
+import { ACTION_BAR_HEIGHT, QUIZ_STATE } from '../globals';
+import WbIncandescent from '@material-ui/icons/WbIncandescent';
+import { QuizzerPopup } from '.';
 
 class ActionBar extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            showQuizzers: false
+        }
     }
     render() {
-        const { isQuizMaster, state, questionNumber, startAction, nextAction, announceAction, bonusAction, jumpAction, resumeAction, completeAction } = this.props
+        const { isQuizMaster, state, questionNumber, startAction, nextAction, announceAction, bonusAction, jumpAction, resumeAction, completeAction, resetRoom, allQuizzers } = this.props
 
         return (
             <div>
-                {state === QUIZ_STATE.ASKED && <Button fullWidth onClick={jumpAction} style={ACTION_STYLE.button}>JUMP!</Button>}
-
                 {isQuizMaster &&
-                    <div>
-                        {state === QUIZ_STATE.WAITING && <Button fullWidth onClick={startAction} style={ACTION_STYLE.button}>Start Quiz</Button>}
-                        {state === QUIZ_STATE.PAUSED && <Button fullWidth onClick={completeAction} style={ACTION_STYLE.button}>Complete Question</Button>}
-                        {state === QUIZ_STATE.PAUSED && <Button fullWidth onClick={resumeAction} style={ACTION_STYLE.button}>Resume Question</Button>}
-                        {state === QUIZ_STATE.ANNOUNCED && <Button fullWidth onClick={nextAction} style={ACTION_STYLE.button}>{questionNumber === 1 ? 'Ask' : 'Next'} Question</Button>}
-                        {state === QUIZ_STATE.STARTED && < Button fullWidth onClick={announceAction} style={ACTION_STYLE.button}>Announce Type</Button>}
-                        {(state === QUIZ_STATE.WAITING || state === QUIZ_STATE.STARTED) && <Button fullWidth onClick={bonusAction} style={ACTION_STYLE.button}>Bonus</Button>}
-                    </div >
+                    <Container align="center">
+                        <Button variant="outlined" onClick={() => this.setState({ showQuizzers: true })} style={ACTION_STYLE.viewButton}>View Quizzers</Button>
+                        <QuizzerPopup open={this.state.showQuizzers} onClose={() => this.setState({ showQuizzers: false })} quizzers={allQuizzers} style={ACTION_STYLE.quizzers} />
+                        <Button fullWidth variant="text" onClick={resetRoom} style={ACTION_STYLE.resetButton}>Reset Room</Button>
+                    </Container>
                 }
-            </div >
-        )
+                <AppBar position="fixed" style={ACTION_STYLE.appBar}>
+                    <Toolbar>
+                        {!isQuizMaster && state === QUIZ_STATE.ASKED && <Button variant="contained" onClick={jumpAction} style={ACTION_STYLE.fabButton} startIcon={<WbIncandescent style={ACTION_STYLE.jump} />}>Jump!</Button>}
 
+                        {isQuizMaster &&
+                            <Container align="center">
+                                {state === QUIZ_STATE.WAITING && <Button onClick={startAction} style={ACTION_STYLE.fabButton}>Start Quiz</Button>}
+
+                                {state === QUIZ_STATE.ASKED && <Button variant="outlined" onClick={jumpAction} style={ACTION_STYLE.secondaryButton}>Pause</Button>}
+
+                                {state === QUIZ_STATE.PAUSED && <Button onClick={completeAction} style={ACTION_STYLE.mainButton}>Complete</Button>}
+                                {state === QUIZ_STATE.PAUSED && <Button variant="outlined" onClick={resumeAction} style={ACTION_STYLE.secondaryButton}>Resume</Button>}
+
+                                {state === QUIZ_STATE.ANNOUNCED && <Button onClick={nextAction} style={ACTION_STYLE.mainButton}>{questionNumber === 1 ? 'Ask' : 'Next'} Question</Button>}
+                                {state === QUIZ_STATE.STARTED && < Button onClick={announceAction} style={ACTION_STYLE.mainButton}>Announce Type</Button>}
+                                {state === QUIZ_STATE.STARTED && <Button variant="outlined" onClick={bonusAction} style={ACTION_STYLE.secondaryButton}>Bonus</Button>}
+                            </Container >
+                        }
+                    </Toolbar>
+                </AppBar>
+            </div>
+        )
     }
 }
 
 export default ActionBar
 
 const ACTION_STYLE = {
-    button: { marginTop: 10, backgroundColor: COLORS.PRIMARY, color: COLORS.WHITE }
+    resetButton: { marginTop: 10, color: COLORS.WARNING },
+    viewButton: { marginTop: 15, color: COLORS.GREY },
+    jump: { color: COLORS.ACCENT },
+    appBar: {
+        height: ACTION_BAR_HEIGHT,
+        backgroundColor: COLORS.PRIMARY,
+        top: 'auto',
+        bottom: 0,
+    },
+    mainButton: { backgroundColor: COLORS.SECONDARY, color: COLORS.DARKTEXT, marginLeft: 5, marginRight: 5 },
+    secondaryButton: { backgroundColor: 'transparent', color: COLORS.WHITE, borderColor: 'white', marginLeft: 5, marginRight: 5 },
+    fabButton: {
+        position: 'absolute',
+        zIndex: 1,
+        top: -10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        // paddingLeft: 10,
+        left: 0,
+        right: 0,
+        margin: '0 auto',
+        backgroundColor: COLORS.SECONDARY,
+        color: COLORS.DARKTEXT
+    },
 }

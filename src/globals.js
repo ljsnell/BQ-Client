@@ -36,3 +36,5 @@ export const QUIZ_STATE = {
     ASKED: 3,
     PAUSED: 4,
 }
+
+export const ACTION_BAR_HEIGHT = 60

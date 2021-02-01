@@ -14,7 +14,7 @@ class App extends Component {
     const { user_name, room_number, signed_in } = this.props;
 
     return (
-      <Container maxWidth={false} style={{ backgroundColor: COLORS.WHITE, height: '100vh', width: '100%' }}>
+      <div>
         <AppBar position="fixed" style={{ backgroundColor: COLORS.LIGHT_NAV }}>
           <Toolbar>
             <Typography variant="h6" style={{ flexGrow: 1 }}>
@@ -24,7 +24,7 @@ class App extends Component {
           </Toolbar>
         </AppBar>
         <Toolbar />
-        <Container maxWidth={false} style={{ paddingTop: 5 }}>
+        <Container maxWidth={false} style={{ paddingTop: 5 }} style={{ backgroundColor: COLORS.WHITE, minHeight: '100vh', overflow: 'auto', width: '100%' }}>
           <Router>
             <div>
               <Switch>
@@ -35,7 +35,7 @@ class App extends Component {
             </div>
           </Router>
         </Container>
-      </Container>
+      </div>
     )
   }
 }

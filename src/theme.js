@@ -10,6 +10,8 @@ export const COLORS = {
     LIGHT_NAV: '#90caf9',
     BACKGROUND: '#f7f7f7',
     GREY: '#424242',
+    DARKTEXT: '#424242',
+    LIGHTTEXT: '#e4e4e4',
     WHITE: '#f7f7f7',
     BLACK: '#1b1b1b',
     WARNING: '#eb4034',
