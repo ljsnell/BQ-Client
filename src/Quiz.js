@@ -254,9 +254,10 @@ current content of the editor to the server. */
     if (jumper == null) {
       console.log('full_question_text', full_question_text)
       this.question_array = full_question_text.split(" ")
-      this.setState({ username: username })
-      this.i = this.question_array.length
-      this.syncJump(this.i, room, username)
+      this.setState({ username: username }, () => {
+        this.i = this.question_array.length
+        this.syncJump(this.i, room, username)
+      })
     }
   }
 
