@@ -5,10 +5,12 @@ let voices = window.speechSynthesis.getVoices();
 msg.voice = voices[1]; // Note: some voices don't support altering params
 msg.voiceURI = 'native';
 msg.lang = 'en-US';
+msg.rate = 2.3;
 
-const QuestionReader = (word_to_read) => {
-    const volumeOn = useSelector(state => state.volumeOn);
-    if(volumeOn) return speechSynthesis.speak(word_to_read)
+const QuestionReader = ({ word_to_read }) => {
+    const volumeOn = false// useSelector(state => state.volumeOn);
+    msg.text = word_to_read
+    if (volumeOn) return speechSynthesis.speak(msg)
     else return
 };
 
