@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import Alert from 'reactstrap/lib/Alert';
 import { ActionBar, AnswerPanel, QuestionBar, QuizPicker, ToolBox } from '../components';
 import { ACTION_BAR_HEIGHT, QUIZ_STATE, TOOLBOX_HEIGHT } from '../globals';
-import BQClient from '../services/client';
+import BQClient from '../utils/client';
+import QuestionReader from '../utils/question_reader';
+import { COLORS } from '../theme';
 import { fetchQuestion } from '../webserviceCalls';
 
 const client = BQClient();
@@ -144,14 +146,16 @@ class Quiz extends Component {
 
     async iterativeSyncQuiz() {
         const { quiz_state, current_index, current_display_text, current_question_list } = this.state
-
+        
         const ASKED = quiz_state === QUIZ_STATE.ASKED;
         const PAUSED = quiz_state === QUIZ_STATE.PAUSED;
 
         if (PAUSED) {
             return;
         } else if (ASKED && current_question_list && current_index < current_question_list.length) {
-            const updateDisplay = current_display_text.concat(`${current_question_list[current_index]} `)
+            const next_word = current_question_list[current_index]
+            QuestionReader(next_word)
+            const updateDisplay = current_display_text.concat(`${next_word} `)
             await this.setState({ current_display_text: updateDisplay, current_index: current_index + 1 })
             this.syncQuiz()
         } else if (ASKED) {
