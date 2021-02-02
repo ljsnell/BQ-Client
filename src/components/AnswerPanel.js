@@ -1,11 +1,12 @@
 import { Accordion, AccordionDetails, AccordionSummary, List, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React from 'react';
+import React, { useState } from 'react';
 
 const AnswerPanel = ({ question, type, answer, reference, questionNumber, style }) => {
+    const [isExpanded, setIsExpanded] = useState(true)
     return (
-        <Accordion style={style}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="qm-panel-content" id="qm-panel-header" >
+        <Accordion expanded={isExpanded} style={style}>
+            <AccordionSummary onClick={() => setIsExpanded(!isExpanded)} expandIcon={<ExpandMoreIcon />} aria-controls="qm-panel-content" id="qm-panel-header" >
                 <Typography>Quiz Master Panel</Typography>
             </AccordionSummary>
             <AccordionDetails>
