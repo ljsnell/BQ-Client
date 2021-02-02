@@ -13,7 +13,7 @@ class ActionBar extends React.Component {
         }
     }
     render() {
-        const { isQuizMaster, state, questionNumber, startAction, nextAction, announceAction, bonusAction, jumpAction, resumeAction, completeAction, resetRoom, allQuizzers } = this.props
+        const { isQuizMaster, state, questionNumber, startAction, nextAction, announceAction, bonusAction, jumpAction, completeAction, resetRoom, allQuizzers } = this.props
 
         return (
             <div>
@@ -34,8 +34,7 @@ class ActionBar extends React.Component {
 
                                 {state === QUIZ_STATE.ASKED && <Button variant="outlined" onClick={jumpAction} style={ACTION_STYLE.secondaryButton}>Pause</Button>}
 
-                                {state === QUIZ_STATE.PAUSED && <Button onClick={completeAction} style={ACTION_STYLE.mainButton}>Complete</Button>}
-                                {state === QUIZ_STATE.PAUSED && <Button variant="outlined" onClick={resumeAction} style={ACTION_STYLE.secondaryButton}>Resume</Button>}
+                                {state === QUIZ_STATE.PAUSED && <Button onClick={completeAction} style={ACTION_STYLE.mainButton}>Complete</Button>}                                
 
                                 {state === QUIZ_STATE.ANNOUNCED && <Button onClick={nextAction} style={ACTION_STYLE.mainButton}>{questionNumber === 1 ? 'Ask' : 'Next'} Question</Button>}
                                 {state === QUIZ_STATE.STARTED && < Button onClick={announceAction} style={ACTION_STYLE.mainButton}>Announce Type</Button>}

@@ -91,7 +91,6 @@ class Quiz extends Component {
                     nextAction={this.nextQuestion}
                     bonusAction={this.startQuiz}
                     jumpAction={this.jumpQuestion}
-                    resumeAction={this.resumeQuestion}
                     completeAction={this.completeQuestion}
                     resetRoom={this.resetRoom}
                 />
@@ -133,11 +132,6 @@ class Quiz extends Component {
     jumpQuestion = async () => {
         await this.setState({ quiz_state: QUIZ_STATE.PAUSED })
         this.syncJump()
-    }
-
-    resumeQuestion = async () => {
-        await this.setState({ quiz_state: QUIZ_STATE.ASKED, jumper_user_name: null })
-        this.syncQuiz()
     }
 
     completeQuestion = async () => {
