@@ -38,3 +38,4 @@ export const QUIZ_STATE = {
 }
 
 export const ACTION_BAR_HEIGHT = 60
+export const TOOLBOX_HEIGHT = 45

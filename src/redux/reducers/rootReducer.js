@@ -1,3 +1,4 @@
+import { QUIZ_GLOBAL } from '../../globals';
 import types from '../actions/types';
 
 const INITIAL_STATE = {
@@ -26,6 +27,14 @@ const rootReducer = (state = INITIAL_STATE, action) => {
             return newState
         case types.SET_ROOM_NUMBER:
             newState = { ...state, roomNumber: action.payload }
+            return newState
+        case types.VOLUME_TOGGLE:
+            newState = { ...state, volumeOn: action.payload }
+            return newState
+        case types.SWITCH_QUIZ:
+            const allQuestionIds = QUIZ_GLOBAL[action.payload].qs
+            console.log(allQuestionIds)
+            newState = { ...state, currentQuiz: allQuestionIds, currentQuizNumber: action.payload }
             return newState
         default:
             return { ...state }

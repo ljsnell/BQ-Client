@@ -1,11 +1,10 @@
-import { Button, Snackbar } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Alert from 'reactstrap/lib/Alert';
-import { ActionBar, AnswerPanel, QuestionBar, QuizzerPopup } from '../components';
-import { QUIZ_GLOBAL as QUIZZES, QUIZ_STATE, ACTION_BAR_HEIGHT } from '../globals';
+import { ActionBar, AnswerPanel, QuestionBar, QuizPicker, ToolBox } from '../components';
+import { ACTION_BAR_HEIGHT, QUIZ_STATE, TOOLBOX_HEIGHT } from '../globals';
 import BQClient from '../services/client';
-import { COLORS } from '../theme';
 import { fetchQuestion } from '../webserviceCalls';
 
 const client = BQClient();
@@ -14,7 +13,6 @@ const QUESTION_INTERVAL = 1000;
 const INITIAL_STATE = {
     quiz_state: QUIZ_STATE.WAITING,
     question_asked: false,
-    all_question_ids: QUIZZES.quiz1.qs,
     iterator_index: 0,
     jumper_user_name: null,
     current_display_text: null,
@@ -32,6 +30,7 @@ class Quiz extends Component {
             // IN USE
             ...INITIAL_STATE
         }
+        this.interval = null;
     }
 
     componentDidMount() {
@@ -47,7 +46,6 @@ class Quiz extends Component {
     render() {
         const {
             quiz_state,
-            showQuizzers,
             quizzers_in_room,
             current_display_text,
             current_question_number,
@@ -58,19 +56,11 @@ class Quiz extends Component {
             jumper_user_name
         } = this.state;
 
-        const { quiz_master, room_number } = this.props;
+        const { quiz_master, current_quiz_number, volume_on } = this.props;
 
         return (
             <div style={QUIZ_STYLE.root}>
-                <Snackbar open={jumper_user_name ? true : false} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} style={{ marginBottom: ACTION_BAR_HEIGHT - 15 }}>
-                    <Alert severity="info">Jumped by {jumper_user_name}!</Alert>
-                </Snackbar>
-                <QuestionBar
-                    type={current_question_type}
-                    question={current_display_text}
-                    state={quiz_state}
-                    style={QUIZ_STYLE.questions}
-                />
+                <QuestionBar type={current_question_type} question={current_display_text} state={quiz_state} style={QUIZ_STYLE.questions} />
                 {quiz_master && quiz_state > QUIZ_STATE.WAITING &&
                     <AnswerPanel
                         type={current_question_type}
@@ -81,6 +71,8 @@ class Quiz extends Component {
                         style={QUIZ_STYLE.questions}
                     />
                 }
+                {current_quiz_number}
+                {volume_on ? "TRUE" : "FALSE"}
                 <ActionBar
                     allQuizzers={quizzers_in_room}
                     isQuizMaster={quiz_master}
@@ -94,23 +86,28 @@ class Quiz extends Component {
                     completeAction={this.completeQuestion}
                     resetRoom={this.resetRoom}
                 />
+                <Snackbar open={jumper_user_name ? true : false} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} style={{ marginBottom: ACTION_BAR_HEIGHT - 15 }}>
+                    <Alert severity="info">Jumped by {jumper_user_name}!</Alert>
+                </Snackbar>
             </div>
         )
     }
 
     resetRoom = async () => {
+        clearInterval(this.interval);
         await this.setState({ ...INITIAL_STATE })
         this.syncQuiz()
     }
 
     startQuiz = async () => {
-        setInterval(() => this.iterativeSyncQuiz(), QUESTION_INTERVAL);
+        this.interval = setInterval(() => this.iterativeSyncQuiz(), QUESTION_INTERVAL);
         await this.setState({ quiz_state: QUIZ_STATE.STARTED })
         this.syncQuiz()
     }
 
     announceQuestion = async () => {
-        const { all_question_ids, current_question_number } = this.state;
+        const { all_question_ids } = this.props;
+        const { current_question_number } = this.state;
 
         const question = all_question_ids && all_question_ids[current_question_number]
 
@@ -251,13 +248,13 @@ class Quiz extends Component {
 
 
 function mapStateToProps(state) {
-    const { userName, roomNumber, signedIn, qm } = state
-    return { quiz_master: qm, user_name: userName, room_number: roomNumber, signed_in: signedIn }
+    const { userName, roomNumber, signedIn, qm, currentQuiz, currentQuizNumber, volumeOn } = state
+    return { quiz_master: qm, user_name: userName, room_number: roomNumber, signed_in: signedIn, all_question_ids: currentQuiz, current_quiz_number: currentQuizNumber, volume_on: volumeOn }
 }
 
 export default connect(mapStateToProps)(Quiz)
 
 const QUIZ_STYLE = {
-    root: { paddingBottom: 20, marginBottom: ACTION_BAR_HEIGHT },
+    root: { paddingBottom: 20, marginTop: TOOLBOX_HEIGHT + 10, marginBottom: ACTION_BAR_HEIGHT },
     questions: { marginTop: 10 },
 }
