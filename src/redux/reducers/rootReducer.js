@@ -2,6 +2,8 @@ import { QUIZ_GLOBAL } from '../../globals';
 import types from '../actions/types';
 
 const INITIAL_STATE = {
+    currentQuiz: QUIZ_GLOBAL.quiz1.qs,
+    currentQuizNumber: "quiz1",
     userName: "QM-sergei",
     roomNumber: 1,
     signedIn: true,
@@ -9,6 +11,8 @@ const INITIAL_STATE = {
 };
 
 // const INITIAL_STATE = {
+//     currentQuiz: QUIZ_GLOBAL.quiz1.qs,
+//     currentQuizNumber: "quiz1",
 //     userName: "",
 //     roomNumber: 0,
 //     signedIn: false,
