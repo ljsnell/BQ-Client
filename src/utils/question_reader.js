@@ -8,7 +8,7 @@ msg.lang = 'en-US';
 msg.rate = 2.3;
 
 const QuestionReader = (word_to_read) => {
-    const volumeOn = true// useSelector(state => state.volumeOn);    
+    const volumeOn = false// useSelector(state => state.volumeOn);    
     msg.text = word_to_read
     if (volumeOn) return speechSynthesis.speak(msg)
     else return
