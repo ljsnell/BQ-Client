@@ -5,8 +5,7 @@ import { QUIZ_GLOBAL } from "../globals";
 import types from "../redux/actions/types";
 
 export default () => {
-    const quizNumber = useSelector(state => state.currentQuizNumber ? state.currentQuizNumber : 'quiz1')
-    console.log('quizNumber: ', quizNumber)
+    const quizNumber = useSelector(state => state.currentQuizNumber)
 
     const dispatch = useDispatch()
     const quizzes = Object.keys(QUIZ_GLOBAL)
