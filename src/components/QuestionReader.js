@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import React, { useState } from 'react';
 
 let msg = new SpeechSynthesisUtterance();
 let voices = window.speechSynthesis.getVoices();
@@ -7,11 +8,10 @@ msg.voiceURI = 'native';
 msg.lang = 'en-US';
 msg.rate = 2.3;
 
-const QuestionReader = (word_to_read) => {
-    const volumeOn = false// useSelector(state => state.volumeOn);    
+export const QuestionReader = ({ word_to_read, volumeOn }) => {
     msg.text = word_to_read
     if (volumeOn) return speechSynthesis.speak(msg)
     else return
-};
+}
 
 export default QuestionReader

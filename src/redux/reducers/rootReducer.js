@@ -7,7 +7,8 @@ const INITIAL_STATE = {
     userName: "QM-sergei",
     roomNumber: 1,
     signedIn: true,
-    qm: true
+    qm: true,
+    volume_on: false
 };
 
 // const INITIAL_STATE = {
@@ -36,8 +37,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
             newState = { ...state, volumeOn: action.payload }
             return newState
         case types.SWITCH_QUIZ:
-            const allQuestionIds = QUIZ_GLOBAL[action.payload].qs
-            console.log(allQuestionIds)
+            const allQuestionIds = QUIZ_GLOBAL[action.payload].qs            
             newState = { ...state, currentQuiz: allQuestionIds, currentQuizNumber: action.payload }
             return newState
         default:
