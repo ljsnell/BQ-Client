@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     currentQuizNumber: "quiz1",
     userName: "QM-sergei",
     roomNumber: 1,
-    signedIn: true,
+    signedIn: false,
     qm: true,
     volume_on: false
 };
