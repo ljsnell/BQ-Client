@@ -11,7 +11,7 @@ msg.rate = 2.3;
 export const QuestionReader = ({ word_to_read, volumeOn }) => {
     msg.text = word_to_read
     if (volumeOn) return speechSynthesis.speak(msg)
-    else return    
+    else return
 }
 
 export default QuestionReader
