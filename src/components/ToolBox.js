@@ -8,8 +8,6 @@ import types from '../redux/actions/types';
 
 const ToolBox = ({ open, onClose, style }) => {
     const { volumeOn, qm } = useSelector(state => state);
-    console.log('volumeOn', volumeOn)
-    console.log('qm', qm)
 
     const dispatch = useDispatch();
 
