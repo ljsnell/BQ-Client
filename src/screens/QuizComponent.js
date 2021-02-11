@@ -23,6 +23,7 @@ const INITIAL_STATE = {
     current_question_text: null,
     current_question_answer: null,
     current_question_reference: null,
+    volume_on: false
 }
 
 class Quiz extends Component {
@@ -73,8 +74,6 @@ class Quiz extends Component {
                         style={QUIZ_STYLE.questions}
                     />
                 }
-                {current_quiz_number}
-                {volume_on ? "TRUE" : "FALSE"}
                 <ActionBar
                     allQuizzers={quizzers_in_room}
                     isQuizMaster={quiz_master}
@@ -145,16 +144,14 @@ class Quiz extends Component {
     }
 
     async iterativeSyncQuiz() {
-        const { quiz_state, current_index, current_display_text, current_question_list } = this.state
-        const { volume_on } = this.props;
-                
+        const { quiz_state, current_index, current_display_text, current_question_list, volumeOn } = this.state
+
         const ASKED = quiz_state === QUIZ_STATE.ASKED;
         const PAUSED = quiz_state === QUIZ_STATE.PAUSED;
 
-        if (PAUSED) { return } 
+        if (PAUSED) { return }
         else if (ASKED && current_question_list && current_index < current_question_list.length) {
             const next_word = current_question_list[current_index]
-            QuestionReader({ word_to_read: next_word, volumeOn: volume_on })
 
             const updateDisplay = current_display_text.concat(`${next_word} `)
             await this.setState({ current_display_text: updateDisplay, current_index: current_index + 1 })
@@ -214,6 +211,9 @@ class Quiz extends Component {
 
     _contentChange = (res) => {
         const { jumper_user_name, current_display_text, current_question_text, current_question_list, current_question_number, current_question_type, room_number, quiz_state } = res
+        const { volume_on } = this.props
+
+        QuestionReader({ word_to_read: current_display_text, volumeOn: volume_on })
         this.setState({
             current_display_text: current_display_text,
             current_question_text: current_question_text,
