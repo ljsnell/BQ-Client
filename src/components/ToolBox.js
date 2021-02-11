@@ -19,7 +19,7 @@ const ToolBox = ({ open, onClose, style }) => {
                 </Container>
                 <DialogContent>
                     <Container align="center">
-                        <Typography variant="h2" style={TOOLBOX_STYLE.title}>Mute/Unmute:</Typography>
+                        <Typography variant="h2" style={TOOLBOX_STYLE.title}>Volume:</Typography>
                         <Button variant="outlined" color="primary" size="large" onClick={() => dispatch({ type: types.VOLUME_TOGGLE, payload: !volumeOn })} startIcon={volumeOn ? <VolumeUpIcon /> : <VolumeOffIcon />}>
                             {volumeOn ? "ON" : "OFF"}
                         </Button>
@@ -40,7 +40,7 @@ const ToolBox = ({ open, onClose, style }) => {
                 </Container>
                 <DialogContent>
                     <Container align="center">
-                        <Typography variant="h2" style={TOOLBOX_STYLE.title}>Mute/Unmute:</Typography>
+                        <Typography variant="h2" style={TOOLBOX_STYLE.title}>Volume:</Typography>
                         <Button variant="outlined" color="primary" size="large" onClick={() => dispatch({ type: types.VOLUME_TOGGLE, payload: !volumeOn })} startIcon={volumeOn ? <VolumeUpIcon /> : <VolumeOffIcon />}>
                             {volumeOn ? "ON" : "OFF"}
                         </Button>
