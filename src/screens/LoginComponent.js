@@ -39,7 +39,7 @@ class LoginForm extends Component {
                     />
                     <br />
                     <TextField onChange={({ target }) => this.updateLogin(target.value, "rm")} id="outlined-basic" label="Room Number" type="number" variant="outlined" helperText="Enter a number" style={LOGIN_STYLE.input} />
-                    <TextField onChange={({ target }) => this.updateLogin(target.value, "un")} id="outlined-basic" label="Your Username" variant="outlined" helperText="E.G. LukeIsCool" style={LOGIN_STYLE.input} />
+                    <TextField onChange={({ target }) => this.updateLogin(target.value, "un")} id="outlined-basic" label="Your Username" variant="outlined" helperText="E.G. Sergei" style={LOGIN_STYLE.input} />
                     <br />
                     <TextField onChange={({ target }) => this.updateLogin(target.value, "tm")} id="outlined-basic" label="Team" variant="outlined" helperText="E.G. Unicorns" style={LOGIN_STYLE.input} />
                     <TextField onChange={({ target }) => this.updateLogin(target.value, "ch")} id="outlined-basic" label="Chair Number" type="number" variant="outlined" helperText="Enter a number" style={LOGIN_STYLE.input} />
