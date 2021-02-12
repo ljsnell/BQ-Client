@@ -24,7 +24,6 @@ const LightCheck = () => {
             </div>
         </>
     )
-    // <div>Choose a chair to send a jump to: </div>
 }
 
 export default LightCheck
