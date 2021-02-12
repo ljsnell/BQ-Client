@@ -4,6 +4,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import WbIncandescent from '@material-ui/icons/WbIncandescent';
 import React from 'react';
 import { QuizzerPopup } from '.';
+import { LightCheck } from '.';
 import { ACTION_BAR_HEIGHT, QUIZ_STATE } from '../globals';
 import { COLORS } from '../theme';
 import ToolBox from './ToolBox';
@@ -27,7 +28,7 @@ class ActionBar extends React.Component {
                         <QuizzerPopup open={this.state.showQuizzers} onClose={() => this.setState({ showQuizzers: false })} quizzers={allQuizzers} style={ACTION_STYLE.quizzers} />
                         <br />
                         <Button variant="text" onClick={resetRoom} style={ACTION_STYLE.resetButton}>Reset Room</Button>
-                        {currentQuizNumber === 'quizlightcheck' && <div>List of Chairs to check here</div>}
+                        {currentQuizNumber === 'quizlightcheck' && <LightCheck />}
                     </Container>
                 }
                 <AppBar position="fixed" style={ACTION_STYLE.appBar}>
