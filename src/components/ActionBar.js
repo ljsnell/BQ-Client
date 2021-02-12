@@ -17,7 +17,7 @@ class ActionBar extends React.Component {
         }
     }
     render() {
-        const { isQuizMaster, state, questionNumber, startAction, nextAction, announceAction, bonusAction, jumpAction, completeAction, resetRoom, allQuizzers } = this.props
+        const { isQuizMaster, state, questionNumber, startAction, nextAction, announceAction, bonusAction, jumpAction, completeAction, resetRoom, allQuizzers, currentQuizNumber } = this.props
 
         return (
             <div>
@@ -27,6 +27,7 @@ class ActionBar extends React.Component {
                         <QuizzerPopup open={this.state.showQuizzers} onClose={() => this.setState({ showQuizzers: false })} quizzers={allQuizzers} style={ACTION_STYLE.quizzers} />
                         <br />
                         <Button variant="text" onClick={resetRoom} style={ACTION_STYLE.resetButton}>Reset Room</Button>
+                        {currentQuizNumber === 'quizlightcheck' && <div>List of Chairs to check here</div>}
                     </Container>
                 }
                 <AppBar position="fixed" style={ACTION_STYLE.appBar}>
@@ -46,6 +47,7 @@ class ActionBar extends React.Component {
                                 {state === QUIZ_STATE.ANNOUNCED && <Button onClick={nextAction} style={ACTION_STYLE.mainButton}>{questionNumber === 1 ? 'Ask' : 'Next'} Question</Button>}
                                 {state === QUIZ_STATE.STARTED && < Button onClick={announceAction} style={ACTION_STYLE.mainButton}>Announce Type</Button>}
                                 {state === QUIZ_STATE.STARTED && <Button variant="outlined" onClick={bonusAction} style={ACTION_STYLE.secondaryButton}>Bonus</Button>}
+                                {state}
                             </Container >
                         }
                     </Toolbar>

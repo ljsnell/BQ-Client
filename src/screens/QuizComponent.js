@@ -79,6 +79,7 @@ class Quiz extends Component {
                     isQuizMaster={quiz_master}
                     state={quiz_state}
                     questionNumber={current_question_number}
+                    currentQuizNumber={current_quiz_number}
                     startAction={this.startQuiz}
                     announceAction={this.announceQuestion}
                     nextAction={this.nextQuestion}
