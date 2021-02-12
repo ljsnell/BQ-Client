@@ -12,7 +12,7 @@ class ActionBar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            showToolbox: true,
+            showToolbox: false,
             showQuizzers: false
         }
     }
@@ -32,7 +32,7 @@ class ActionBar extends React.Component {
                 <AppBar position="fixed" style={ACTION_STYLE.appBar}>
                     <Toolbar>
                         <MoreVertIcon onClick={() => this.setState({ showToolbox: true })} />
-                        <ToolBox open={this.state.showToolbox} onClose={() => this.setState({ showToolbox: false })} />
+                        <ToolBox resetRoom={resetRoom} open={this.state.showToolbox} onClose={() => this.setState({ showToolbox: false })} />
                         {!isQuizMaster && state === QUIZ_STATE.ASKED && <Button variant="contained" onClick={jumpAction} style={ACTION_STYLE.fabButton} startIcon={<WbIncandescent style={ACTION_STYLE.jump} />}>Jump!</Button>}
 
                         {isQuizMaster &&
@@ -41,7 +41,7 @@ class ActionBar extends React.Component {
 
                                 {state === QUIZ_STATE.ASKED && <Button variant="outlined" onClick={jumpAction} style={ACTION_STYLE.secondaryButton}>Pause</Button>}
 
-                                {state === QUIZ_STATE.PAUSED && <Button onClick={completeAction} style={ACTION_STYLE.mainButton}>Complete</Button>}                                
+                                {state === QUIZ_STATE.PAUSED && <Button onClick={completeAction} style={ACTION_STYLE.mainButton}>Complete</Button>}
 
                                 {state === QUIZ_STATE.ANNOUNCED && <Button onClick={nextAction} style={ACTION_STYLE.mainButton}>{questionNumber === 1 ? 'Ask' : 'Next'} Question</Button>}
                                 {state === QUIZ_STATE.STARTED && < Button onClick={announceAction} style={ACTION_STYLE.mainButton}>Announce Type</Button>}

@@ -6,53 +6,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { QuizPicker } from '.';
 import types from '../redux/actions/types';
 
-const ToolBox = ({ open, onClose, style }) => {
+const ToolBox = ({ open, onClose, resetRoom, style }) => {
     const { volumeOn, qm } = useSelector(state => state);
 
     const dispatch = useDispatch();
 
-    if (qm) {
-        return (
-            <Dialog open={open} onClose={onClose} aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description" style={style}>
+    return (
+        <Dialog open={open} onClose={onClose} aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description" style={style}>
+            <Container align="center">
+                <Typography variant="h5" style={{ padding: 15 }}>More Settings:</Typography>
+            </Container>
+            <DialogContent>
                 <Container align="center">
-                    <Typography variant="h5" style={{ padding: 15 }}>More Settings:</Typography>
+                    <Typography variant="h2" style={TOOLBOX_STYLE.title}>Volume:</Typography>
+                    <Button variant="outlined" color="primary" size="large" onClick={() => dispatch({ type: types.VOLUME_TOGGLE, payload: !volumeOn })} startIcon={volumeOn ? <VolumeUpIcon /> : <VolumeOffIcon />}>
+                        {volumeOn ? "ON" : "OFF"}
+                    </Button>
+                    {qm &&
+                        <>
+                            <Typography variant="h2" style={TOOLBOX_STYLE.title}>Change Quiz:</Typography>
+                            <QuizPicker resetRoom={resetRoom} />
+                        </>
+                    }
                 </Container>
-                <DialogContent>
-                    <Container align="center">
-                        <Typography variant="h2" style={TOOLBOX_STYLE.title}>Volume:</Typography>
-                        <Button variant="outlined" color="primary" size="large" onClick={() => dispatch({ type: types.VOLUME_TOGGLE, payload: !volumeOn })} startIcon={volumeOn ? <VolumeUpIcon /> : <VolumeOffIcon />}>
-                            {volumeOn ? "ON" : "OFF"}
-                        </Button>
-                        <Typography variant="h2" style={TOOLBOX_STYLE.title}>Change Quiz:</Typography>
-                        <QuizPicker />
-                    </Container>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose} color="primary">Done</Button>
-                </DialogActions>
-            </Dialog>
-        )
-    } else {
-        return (
-            <Dialog open={open} onClose={onClose} aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description" style={style}>
-                <Container align="center">
-                    <Typography variant="h5" style={{ padding: 15 }}>More Settings:</Typography>
-                </Container>
-                <DialogContent>
-                    <Container align="center">
-                        <Typography variant="h2" style={TOOLBOX_STYLE.title}>Volume:</Typography>
-                        <Button variant="outlined" color="primary" size="large" onClick={() => dispatch({ type: types.VOLUME_TOGGLE, payload: !volumeOn })} startIcon={volumeOn ? <VolumeUpIcon /> : <VolumeOffIcon />}>
-                            {volumeOn ? "ON" : "OFF"}
-                        </Button>
-                    </Container>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose} color="primary">Done</Button>
-                </DialogActions>
-            </Dialog>
-        )
-    }
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose} color="primary">Done</Button>
+            </DialogActions>
+        </Dialog>
+    )
 }
+
 
 export default ToolBox
 

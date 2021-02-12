@@ -37,7 +37,8 @@ const rootReducer = (state = INITIAL_STATE, action) => {
             newState = { ...state, volumeOn: action.payload }
             return newState
         case types.SWITCH_QUIZ:
-            const allQuestionIds = QUIZ_GLOBAL[action.payload].qs            
+            const allQuestionIds = QUIZ_GLOBAL[action.payload].qs
+
             newState = { ...state, currentQuiz: allQuestionIds, currentQuizNumber: action.payload }
             return newState
         default:

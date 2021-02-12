@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { QUIZ_GLOBAL } from "../globals";
 import types from "../redux/actions/types";
 
-export default () => {
+export default ({ resetRoom }) => {
     const quizNumber = useSelector(state => state.currentQuizNumber)
 
     const dispatch = useDispatch()
@@ -12,7 +12,7 @@ export default () => {
 
     return (
         < FormControl variant="outlined" >
-            <Select native value={quizNumber} onChange={(v) => dispatch({ type: types.SWITCH_QUIZ, payload: v.target.value }) } >
+            <Select native value={quizNumber} onChange={(v) => { resetRoom(); dispatch({ type: types.SWITCH_QUIZ, payload: v.target.value }) }} >
                 {quizzes && quizzes.map((quizNumber, index) => (
                     <option key={`${quizNumber}-${index}`} value={quizNumber}>{quizNumber.toUpperCase()}</option>
                 ))}
