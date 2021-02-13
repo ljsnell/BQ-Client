@@ -24,7 +24,7 @@ export const QUIZ_GLOBAL = {
         bonus: []
     }, // Light check's don't need question #'s.
     quizlightcheck: {
-        qs: [],
+        qs: [4001, 4002, 4003, 4004, 4005, 4001, 4002, 4003, 4004, 4005],
         bonus: []
     }
 }
