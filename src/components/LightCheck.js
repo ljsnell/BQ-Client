@@ -6,7 +6,6 @@ import types from '../redux/actions/types';
 
 class LightCheck extends Component {
     handleChanges = (event) => {
-        console.log(event.target.value)
         const question_text = "Chair: " + event.target.value + " Jump!"
         this.props.setLightCheck({ question_text: question_text })
     }
