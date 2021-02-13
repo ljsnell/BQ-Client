@@ -1,18 +1,14 @@
 import { Select } from '@material-ui/core';
 import React from 'react';
 import { Component } from 'react';
-
-const options = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5'
-];
+import { connect } from 'react-redux';
+import types from '../redux/actions/types';
 
 class LightCheck extends Component {
     handleChanges = (event) => {
         console.log(event.target.value)
+        const question_text = "Chair: " + event.target.value + " Jump!"
+        this.props.setLightCheck({ question_text: question_text })
     }
 
     render() {
@@ -20,7 +16,7 @@ class LightCheck extends Component {
             <>
                 <div>
                     <>Select Chair to Test: </>
-                    <Select native={true} onChange={this.handleChanges} native value='1'>
+                    <Select native={true} onChange={this.handleChanges}>
                         <option key='1' value='1'>1</option>
                         <option key='2' value='2'>2</option>
                         <option key='3' value='3'>3</option>
@@ -33,4 +29,10 @@ class LightCheck extends Component {
     }
 }
 
-export default LightCheck
+const mapDispatchToProps = dispatch => {
+    return {
+        setLightCheck: (payload) => dispatch({ type: types.LIGHT_CHECK, payload: payload }),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LightCheck);

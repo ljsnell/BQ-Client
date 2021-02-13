@@ -41,6 +41,8 @@ const rootReducer = (state = INITIAL_STATE, action) => {
 
             newState = { ...state, currentQuiz: allQuestionIds, currentQuizNumber: action.payload }
             return newState
+        case types.LIGHT_CHECK:
+            console.log('action.payload', action.payload)
         default:
             return { ...state }
     }
