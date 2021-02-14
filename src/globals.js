@@ -22,9 +22,9 @@ export const QUIZ_GLOBAL = {
     quizpractice: {
         qs: [],
         bonus: []
-    }, // Light check's don't need question #'s.
+    }, // Light check's use a hard coded list of question numbers.
     quizlightcheck: {
-        qs: [],
+        qs: [99991, 99992, 99993, 99994, 99995, 99991, 99992, 99993, 99994, 99995],
         bonus: []
     }
 }
