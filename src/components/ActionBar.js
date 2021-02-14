@@ -4,7 +4,6 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import WbIncandescent from '@material-ui/icons/WbIncandescent';
 import React from 'react';
 import { QuizzerPopup } from '.';
-import { LightCheck } from '.';
 import { ACTION_BAR_HEIGHT, QUIZ_STATE } from '../globals';
 import { COLORS } from '../theme';
 import ToolBox from './ToolBox';
@@ -28,7 +27,6 @@ class ActionBar extends React.Component {
                         <QuizzerPopup open={this.state.showQuizzers} onClose={() => this.setState({ showQuizzers: false })} quizzers={allQuizzers} style={ACTION_STYLE.quizzers} />
                         <br />
                         <Button variant="text" onClick={resetRoom} style={ACTION_STYLE.resetButton}>Reset Room</Button>
-                        {currentQuizNumber === 'quizlightcheck' && <LightCheck />}
                     </Container>
                 }
                 <AppBar position="fixed" style={ACTION_STYLE.appBar}>
@@ -48,7 +46,6 @@ class ActionBar extends React.Component {
                                 {state === QUIZ_STATE.ANNOUNCED && <Button onClick={nextAction} style={ACTION_STYLE.mainButton}>{questionNumber === 1 ? 'Ask' : 'Next'} Question</Button>}
                                 {state === QUIZ_STATE.STARTED && < Button onClick={announceAction} style={ACTION_STYLE.mainButton}>Announce Type</Button>}
                                 {state === QUIZ_STATE.STARTED && <Button variant="outlined" onClick={bonusAction} style={ACTION_STYLE.secondaryButton}>Bonus</Button>}
-                                {state}
                             </Container >
                         }
                     </Toolbar>

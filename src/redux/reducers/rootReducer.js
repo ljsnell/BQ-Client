@@ -1,24 +1,24 @@
 import { QUIZ_GLOBAL } from '../../globals';
 import types from '../actions/types';
 
-const INITIAL_STATE = {
-    currentQuiz: QUIZ_GLOBAL.quiz1.qs,
-    currentQuizNumber: "quiz1",
-    userName: "QM-sergei",
-    roomNumber: 1,
-    signedIn: true,
-    qm: true,
-    volume_on: false
-};
-
 // const INITIAL_STATE = {
 //     currentQuiz: QUIZ_GLOBAL.quiz1.qs,
 //     currentQuizNumber: "quiz1",
-//     userName: "",
-//     roomNumber: 0,
-//     signedIn: false,
-//     qm: false
+//     userName: "QM-sergei",
+//     roomNumber: 1,
+//     signedIn: true,
+//     qm: true,
+//     volume_on: false
 // };
+
+const INITIAL_STATE = {
+    currentQuiz: QUIZ_GLOBAL.quiz1.qs,
+    currentQuizNumber: "quiz1",
+    userName: "",
+    roomNumber: 0,
+    signedIn: false,
+    qm: false
+};
 
 const rootReducer = (state = INITIAL_STATE, action) => {
     let newState = state;
@@ -41,9 +41,6 @@ const rootReducer = (state = INITIAL_STATE, action) => {
 
             newState = { ...state, currentQuiz: allQuestionIds, currentQuizNumber: action.payload }
             return newState
-        case types.LIGHT_CHECK:
-            console.log('action.payload', action.payload)
-            newState = { ...state, question }
         default:
             return { ...state }
     }
