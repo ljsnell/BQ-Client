@@ -11,7 +11,7 @@ import { COLORS } from './theme';
 
 class App extends Component {
   render() {
-    const { user_name, room_number, signed_in } = this.props;
+    const { user_name, room_number, signed_in, current_quiz_number } = this.props;
 
     return (
       <div>
@@ -20,7 +20,7 @@ class App extends Component {
             <Typography variant="h6" style={{ flexGrow: 1 }}>
               Bible Quiz 3.0
               </Typography>
-            {signed_in && <Button color="inherit">{user_name} | Rm. #{room_number}</Button>}
+            {signed_in && <Button color="inherit">{user_name} | Rm. #{room_number} | {current_quiz_number}</Button>}
           </Toolbar>
         </AppBar>
         <Toolbar />
@@ -41,8 +41,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { userName, roomNumber, signedIn } = state
-  return { user_name: userName, room_number: roomNumber, signed_in: signedIn }
+  const { userName, roomNumber, signedIn, currentQuizNumber } = state
+  return { user_name: userName, room_number: roomNumber, signed_in: signedIn, current_quiz_number: currentQuizNumber }
 }
 
 export default connect(mapStateToProps)(App)
