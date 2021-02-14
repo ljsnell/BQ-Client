@@ -24,7 +24,7 @@ export const QUIZ_GLOBAL = {
         bonus: []
     }, // Light check's use a hard coded list of question numbers.
     quizlightcheck: {
-        qs: [4001, 4002, 4003, 4004, 4005, 4001, 4002, 4003, 4004, 4005],
+        qs: [99991, 99992, 99993, 99994, 99995, 99991, 99992, 99993, 99994, 99995],
         bonus: []
     }
 }
