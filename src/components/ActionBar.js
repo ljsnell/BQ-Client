@@ -72,15 +72,16 @@ const ACTION_STYLE = {
     fabButton: {
         position: 'absolute',
         zIndex: 1,
-        top: -10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        left: 0,
+        top: 0,
+        paddingTop: 0,
+        paddingBottom: 30,
+        left: 55,
         right: 0,
         margin: '0 auto',
         border: '3px solid',
         borderColor: COLORS.SECONDARY,
         backgroundColor: COLORS.LIGHTTEXT,
-        color: COLORS.DARKTEXT
+        color: COLORS.DARKTEXT,
+        width: '100%'
     },
 }
