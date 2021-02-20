@@ -199,7 +199,7 @@ current content of the editor to the server. */
     }.bind(this));
 
     client.on('joined', function (message) {
-      console.log('Joined!', message)      
+      console.log('Joined!', message)
       this.setState({ quizzers_in_room: message })
     }.bind(this));
 
@@ -270,7 +270,7 @@ current content of the editor to the server. */
       let questionID = questionsList[questionNUMTemp]
       await fetchQuestion(questionID)
         .then(res => res.json()).then((data) => {
-          console.log('question from api!', data)          
+          console.log('question from api!', data)
           this.i = 0
           if (isNextBonus) {
             this.bonusQuestionNumber++
@@ -456,7 +456,7 @@ current content of the editor to the server. */
 
   showQuizMasterSection = () => {
     let { username, full_question_text, answer_question_text, question_number, question_reference, is_bonus, futureQuestionType } = this.state
-    if (username === 'QM') {
+    if (username === 'FQM') {
       let questionNumTemp;
       if (is_bonus) {
         questionNumTemp = <h6 className="quizMasterBody"><b>Question:</b> Bonus</h6>
@@ -504,7 +504,7 @@ current content of the editor to the server. */
 
   footerButtons = () => {
     let { username, quiz_started } = this.state
-    if (username === 'QM') {
+    if (username === 'FQM') {
       if (this.state.quizNumber === 'practice') {
         return (
           <div id="practiceQuiz" className="footerButton">
