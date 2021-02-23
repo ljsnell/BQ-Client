@@ -123,11 +123,27 @@ current content of the editor to the server. */
         Spectator Mode. If you are a quizzer who needs the jump button please start your name with a  chair number. E.G. 1-Jeff
       </div>)
   }
-
+  // Similar option for Full Question Text.
   showMoreQuizOptions() {
     let showMore = document.getElementById("showMore");
     let showLess = document.getElementById("showLess");
     let moreQuizOptions = document.getElementById("moreQuizOptions");
+    this.showMoreOpions = !this.showMoreOpions;
+    if (this.showMoreOpions) {
+      showLess.style.display = "block";
+      showMore.style.display = "none";
+      moreQuizOptions.style.display = "block";
+    } else {
+      showMore.style.display = "block";
+      showLess.style.display = "none";
+      moreQuizOptions.style.display = "none";
+    }
+  }
+
+  showQuizInfo() {
+    let showMore = document.getElementById("showQuizInfo");
+    let showLess = document.getElementById("hideQuizInfo");
+    let moreQuizOptions = document.getElementById("quizInfo");
     this.showMoreOpions = !this.showMoreOpions;
     if (this.showMoreOpions) {
       showLess.style.display = "block";
@@ -466,6 +482,13 @@ current content of the editor to the server. */
       return (
         <div className="quiz_master_content">
           <div className="flex">
+            <Button id="showMoreButton" onClick={() => this.showQuizInfo()}>
+              <ExpandLessIcon id="showQuizInfo" style={{ display: 'none' }} />
+              <ExpandMoreIcon id="hideQuizInfo" style={{ display: 'block' }} />
+            </Button>
+            <h6>Quiz Master Info</h6>
+          </div>
+          <div className="flex" id="quizInfo">
             <h4 className="quizMasterBody" style={{ flex: '1 100%', 'textAlign': 'left' }}><b>Full Question:</b> {full_question_text}</h4>
             <h4 className="quizMasterBody" style={{ flex: '1 100%', 'textAlign': 'left' }}><b>Answer:</b> {answer_question_text}</h4>
             <div className="quizMasterBody flex" style={{ flex: '1 100%' }}>
