@@ -470,7 +470,7 @@ current content of the editor to the server. */
 
   showQuizMasterSection = () => {
     let { username, full_question_text, answer_question_text, question_number, question_reference, is_bonus, futureQuestionType } = this.state
-    if (username === 'QMM') {
+    if (username === 'QM') {
       let questionNumTemp;
       if (is_bonus) {
         questionNumTemp = <h6 className="quizMasterBody"><b>Question:</b> Bonus</h6>
@@ -525,7 +525,7 @@ current content of the editor to the server. */
   // Update Quiz master view to be collapsible for practice.
   footerButtons = () => {
     let { username, quiz_started } = this.state
-    if (username === 'QMM') {
+    if (username === 'QM') {
       if (this.state.quizNumber === 'practice') {
         return (
           <div id="practiceQuiz" className="footerButton">
