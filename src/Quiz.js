@@ -345,7 +345,7 @@ current content of the editor to the server. */
         selectedRandomChaptersList.push(this.state.selectedChapters[i].value);
       }
     }
-    await fetchRandomQuestion(this.selectedRandomQuestionType, 1, selectedRandomChaptersList)
+    await fetchRandomQuestion(this.selectedRandomQuestionType, 2, selectedRandomChaptersList)
       .then(res => res.json()).then((data) => {
         this.i = 0
         if (data != null) {
