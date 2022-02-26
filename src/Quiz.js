@@ -63,7 +63,7 @@ class Quiz extends Component {
   questionIDs = QUIZZES.quiz1.qs
   bonusQuestionIDs = QUIZZES.quiz1.bonus
   selectedRandomQuestionType = 1;
-  selectedBook = 2;
+  selectedBook = 1;
 
   /* When content changes, we send the
 current content of the editor to the server. */
