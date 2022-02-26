@@ -10,6 +10,11 @@ const questionTypes = [
     "Situation"
 ];
 
+const books = [
+    "Romans",
+    "James"
+];
+
 const chapters = [{
     value: 1,
     label: 1,
@@ -107,4 +112,4 @@ const chapters = [{
     isFixed: false,
     isDisabled: false
 }];
-export { chapters, questionTypes }
+export { chapters, questionTypes, books }

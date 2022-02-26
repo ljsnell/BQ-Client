@@ -14,7 +14,7 @@ import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
 import globals from './globals'
 import { fetchQuestion, fetchQuestionType, fetchRandomQuestion } from './webserviceCalls';
-import { chapters, questionTypes } from './constants';
+import { chapters, questionTypes, books } from './constants';
 
 const QUIZZES = globals.QUIZ_GLOBAL
 
@@ -63,6 +63,7 @@ class Quiz extends Component {
   questionIDs = QUIZZES.quiz1.qs
   bonusQuestionIDs = QUIZZES.quiz1.bonus
   selectedRandomQuestionType = 1;
+  selectedBook = 2;
 
   /* When content changes, we send the
 current content of the editor to the server. */
@@ -345,7 +346,7 @@ current content of the editor to the server. */
         selectedRandomChaptersList.push(this.state.selectedChapters[i].value);
       }
     }
-    await fetchRandomQuestion(this.selectedRandomQuestionType, 2, selectedRandomChaptersList)
+    await fetchRandomQuestion(this.selectedRandomQuestionType, this.selectedBook, selectedRandomChaptersList)
       .then(res => res.json()).then((data) => {
         this.i = 0
         if (data != null) {
@@ -413,6 +414,10 @@ current content of the editor to the server. */
     this.setState({ futureQuestionType: questionTypes[e.target.value - 1] })
   }
 
+  updateSelectedBook = (e) => {
+    this.selectedBook = e.target.value
+  }
+
   displayNextQuestionType() {
     let { question_number, futureQuestionType, room } = this.state
     this.setState({
@@ -448,6 +453,13 @@ current content of the editor to the server. */
               className="basic-multi-select"
               classNamePrefix="select"
             />
+          </div>
+          <div>
+            <label htmlFor="bookNameLabel">Choose a book:</label>
+            <select onChange={(e) => this.updateSelectedBook(e)} name="bookName" id="bookId">
+              <option value="1">{books[0]}</option>
+              <option value="2">{books[1]}</option>
+            </select>
           </div>
         </div>
       )
