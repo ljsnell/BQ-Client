@@ -110,5 +110,89 @@ const chapters = [{
     color: '#5243AA',
     isFixed: false,
     isDisabled: false
-}];
+}, {
+    value: 16,
+    label: 16,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+},
+{
+    value: 17,
+    label: 17,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+},
+{
+    value: 18,
+    label: 18,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+},
+{
+    value: 19,
+    label: 19,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+},
+{
+    value: 20,
+    label: 20,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+},
+{
+    value: 21,
+    label: 21,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}, {
+    value: 22,
+    label: 22,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}, {
+    value: 23,
+    label: 23,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}, {
+    value: 24,
+    label: 24,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}, {
+    value: 25,
+    label: 25,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}, {
+    value: 26,
+    label: 26,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}, {
+    value: 27,
+    label: 27,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}, {
+    value: 28,
+    label: 28,
+    color: '#5243AA',
+    isFixed: false,
+    isDisabled: false
+}
+];
 export { chapters, questionTypes, books }
