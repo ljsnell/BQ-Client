@@ -14,7 +14,7 @@
     "react-identicons": "^1.1.7",
     "react-medium-editor": "^1.8.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.1",
     "react-select": "^3.1.0",
     "react-speech": "^1.0.2",
     "reactstrap": "^8.0.0",
