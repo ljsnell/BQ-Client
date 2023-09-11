@@ -11,7 +11,10 @@ const questionTypes = [
 ];
 
 const books = [
-    "Acts"
+    "Gal",
+    "Eph",
+    "Php",
+    "Col"
 ];
 
 const chapters = [{

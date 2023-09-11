@@ -445,7 +445,7 @@ current content of the editor to the server. */
           <div>
             <label htmlFor="questionChaptersLabel">Choose Chapters:</label>
             <Select
-              defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5], chapters[6], chapters[7], chapters[8], chapters[9], chapters[10], chapters[11], chapters[12], chapters[13], chapters[14], chapters[15], chapters[16], chapters[17], chapters[18], chapters[19], chapters[20], chapters[21], chapters[22], chapters[23], chapters[24], chapters[25], chapters[26], chapters[27], chapters[28]]}
+              defaultValue={[chapters[0], chapters[1], chapters[2], chapters[3], chapters[4], chapters[5]]}
               isMulti
               name="questionchapters"
               options={chapters}
@@ -459,6 +459,8 @@ current content of the editor to the server. */
             <select onChange={(e) => this.updateSelectedBook(e)} name="bookName" id="bookId">
               <option value="1">{books[0]}</option>
               <option value="2">{books[1]}</option>
+              <option value="3">{books[2]}</option>
+              <option value="4">{books[3]}</option>
             </select>
           </div>
         </div>
