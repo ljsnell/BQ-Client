@@ -14,7 +14,8 @@ const books = [
     "Gal",
     "Eph",
     "Php",
-    "Col"
+    "Col",
+    "Phm"
 ];
 
 const chapters = [{
