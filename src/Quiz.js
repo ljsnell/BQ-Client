@@ -461,6 +461,7 @@ current content of the editor to the server. */
               <option value="2">{books[1]}</option>
               <option value="3">{books[2]}</option>
               <option value="4">{books[3]}</option>
+              <option value="4">{books[4]}</option>
             </select>
           </div>
         </div>
