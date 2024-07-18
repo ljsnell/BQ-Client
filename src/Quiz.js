@@ -457,11 +457,7 @@ current content of the editor to the server. */
           <div>
             <label htmlFor="bookNameLabel">Choose a book:</label>
             <select onChange={(e) => this.updateSelectedBook(e)} name="bookName" id="bookId">
-              <option value="1">{books[0]}</option>
-              <option value="2">{books[1]}</option>
-              <option value="3">{books[2]}</option>
-              <option value="4">{books[3]}</option>
-              <option value="5">{books[4]}</option>
+              <option value="1">{books[0]}</option>              
             </select>
           </div>
         </div>

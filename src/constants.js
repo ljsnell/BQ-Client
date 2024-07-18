@@ -11,11 +11,7 @@ const questionTypes = [
 ];
 
 const books = [
-    "Gal",
-    "Eph",
-    "Php",
-    "Col",
-    "Phm"
+    "Luke"
 ];
 
 const chapters = [{
@@ -170,30 +166,6 @@ const chapters = [{
 }, {
     value: 24,
     label: 24,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false
-}, {
-    value: 25,
-    label: 25,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false
-}, {
-    value: 26,
-    label: 26,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false
-}, {
-    value: 27,
-    label: 27,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false
-}, {
-    value: 28,
-    label: 28,
     color: '#5243AA',
     isFixed: false,
     isDisabled: false
