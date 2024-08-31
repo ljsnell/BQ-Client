@@ -110,12 +110,6 @@ const chapters = [{
     color: '#5243AA',
     isFixed: false,
     isDisabled: false
-}, {
-    value: 16,
-    label: 16,
-    color: '#5243AA',
-    isFixed: false,
-    isDisabled: false
 },
 {
     value: 17,
